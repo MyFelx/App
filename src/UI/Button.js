@@ -22,7 +22,7 @@ const AppButton = (props) => (
     fontSize={props.fontSize}
     backgroundColor={props.backgroundColor}
     border={props.border}
-    onClick={props.whenClick}
+    onClick={props.onClick}
   >
     {props.icon}
     {props.text}

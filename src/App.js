@@ -13,7 +13,7 @@ function App() {
           color={"#c1c1c1"}
           fontSize={"24px"}
           backgroundColor={"#303030"}
-          clicked={() => alert("Joined")}
+          onClick={() => alert("Joined")}
         />
         <AppButton
           text={"Login"}
@@ -26,7 +26,7 @@ function App() {
           fontSize={"14px"}
           backgroundColor={"rgba(0,0,0,0)"}
           border={"1px solid white"}
-          whenClick={() => alert("Logged in")}
+          onClick={() => alert("Logged in")}
         />
       </div>
     </div>
