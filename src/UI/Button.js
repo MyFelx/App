@@ -10,7 +10,7 @@ const StyledButton = styled.button`
   font-size: ${(props) => props.fontSize};
   background-color: ${(props) => props.backgroundColor};
   margin: 10px;
-  border: ${(props) => props.border};
+  border: ${(props) => (props.border === undefined ? "none" : props.border)};
   outline: none;
 `;
 
@@ -22,7 +22,7 @@ const AppButton = (props) => (
     fontSize={props.fontSize}
     backgroundColor={props.backgroundColor}
     border={props.border}
-    onClick={props.clicked}
+    onClick={props.whenClick}
   >
     {props.icon}
     {props.text}
