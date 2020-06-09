@@ -6,7 +6,7 @@ import "antd/dist/antd.css";
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <h3>UseLESS</h3>
+    <h3>UselESS</h3>
   </React.StrictMode>,
   document.getElementById("root")
 );
