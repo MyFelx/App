@@ -1,11 +1,10 @@
-import React from 'react';
+import React from "react";
+import { Button } from "antd";
 
 function App() {
   return (
     <div className="App">
-      <h2>
-        HIIIIII
-      </h2>
+      <Button type="primary">Button</Button>
     </div>
   );
 }
