@@ -11,6 +11,7 @@ const StyledButton = styled.button`
   background-color: ${(props) => props.backgroundColor};
   margin: 10px;
   border: ${(props) => props.border};
+  outline: none;
 `;
 
 const AppButton = (props) => (
@@ -18,7 +19,7 @@ const AppButton = (props) => (
     height={props.height}
     width={props.width}
     color={props.color}
-    fontsize={props.fontSize}
+    fontSize={props.fontSize}
     backgroundColor={props.backgroundColor}
     border={props.border}
     onClick={props.clicked}

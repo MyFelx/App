@@ -11,7 +11,7 @@ function App() {
           height={"53px"}
           width={"165px"}
           color={"#c1c1c1"}
-          fontsize={"24px"}
+          fontSize={"24px"}
           backgroundColor={"#303030"}
           border={"none"}
           icon={null}
@@ -26,7 +26,7 @@ function App() {
           width={"73px"}
           color={"white"}
           fontSize={"14px"}
-          backgroundColor={"black"}
+          backgroundColor={"rgba(0,0,0,0)"}
           border={"1px solid white"}
           clicked={() => alert("Logged in")}
         />
