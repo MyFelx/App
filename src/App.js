@@ -8,6 +8,12 @@ import {
 } from "@ant-design/icons";
 import GenericInput from "./UI/Input";
 
+const iconStyling = {
+  color: "#c1c1c1",
+  fontSize: "18px",
+  marginLeft: "8px",
+};
+
 function App() {
   return (
     <div className="App">
@@ -44,30 +50,18 @@ function App() {
       >
         <GenericInput
           inputType={"text"}
-          icon={
-            <UserOutlined
-              style={{ color: "#c1c1c1", fontSize: "18px", marginLeft: "8px" }}
-            />
-          }
-          initValue={"Username"}
+          icon={<UserOutlined style={iconStyling} />}
+          placeholderValue={"Username"}
         />
         <GenericInput
           inputType={"text"}
-          icon={
-            <MailOutlined
-              style={{ color: "#c1c1c1", fontSize: "18px", marginLeft: "8px" }}
-            />
-          }
-          initValue={"email"}
+          icon={<MailOutlined style={iconStyling} />}
+          placeholderValue={"email"}
         />
         <GenericInput
           inputType={"password"}
-          icon={
-            <KeyOutlined
-              style={{ color: "#c1c1c1", fontSize: "18px", marginLeft: "8px" }}
-            />
-          }
-          initValue={"password"}
+          icon={<KeyOutlined style={iconStyling} />}
+          placeholderValue={"password"}
         />
       </div>
     </div>

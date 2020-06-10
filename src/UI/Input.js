@@ -17,66 +17,45 @@ const OuterDiv = styled.div`
   align-items: center;
   justify-content: center;
   width: 550px;
+  margin: 10px;
 `;
-
+const iconStyling = {
+  color: "#c1c1c1",
+  fontSize: "18px",
+  margin: "8px",
+};
 class GenericInput extends Component {
   state = {
-    showTogglePasswordButton: null,
-    inputType: this.props.inputType,
+    showPassword: false,
   };
-
-  isPassword = () => {
+  toggleShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+  };
+  getInputPasswordIcon = () => {
     if (this.props.inputType === "password") {
-      this.setState({
-        showTogglePasswordButton: (
+      if (this.state.showPassword) {
+        return (
+          <EyeOutlined style={iconStyling} onClick={this.toggleShowPassword} />
+        );
+      } else {
+        return (
           <EyeInvisibleOutlined
-            style={{ color: "#c1c1c1", fontSize: "18px", margin: "8px" }}
-            onClick={this.showPasswordChar}
+            style={iconStyling}
+            onClick={this.toggleShowPassword}
           />
-        ),
-      });
+        );
+      }
     }
   };
-
-  showPasswordChar = () => {
-    if (this.state.inputType === "password") {
-      this.setState({
-        inputType: "text",
-        showTogglePasswordButton: (
-          <EyeOutlined
-            style={{ color: "#c1c1c1", fontSize: "18px", margin: "8px" }}
-            onClick={this.showPasswordChar}
-          />
-        ),
-      });
-    } else {
-      this.setState({
-        inputType: "password",
-        showTogglePasswordButton: (
-          <EyeInvisibleOutlined
-            style={{ color: "#c1c1c1", fontSize: "18px", margin: "8px" }}
-            onClick={this.showPasswordChar}
-          />
-        ),
-      });
-    }
-  };
-
-  componentWillMount() {
-    this.isPassword();
-  }
-
   render() {
-    console.log(this.state.showTogglePasswordButton);
-    console.log(this.state.inputType);
     return (
-      <OuterDiv style={{ margin: "10px" }}>
+      <OuterDiv>
         {this.props.icon}
         <StyledInput
-          placeholder={this.props.initValue}
-          type={this.state.inputType}
+          placeholder={this.props.placeholderValue}
+          type={this.state.showPassword ? "text" : "password"}
         />
-        <div>{this.state.showTogglePasswordButton}</div>
+        <div>{this.getInputPasswordIcon()}</div>
       </OuterDiv>
     );
   }
