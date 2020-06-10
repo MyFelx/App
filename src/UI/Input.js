@@ -19,7 +19,7 @@ const OuterDiv = styled.div`
   width: 550px;
   margin: 10px;
 `;
-const iconStyling = {
+const passwordIconStyling = {
   color: "#c1c1c1",
   fontSize: "18px",
   margin: "8px",
@@ -35,12 +35,12 @@ class GenericInput extends Component {
     if (this.props.inputType === "password") {
       if (this.state.showPassword) {
         return (
-          <EyeOutlined style={iconStyling} onClick={this.toggleShowPassword} />
+          <EyeOutlined style={passwordIconStyling} onClick={this.toggleShowPassword} />
         );
       } else {
         return (
           <EyeInvisibleOutlined
-            style={iconStyling}
+            style={passwordIconStyling}
             onClick={this.toggleShowPassword}
           />
         );
