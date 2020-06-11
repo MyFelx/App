@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import GenericInput from "./UI/Input";
 
+
 const iconStyling = {
   color: "#c1c1c1",
   fontSize: "18px",
@@ -17,6 +18,7 @@ const iconStyling = {
 function App() {
   return (
     <div className="App">
+
       <div style={{ backgroundColor: "#202020" }}>
         <AppButton
           text={"Join"}
