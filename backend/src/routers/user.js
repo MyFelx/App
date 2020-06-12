@@ -3,10 +3,8 @@ const router = new express.Router()
 const User = require("../models/User")
 const auth = require("../middleWare/auth")
 
-
-
 //create a new user
-router.post("/signUp", async (req, res) => {
+router.post("/MyFlex/v1/API/SignUp", async (req, res) => {
 
     const user = new User(req.body)
     try {
@@ -18,13 +16,9 @@ router.post("/signUp", async (req, res) => {
     }
 })
 
-//get my profile
-router.post("/profile", auth, async (req, res) => {
-    res.status(200).send()
-})
 
 //login the user
-router.post("/login", async (req, res) => {
+router.post("/MyFlex/v1/API/LogIn", async (req, res) => {
 
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -35,7 +29,13 @@ router.post("/login", async (req, res) => {
     }
 })
 
-router.post("/logout", auth, async (req, res) => {
+//get my profile
+router.get("/MyFlex/v1/API/LoggedIn", auth, async (req, res) => {
+    res.status(200).send(req.user)
+})
+
+// logout the user 
+router.get("/MyFlex/v1/API/Logout", auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter(eachToken => {
             return eachToken.token != req.token
@@ -49,8 +49,6 @@ router.post("/logout", auth, async (req, res) => {
 
     }
 })
-
-
 
 
 module.exports = router

@@ -40,7 +40,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
         throw new Error("Unable to login")
     }
 
-    // const checkPass = await bcrypt.compare(password, user.password)
     const passCheck = user.password === password
 
     if (!passCheck) {
@@ -52,18 +51,11 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 //generating tokens
 userSchema.methods.generatingTokens = async function () {
-    const token = jwt.sign({ _id: this._id }, 'myFlex', { expiresIn: '10 seconds' });
+    const token = jwt.sign({ _id: this._id }, 'myFlex');
     this.tokens = this.tokens.concat({ token })
     this.save()
     return token
 }
-
-// hash the password before saving into the db in the signup level 
-// userSchema.pre("save", async function () {
-
-//     this.password = await bcrypt.hash(this.password, 7)
-
-// })
 
 
 const User = mongoose.model("User", userSchema)
