@@ -3,7 +3,6 @@ import AppButton from "../UI/Button";
 import GenericInput from "../UI/Input";
 import Modal from "../UI/Modal";
 import { LoginOutlined, UserOutlined, KeyOutlined } from "@ant-design/icons";
-import testImage from "../testBackground.png";
 
 const iconStyling = {
   color: "#c1c1c1",
@@ -29,7 +28,6 @@ function Login() {
           onClick={() => alert("Logged in")}
         />
       </div>
-
       <Modal closeOnClick={() => console.log("object")}>
         <h1 style={{ color: "#c1c1c1", marginLeft: "9px" }}>Login</h1>
 
@@ -54,9 +52,6 @@ function Login() {
           onClick={() => alert("Joined")}
         />
       </Modal>
-      <div>
-        <img src={testImage} alt="Girl in a jacket" width="100%" />
-      </div>
     </div>
   );
 }

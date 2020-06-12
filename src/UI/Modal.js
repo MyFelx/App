@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import { CloseOutlined } from "@ant-design/icons";
 
@@ -14,6 +14,7 @@ const StyledModal = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  opacity: ${(props) => props.modalOpacity};
 `;
 
 const closeIconStyle = {
@@ -25,15 +26,47 @@ const closeIconStyle = {
   top: "3%",
 };
 
-const Modal = (props) => {
-  return (
-    <div>
-      <StyledModal>
-        <CloseOutlined style={closeIconStyle} onClick={props.closeOnClick} />
-        {props.children}
+class Modal extends Component {
+  state = {
+    modalOpacity: 0,
+  };
+
+  componentDidMount() {
+    this.modalFadeIn();
+  }
+
+  modalFadeIn = () => {
+    const fadeInInterval = setInterval(() => {
+      this.setState({ modalOpacity: this.state.modalOpacity + 0.05 }, () => {
+        if (this.state.modalOpacity >= 1) {
+          this.setState({ modalOpacity: 1 }, () => {
+            clearInterval(fadeInInterval);
+          });
+        }
+      });
+    }, 5);
+  };
+
+  modalFadeOut = () => {
+    const closingInterval = setInterval(() => {
+      this.setState({ modalOpacity: this.state.modalOpacity - 0.05 }, () => {
+        if (this.state.modalOpacity <= 0) {
+          this.setState({ modalOpacity: 0 }, () => {
+            clearInterval(closingInterval);
+          });
+        }
+      });
+    }, 5);
+  };
+
+  render() {
+    return (
+      <StyledModal modalOpacity={this.state.modalOpacity}>
+        <CloseOutlined style={closeIconStyle} onClick={this.modalFadeOut} />
+        {this.props.children}
       </StyledModal>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Modal;
