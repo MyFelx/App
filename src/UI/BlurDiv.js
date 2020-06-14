@@ -6,7 +6,6 @@ const StyledBlurDiv = styled.div`
 `;
 
 const BlurDiv = (props) => {
-  console.log(props.blurDegree);
   return (
     <div>
       <StyledBlurDiv blurDegree={props.blurDegree}>
