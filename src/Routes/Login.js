@@ -2,6 +2,7 @@ import React from "react";
 import AppButton from "../UI/Button";
 import GenericInput from "../UI/Input";
 import Modal from "../UI/Modal";
+import UserIcon from "../UI/UserIcon";
 import { LoginOutlined, UserOutlined, KeyOutlined } from "@ant-design/icons";
 
 const iconStyling = {
@@ -13,7 +14,13 @@ const iconStyling = {
 function Login() {
   return (
     <div className="App">
-      <div style={{ backgroundColor: "black" }}>
+      <div
+        style={{
+          backgroundColor: "black",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
         <AppButton
           text={"Login"}
           icon={
@@ -27,6 +34,7 @@ function Login() {
           border={"1px solid white"}
           onClick={() => alert("Logged in")}
         />
+        <UserIcon username={"Fady Philips"} />
       </div>
       <Modal closeOnClick={() => console.log("object")}>
         <h1 style={{ color: "#c1c1c1", marginLeft: "9px" }}>Login</h1>
