@@ -16,8 +16,7 @@ const colorList = [
   "#d87a16",
 ];
 
-const randomColor =
-  colorList[Math.floor(Math.random() * Math.floor(colorList.length))];
+const randomColor = colorList[Math.floor(Math.random() * colorList.length)];
 
 const UserIconDiv = styled.div`
   width: 40px;
