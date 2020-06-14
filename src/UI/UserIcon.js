@@ -18,7 +18,6 @@ const colorList = [
 
 const randomColor =
   colorList[Math.floor(Math.random() * Math.floor(colorList.length))];
-console.log(randomColor);
 
 const UserIconDiv = styled.div`
   width: 40px;
