@@ -3,6 +3,7 @@ import AppButton from "../UI/Button";
 import GenericInput from "../UI/Input";
 import Modal from "../UI/Modal";
 import UserIcon from "../UI/UserIcon";
+import MyListIcon from "../UI/MyListIcon";
 import { LoginOutlined, UserOutlined, KeyOutlined } from "@ant-design/icons";
 
 const iconStyling = {
@@ -35,6 +36,10 @@ function Login() {
           onClick={() => alert("Logged in")}
         />
         <UserIcon username={"Fady Philips"} />
+        <MyListIcon
+          myListNo={855}
+          onIconClick={() => console.log("Open My List")}
+        />
       </div>
       <Modal closeOnClick={() => console.log("object")}>
         <h1 style={{ color: "#c1c1c1", marginLeft: "9px" }}>Login</h1>
