@@ -7,7 +7,7 @@ const TMDBApi = require("../TMDBApi")
 const auth = require("../middleWare/auth")
 
 // searching for a movie
-router.get("/MyFlex/v1/API/movies", async (req, res) => {
+router.get("/myFlex/api/v1/search/movie", async (req, res) => {
     try {
         const respone = await TMDBApi.searchMovies(req.query.searchQuery)
         const formatedResponse = Helper.formatMovies(respone)
@@ -18,7 +18,7 @@ router.get("/MyFlex/v1/API/movies", async (req, res) => {
 })
 
 // adding a movie to your list 
-router.post("/MyFlex/v1/API/add/toWatchList", auth, async (req, res) => {
+router.post("/myFlex/api/v1/list", auth, async (req, res) => {
     try {
 
         const user = req.user
@@ -42,7 +42,7 @@ router.post("/MyFlex/v1/API/add/toWatchList", auth, async (req, res) => {
 })
 
 // getting my movies list
-router.get("/MyFlex/v1/API/MyList", auth, async (req, res) => {
+router.get("/myFlex/api/v1/list", auth, async (req, res) => {
     try {
         const user = req.user
         const moviesIDList = []
