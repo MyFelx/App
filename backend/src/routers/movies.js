@@ -1,8 +1,8 @@
 const express = require("express")
 const router = new express.Router()
+const Movie = require("../models/Movie")
 const Helper = require("../Helper")
 const { ObjectID } = require("mongodb")
-const Movie = require("../models/Movie")
 const TMDBApi = require("../TMDBApi")
 const auth = require("../middleWare/auth")
 
@@ -16,6 +16,7 @@ router.get("/MyFlex/v1/API/movies", async (req, res) => {
         res.status(400).send(e)
     }
 })
+
 // adding a movie to your list 
 router.post("/MyFlex/v1/API/add/toWatchList", auth, async (req, res) => {
     try {
@@ -39,4 +40,22 @@ router.post("/MyFlex/v1/API/add/toWatchList", auth, async (req, res) => {
         res.status(400).send(err)
     }
 })
+
+// getting my movies list
+router.get("/MyFlex/v1/API/MyList", auth, async (req, res) => {
+    try {
+        const user = req.user
+        const moviesIDList = []
+
+        for (let i = 0; i < user.movies.length; i++) {
+            moviesIDList.push(user.movies[i]._id.toString())
+        }
+        const movies = await Movie.find({ _id: { $in: moviesIDList } })
+
+        res.send(movies)
+    } catch (err) {
+        res.status(400).send(err)
+    }
+})
+
 module.exports = router
