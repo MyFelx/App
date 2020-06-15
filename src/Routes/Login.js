@@ -37,7 +37,7 @@ function Login() {
         />
         <UserIcon username={"Fady Philips"} />
         <MyListIcon
-          myListNo={855}
+          myListNo={85}
           onIconClick={() => console.log("Open My List")}
         />
       </div>
