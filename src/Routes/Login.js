@@ -4,6 +4,7 @@ import GenericInput from "../UI/Input";
 import Modal from "../UI/Modal";
 import UserIcon from "../UI/UserIcon";
 import MyListIcon from "../UI/MyListIcon";
+import ValidationWarning from "../UI/ValidationWarning";
 import { LoginOutlined, UserOutlined, KeyOutlined } from "@ant-design/icons";
 
 const iconStyling = {
@@ -49,11 +50,25 @@ function Login() {
           icon={<UserOutlined style={iconStyling} />}
           placeholderValue={"Username"}
         />
-
+        <ValidationWarning
+          isValid={true}
+          ifValid={"email is valid"}
+          ifInvalid={"email is invalid"}
+        />
         <GenericInput
           inputType={"password"}
           icon={<KeyOutlined style={iconStyling} />}
           placeholderValue={"password"}
+        />
+        <ValidationWarning
+          isValid={false}
+          ifValid={"Contains Number"}
+          ifInvalid={"Does not contain a number"}
+        />
+        <ValidationWarning
+          isValid={true}
+          ifValid={"Contains an Uppercase letter"}
+          ifInvalid={"Does not contain an Uppercase letter"}
         />
         <AppButton
           text={"Join"}
