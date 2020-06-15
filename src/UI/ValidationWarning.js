@@ -4,6 +4,7 @@ import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 
 const StyledNotice = styled.div`
   color: ${(props) => (props.isValid ? "green" : "#EA3737")};
+  font-size: 12px;
 `;
 
 const ValidationWarning = (props) => {

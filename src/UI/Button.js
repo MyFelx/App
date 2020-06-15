@@ -6,12 +6,14 @@ const StyledButton = styled.button`
   height: ${(props) => props.height};
   width: ${(props) => props.width};
   text-align: center;
-  color: ${(props) => props.color};
+  color: ${(props) => (props.disabled ? "#505050" : props.color)};
   font-size: ${(props) => props.fontSize};
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) =>
+    props.disabled ? "#262626" : props.backgroundColor};
   margin: 10px;
   border: ${(props) => (props.border === undefined ? "none" : props.border)};
   outline: none;
+  cursor: ${(props) => (!props.disabled ? "pointer" : "not-allowed")};
 `;
 
 const AppButton = (props) => (
@@ -23,6 +25,7 @@ const AppButton = (props) => (
     backgroundColor={props.backgroundColor}
     border={props.border}
     onClick={props.onClick}
+    disabled={props.disabledButton}
   >
     {props.icon}
     {props.text}
