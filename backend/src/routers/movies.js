@@ -6,6 +6,7 @@ const { ObjectID } = require("mongodb")
 const TMDBApi = require("../TMDBApi")
 const auth = require("../middleWare/auth")
 
+
 // searching for a movie
 router.get("/MyFlex/v1/API/movies", async (req, res) => {
     try {
@@ -18,7 +19,7 @@ router.get("/MyFlex/v1/API/movies", async (req, res) => {
 })
 
 // adding a movie to your list 
-router.post("/MyFlex/v1/API/add/toWatchList", auth, async (req, res) => {
+router.post("/MyFlex/v1/API/add/WatchList", auth, async (req, res) => {
     try {
 
         const user = req.user

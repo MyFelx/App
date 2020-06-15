@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 const userRouter = require("./backend/src/routers/user")
+const moviesRouter = require("./backend/src/routers/movies")
 const mongoose = require("mongoose")
 const cors = require('cors');
 
@@ -13,7 +14,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-mongoose.connect("mongodb://127.0.0.1:27017/movies_Project", {
+mongoose.connect("mongodb://127.0.0.1:27017/MyFlex", {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useFindAndModify: false
@@ -21,6 +22,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/movies_Project", {
 
 app.use(express.json());
 app.use(userRouter)
+app.use(moviesRouter)
 
 
 

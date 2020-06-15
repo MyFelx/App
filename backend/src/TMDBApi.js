@@ -4,8 +4,6 @@ const API_URL = "https://api.themoviedb.org/3/"
 const API_KEY = "29de87d3f58e703ce82ba34e2460edcd"
 
 class TMDBApi {
-
-
     static formatPramaters(params) {
         let formatedParams = ''
         for (let [param, value] of Object.entries(params)) {
