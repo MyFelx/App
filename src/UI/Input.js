@@ -35,7 +35,10 @@ class GenericInput extends Component {
     if (this.props.inputType === "password") {
       if (this.state.showPassword) {
         return (
-          <EyeOutlined style={passwordIconStyling} onClick={this.toggleShowPassword} />
+          <EyeOutlined
+            style={passwordIconStyling}
+            onClick={this.toggleShowPassword}
+          />
         );
       } else {
         return (
@@ -53,7 +56,7 @@ class GenericInput extends Component {
         {this.props.icon}
         <StyledInput
           placeholder={this.props.placeholderValue}
-          type={this.state.showPassword ? "text" : "password"}
+          type={this.state.showPassword ? "text" : this.props.inputType}
         />
         <div>{this.getInputPasswordIcon()}</div>
       </OuterDiv>
