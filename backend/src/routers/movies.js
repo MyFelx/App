@@ -6,7 +6,16 @@ const Movie = require("../models/Movie")
 const TMDBApi = require("../TMDBApi")
 const auth = require("../middleWare/auth")
 
-
+// searching for a movie
+router.get("/MyFlex/v1/API/movies", async (req, res) => {
+    try {
+        const respone = await TMDBApi.searchMovies(req.query.searchQuery)
+        const formatedResponse = Helper.formatMovies(respone)
+        res.send(formatedResponse)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
 // adding a movie to your list 
 router.post("/MyFlex/v1/API/add/toWatchList", auth, async (req, res) => {
     try {
@@ -30,7 +39,4 @@ router.post("/MyFlex/v1/API/add/toWatchList", auth, async (req, res) => {
         res.status(400).send(err)
     }
 })
-
-
-
 module.exports = router
