@@ -58,4 +58,18 @@ router.get("/myFlex/api/v1/list", auth, async (req, res) => {
     }
 })
 
+
+//removing a movie 
+router.delete("/myFlex/api/v1/list", auth, async (req, res) => {
+    try {
+        const user = req.user
+        const movieIndex = user.movies.findIndex(movie => movie.TMDB_Id === req.body.id)
+        user.movies.splice(movieIndex, 1)
+        user.save()
+        res.send("Movie removed Succecfully")
+    } catch (e) {
+        res.status(400).send(err)
+    }
+})
+
 module.exports = router
