@@ -29,7 +29,9 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+   
+
 })
 
 // Logging the user in 
