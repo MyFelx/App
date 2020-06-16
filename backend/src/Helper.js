@@ -1,9 +1,8 @@
 const movieFilter = ["id", "title", "overview", "poster_path", "release_date"]
-const watchLaterFilter = ["id", "watched"]
 
 class Helper {
 
-    static filter(object, movieFilter = []) {
+    static filterObject(object, movieFilter = []) {
         return Object.keys(object)
             .filter(key => movieFilter.includes(key))
             .reduce((obj, key) => {
@@ -15,17 +14,18 @@ class Helper {
     static formatMovies(movies) {
         const moviesList = []
         movies.forEach(movie => {
-            moviesList.push(this.filter(movie, movieFilter))
+            moviesList.push(this.filterObject(movie, movieFilter))
         })
         return moviesList
     }
 
     static formatMovie(movie) {
-        return this.filter(movie, movieFilter)
+        return this.filterObject(movie, movieFilter)
     }
 
     static filterWatchLaterMovie(movie) {
-        return this.filter(movie, watchLaterFilter)
+        const watchLaterFilter = ["id", "watched"]
+        return this.filterObject(movie, watchLaterFilter)
     }
 
 }
