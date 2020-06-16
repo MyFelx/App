@@ -1,7 +1,8 @@
 import React from "react";
+import SignUpModal from "../UI/SignUpModal";
 
 const SignUp = (props) => {
-  return <h1>SIGN UP</h1>;
+  return <SignUpModal />;
 };
 
 export default SignUp;
