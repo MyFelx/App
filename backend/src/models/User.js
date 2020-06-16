@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema({
         },
         TMDB_Id: {
             type: Number,
+        },
+        watched: {
+            type: Boolean,
+            default: false
         }
 
     }]
