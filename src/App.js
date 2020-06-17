@@ -4,6 +4,7 @@ import Login from "./Routes/Login";
 import Home from "./Routes/Home";
 import MyList from "./Routes/MyList";
 import SignUp from "./Routes/SignUp";
+import Card from './UI/Card'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/sign-up" component={SignUp} />
         </Switch>
       </div>
+      <Card />
     </Router>
   );
 }
