@@ -18,6 +18,11 @@ function App() {
         </Switch>
       </div>
       <Card />
+      <Card />
+      <Card />
+      <Card />
+      <Card />
+
     </Router>
   );
 }
