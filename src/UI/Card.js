@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-import { PlusCircleFilled, CheckCircleFilled, MinusCircleFilled, InfoCircleOutlined } from '@ant-design/icons'
+import { PlusCircleFilled, CheckCircleFilled, MinusCircleFilled, InfoCircleFilled } from '@ant-design/icons'
 
 const StyledCard = styled.div`
     width: 240px;
@@ -13,25 +13,20 @@ const StyledCard = styled.div`
     background-repeat: no-repeat;
     background-size: 100% 100%;
 `;
-const IconAddPosition = {
-    position: "relative",
-    top: "20%",
-    left: "38%",
-    padding: "0",
-    fontSize: "50px",
-};
 const IconPosition = {
     position: "relative",
     top: "20%",
     left: "38%",
     padding: "0",
     fontSize: "50px",
+    color: "white",
 };
 const Info = {
     position: "relative",
     fontSize: "20px",
     left: "90%",
-    height: "30%"
+    height: "30%",
+    color: "white",
 };
 const IconHeight = {
     height: "70%",
@@ -44,12 +39,12 @@ const AppCard = (props) => {
     }
     return (
         <StyledCard >
-            <div style={Info}> <InfoCircleOutlined /></div>
+            <div style={Info}> <InfoCircleFilled /></div>
             <div style={IconHeight}>
                 <div onClick={EditValue} >
                     {
                         inVal === true ?
-                            <PlusCircleFilled style={IconAddPosition} addToList={props.isInList} />
+                            <PlusCircleFilled style={IconPosition} addToList={props.isInList} />
                             :
                             <div>
                                 <div><CheckCircleFilled style={IconPosition} isInList={props.isInList} /></div>
