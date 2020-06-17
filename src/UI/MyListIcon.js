@@ -32,7 +32,7 @@ const MyListIcon = (props) => {
   return (
     <div>
       <HeartFilled style={heartIconStyling} onClick={props.onIconClick} />
-      <NumberDiv>
+      <NumberDiv onClick={props.onIconClick}>
         <StyledNumber>{myListNo}</StyledNumber>
       </NumberDiv>
     </div>

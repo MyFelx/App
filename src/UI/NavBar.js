@@ -50,12 +50,11 @@ const NavBar = (props) => {
   let myListIcon = null;
   if (props.showMyListIcon) {
     myListIcon = (
-      <MyListIconDiv>
-        <MyListIcon
-          myListNo={750}
-          onIconClick={() => console.log("Open My List")}
-        />
-      </MyListIconDiv>
+      <Link to="/my-list">
+        <MyListIconDiv>
+          <MyListIcon myListNo={750} />
+        </MyListIconDiv>
+      </Link>
     );
   }
   let searchBar = null;
@@ -135,7 +134,9 @@ const NavBar = (props) => {
   return (
     <StyledNavBar>
       <LeftNavBarItems>
-        <StyledLogo src={Logo} alt="oops" width="auto" height="34px" />
+        <Link to="/">
+          <StyledLogo src={Logo} alt="oops" width="auto" height="34px" />
+        </Link>
         {myListIcon}
       </LeftNavBarItems>
       {searchBar}
