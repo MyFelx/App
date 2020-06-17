@@ -10,7 +10,7 @@ const StyledCard = styled.div`
     box-shadow: 0 2px 5px #ccc;
     margin: 15px 15px 15px 15px;
     float: left;
-    background-image:url("https://m.media-amazon.com/images/M/MV5BODY1NWE2OTctOTU5MC00NTlmLWI2MzktMmYzMTUzYjk4YjEzXkEyXkFqcGdeQXVyNjc3MjQzNTI@._V1_SY1000_CR0,0,701,1000_AL_.jpg");
+    background-image:url("https://m.media-amazon.com/images/M/MV5BZjNlZmUyYmMtNjNjMS00NzQ5LTlmYjktNDVkMmRjMTQyMmVjXkEyXkFqcGdeQXVyNzk0NTA5NQ@@._V1_SY1000_CR0,0,677,1000_AL_.jpg");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     &:hover {
@@ -18,9 +18,11 @@ const StyledCard = styled.div`
     }
 `;
 const HoverDiv = styled.div`
-background-color : rgba(0,0,0,0.5);
-height: 100%;
-width:100%;
+    background-color : rgba(0,0,0,0.5);
+    height: 100%;
+    width:100%;
+    border-radius: 7px;
+    box-shadow: 0 2px 5px #ccc;
 `
 const IconPosition = {
     position: "relative",
@@ -29,66 +31,63 @@ const IconPosition = {
     padding: "0",
     fontSize: "50px",
     color: "white",
+    marginTop: "5px",
 };
 const Info = {
     position: "relative",
     fontSize: "20px",
-    left: "90%",
+    left: "85%",
     height: "30%",
     color: "white",
 };
 const IconHeight = {
-    height: "60%",
+    height: "57%",
 };
+const IMDBStyle = {
+    margin: "1px 1px 1px 25px",
+}
 
 const AppCard = (props) => {
     const [inVal, exVal] = useState(true);
     const EditValue = (v) => {
         v.inVal !== inVal && exVal(!inVal);
     };
+
     let [inOnHover, exOnHover] = useState(true);
     const Hovering = (val) => {
         val.inOnHover !== inOnHover && exOnHover(!inOnHover);
+        OnHover();
     };
-    const isWork = () => {
-        return (
-            <div onClick={EditValue}>
-                {
-                    inVal === true ?
-                        <PlusCircleFilled style={IconPosition} addToList={props.isInList} />
-                        :
-                        <div>
-                            <div><CheckCircleFilled style={IconPosition} isInList={props.isInList} /></div>
-                            <div><MinusCircleFilled style={IconPosition} removeFromList={props.removeFromList} /></div>
-                        </div>
-                }
-            </div>
-        )
-    }
+
     const OnHover = () => {
         if (inOnHover) {
             return (
                 <HoverDiv>
                     <div style={Info}> <InfoCircleFilled /></div>
                     <div style={IconHeight}>
-                        {isWork()}
+                        <div onClick={EditValue}>
+                            {
+                                inVal === true ?
+                                    <PlusCircleFilled style={IconPosition} addToList={props.isInList} />
+                                    :
+                                    <div>
+                                        <div><CheckCircleFilled style={IconPosition} isInList={props.isInList} /></div>
+                                        <div><MinusCircleFilled style={IconPosition} removeFromList={props.removeFromList} /></div>
+                                    </div>
+                            }
+                        </div>
                     </div>
-                    <div > <IMDB rating={4} /></div>
+                    <div style={IMDBStyle} > <IMDB rating={4} /></div>
+                    <div >Title {props.title} </div>
                 </HoverDiv>
-            )
-        }
-        else {
-            return (
-                <div></div>
             )
         }
     }
 
     return (
-        <StyledCard onMouseOver={Hovering} onmouseleave={Hovering}>
+        <StyledCard onPointerEnter={Hovering} onMouseLeave={Hovering}>
             {OnHover()}
 
-            <div >Title {props.title} </div>
         </StyledCard>
 
     )
