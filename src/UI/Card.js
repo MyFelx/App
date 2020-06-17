@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import { PlusCircleFilled, CheckCircleFilled, MinusCircleFilled, InfoCircleFilled } from '@ant-design/icons'
+import IMDB from './IMDbRating'
 
 const StyledCard = styled.div`
     width: 200px;
@@ -39,11 +40,6 @@ const Info = {
 const IconHeight = {
     height: "60%",
 };
-const IMDB = styled.div`
-    width: 50%;
-    background-image:url("https://images6.alphacoders.com/612/612531.jpg");
-`;
-
 
 const AppCard = (props) => {
     const [inVal, exVal] = useState(true);
@@ -77,7 +73,7 @@ const AppCard = (props) => {
                     <div style={IconHeight}>
                         {isWork()}
                     </div>
-                    <div > <IMDB /> IMDB</div>
+                    <div > <IMDB rating={4} /></div>
                 </HoverDiv>
             )
         }
