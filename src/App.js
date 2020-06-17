@@ -17,10 +17,10 @@ function App() {
           <Route path="/sign-up" component={SignUp} />
         </Switch>
       </div>
-      {/* <Card />
       <Card />
       <Card />
-      <Card /> */}
+      <Card />
+      <Card />
       <Card />
 
     </Router>
