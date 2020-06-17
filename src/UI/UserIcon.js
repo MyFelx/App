@@ -19,13 +19,13 @@ const colorList = [
 const randomColor = colorList[Math.floor(Math.random() * colorList.length)];
 
 const UserIconDiv = styled.div`
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
   margin: 10px;
   border-radius: 50%;
   background-color: ${randomColor};
   text-align: center;
-  line-height: 35px;
+  line-height: 32px;
   margin: 10px;
 `;
 const StyledLetter = styled.div`

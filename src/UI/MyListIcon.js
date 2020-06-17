@@ -4,21 +4,21 @@ import { HeartFilled } from "@ant-design/icons";
 
 const heartIconStyling = {
   color: "#c1c1c1",
-  fontSize: "34px",
+  fontSize: "29px",
 };
 
 const NumberDiv = styled.div`
   position: relative;
-  width: 20px;
+  width: 17px;
   border-radius: 50%;
   background-color: red;
   text-align: center;
-  line-height: 20px;
-  left: 17px;
-  top: -24px;
+  line-height: 17px;
+  left: 14px;
+  top: -19px;
 `;
 const StyledNumber = styled.div`
-  font-size: 10px;
+  font-size: 8px;
   font-weight: 550;
   color: #fff;
 `;
@@ -30,7 +30,7 @@ const MyListIcon = (props) => {
   }
 
   return (
-    <div st>
+    <div>
       <HeartFilled style={heartIconStyling} onClick={props.onIconClick} />
       <NumberDiv>
         <StyledNumber>{myListNo}</StyledNumber>
