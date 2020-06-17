@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-import { PlusCircleFilled, CheckCircleFilled, MinusCircleFilled } from '@ant-design/icons'
+import { PlusCircleFilled, CheckCircleFilled, MinusCircleFilled, InfoCircleOutlined } from '@ant-design/icons'
 
 const StyledCard = styled.div`
     width: 240px;
@@ -15,14 +15,16 @@ const StyledCard = styled.div`
 `;
 const DIV = styled.div`
     position: relative;
-    top: 27%;
+    top: 15%;
     left: 38%;
     padding: 0;
     font-size: 50px;
 `;
-const Title = styled.p`
-    height: 100%;
-`;
+const Title = {
+    position: "relative",
+    fontSize: "20px",
+    left: "90%",
+};
 
 const AppCard = (props) => {
     const [inVal, exVal] = useState(true);
@@ -31,7 +33,8 @@ const AppCard = (props) => {
     }
     return (
         <tr>
-            <StyledCard>
+            <StyledCard >
+                <div style={Title}> <InfoCircleOutlined /></div>
                 <DIV onClick={EditValue}>
                     <tr>
                         {
@@ -47,7 +50,7 @@ const AppCard = (props) => {
                 </DIV>
             </StyledCard>
             <tr>
-                <Title> Title {props.title} </Title>
+                <p> Title {props.title} </p>
             </tr>
         </tr>
     )
