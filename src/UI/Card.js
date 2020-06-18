@@ -19,14 +19,24 @@ const StyledCard = styled.div`
 `;
 const HoverDiv = styled.div`
     background-color : rgba(0,0,0,0.5);
-    height: 90%;
+    opacity:${(props) => props.opacity};
+    height: 100%;
     width:100%;
     border-radius: 7px;
     box-shadow: 0 2px 5px #ccc;
 `
+const IconAddPosition = {
+    position: "relative",
+    top: "15%",
+    left: "38%",
+    padding: "0",
+    fontSize: "60px",
+    color: "white",
+    marginTop: "10px",
+};
 const IconPosition = {
     position: "relative",
-    top: "20%",
+    top: "0%",
     left: "38%",
     padding: "0",
     fontSize: "60px",
@@ -47,7 +57,7 @@ const IconHeight = {
 const IMDBStyle = {
     top: '80%',
     textAlignItems: 'center',
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "rgba(0,0,0,0.7)",
 }
 const EmptyDiv = {
     height: "90%",
@@ -63,23 +73,35 @@ const AppCard = (props) => {
     const EditValue = (v) => {
         v.inVal !== inVal && exVal(!inVal);
     };
-
-    let [inOnHover, exOnHover] = useState(false);
+    let [isHovering, setIsHovering] = useState(true);
+    const [overLayOpacity, setOverlayOpacity] = useState(0)
     const Hovering = (val) => {
-        val.inOnHover !== inOnHover && exOnHover(!inOnHover);
-        OnHover();
+        val.isHovering !== isHovering && setIsHovering(!isHovering);
     };
 
-    const OnHover = () => {
-        if (inOnHover) {
+    // const onHover = (val) => {
+    //     setIsHovering(true);
+    //     setInterval(() => {
+    //         console.log("object")
+    //         setOverlayOpacity(overLayOpacity + 0.6)
+    //     }, 200);
+
+    // }
+    // const onExitHover = (val) => {
+    //     setIsHovering(false);
+    //     setOverlayOpacity(0);
+    // }
+
+    const shouldShowOverlay = () => {
+        if (isHovering) {
             return (
-                <HoverDiv>
+                <HoverDiv >
                     <div style={Info}> <InfoCircleFilled /></div>
                     <div style={IconHeight}>
                         <div onClick={EditValue}>
                             {
                                 inVal === true ?
-                                    <PlusCircleFilled style={IconPosition} addToList={props.isInList} />
+                                    <PlusCircleFilled style={IconAddPosition} addToList={props.isInList} />
                                     :
                                     <div>
                                         <div><CheckCircleFilled style={IconPosition} isInList={props.isInList} /></div>
@@ -92,14 +114,11 @@ const AppCard = (props) => {
                 </HoverDiv>
             )
         }
-        else {
-            return (<div style={EmptyDiv}></div>)
-        }
     }
 
     return (
-        <StyledCard onPointerEnter={Hovering} onMouseLeave={Hovering}>
-            {OnHover()}
+        <StyledCard onPointerEnter={Hovering} onMouseLeave={Hovering} opacity={overLayOpacity}>
+            <div style={EmptyDiv} > {shouldShowOverlay()}</div>
             <div style={IMDBStyle} >  <div style={IMDBPostion}><IMDB rating={4} /></div></div>
             <div >Title {props.title} </div>
         </StyledCard>
