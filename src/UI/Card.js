@@ -73,7 +73,7 @@ const AppCard = (props) => {
     const EditValue = (v) => {
         v.inVal !== inVal && exVal(!inVal);
     };
-    let [isHovering, setIsHovering] = useState(true);
+    let [isHovering, setIsHovering] = useState(false);
     const [overLayOpacity, setOverlayOpacity] = useState(0)
     const Hovering = (val) => {
         val.isHovering !== isHovering && setIsHovering(!isHovering);
