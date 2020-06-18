@@ -117,7 +117,7 @@ class SignUpModal extends Component {
   render() {
     return (
       <div>
-        <Modal>
+        <Modal closable={false}>
           <h1 style={{ color: "#c1c1c1", marginLeft: "10px" }}>Sign Up</h1>
           <GenericInput
             inputType={"text"}
