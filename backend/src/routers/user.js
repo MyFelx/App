@@ -70,7 +70,7 @@ router.patch("/myFlex/api/v1/user/list", auth, async (req, res) => {
         } else {
             if (Object.keys(formatResponse).length > 0) {
                 const movieIndex = user.movies.findIndex(movie => movie.TMDB_Id === req.body.id)
-                user.movies[movieIndex] = { _id: user.movies[movieIndex]._id, TMDB_Id: req.body.id, ...formatResponse }
+                user.movies[movieIndex] = { ...user.movies[movieIndex]._doc, ...formatResponse }
             } else {
                 user.movies = user.movies.concat({ _id: movieExists._id, TMDB_Id: req.body.id })
             }
