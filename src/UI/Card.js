@@ -19,7 +19,7 @@ const StyledCard = styled.div`
 `;
 const HoverDiv = styled.div`
     background-color : rgba(0,0,0,0.5);
-    height: 100%;
+    height: 90%;
     width:100%;
     border-radius: 7px;
     box-shadow: 0 2px 5px #ccc;
@@ -42,11 +42,20 @@ const Info = {
     color: "white",
 };
 const IconHeight = {
-    height: "57%",
+    height: "60%",
 };
 const IMDBStyle = {
-    margin: "1px 1px 1px 30px",
+    top: '80%',
     textAlignItems: 'center',
+    backgroundColor: "rgba(0,0,0,0.5)",
+}
+const EmptyDiv = {
+    height: "90%",
+    width: "100%",
+    borderRadius: "7px",
+}
+const IMDBPostion = {
+    margin: "1px 1px 1px 30px",
 }
 
 const AppCard = (props) => {
@@ -55,7 +64,7 @@ const AppCard = (props) => {
         v.inVal !== inVal && exVal(!inVal);
     };
 
-    let [inOnHover, exOnHover] = useState(true);
+    let [inOnHover, exOnHover] = useState(false);
     const Hovering = (val) => {
         val.inOnHover !== inOnHover && exOnHover(!inOnHover);
         OnHover();
@@ -79,17 +88,20 @@ const AppCard = (props) => {
                             }
                         </div>
                     </div>
-                    <div style={IMDBStyle} > <IMDB rating={4} /></div>
-                    <div >Title {props.title} </div>
+
                 </HoverDiv>
             )
+        }
+        else {
+            return (<div style={EmptyDiv}></div>)
         }
     }
 
     return (
         <StyledCard onPointerEnter={Hovering} onMouseLeave={Hovering}>
             {OnHover()}
-
+            <div style={IMDBStyle} >  <div style={IMDBPostion}><IMDB rating={4} /></div></div>
+            <div >Title {props.title} </div>
         </StyledCard>
 
     )
