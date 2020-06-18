@@ -120,7 +120,7 @@ const AppCard = (props) => {
         <StyledCard onPointerEnter={Hovering} onMouseLeave={Hovering} opacity={overLayOpacity}>
             <div style={EmptyDiv} > {shouldShowOverlay()}</div>
             <div style={IMDBStyle} >  <div style={IMDBPostion}><IMDB rating={4} /></div></div>
-            <div >Title {props.title} </div>
+            <div >Title is  {props.title} </div>
         </StyledCard>
 
     )
