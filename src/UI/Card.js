@@ -53,7 +53,7 @@ const AppCard = (props) => {
         v.inVal !== inVal && exVal(!inVal);
     };
 
-    let [inOnHover, exOnHover] = useState(true);
+    let [inOnHover, exOnHover] = useState(false);
     const Hovering = (val) => {
         val.inOnHover !== inOnHover && exOnHover(!inOnHover);
         OnHover();
