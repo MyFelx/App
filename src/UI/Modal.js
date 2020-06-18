@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { CloseOutlined } from "@ant-design/icons";
 
 const StyledModal = styled.div`
-  position: fixed;
+  position: absolute;
   z-index: 500;
   background-color: #202020;
   width: auto;
@@ -13,7 +13,8 @@ const StyledModal = styled.div`
   display: block;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(calc(-50% - 0.5px), calc(-50%));
+
   opacity: ${(props) => props.modalOpacity};
 `;
 
@@ -22,8 +23,8 @@ const closeIconStyle = {
   fontSize: "18px",
   margin: "8px",
   position: "absolute",
-  left: "93%",
-  top: "3%",
+  left: "95%",
+  top: "1%",
 };
 
 class Modal extends Component {
