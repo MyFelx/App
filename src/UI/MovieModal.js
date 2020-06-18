@@ -7,18 +7,24 @@ import AppButton from "./Button";
 
 const OuterDiv = styled.div`
   display: flex;
-  width: 850px;
+  width: 1060px;
+  height: 680px;
   margin: -15px 0px;
 `;
 const AllInfoDiv = styled.div`
-  width: 550px;
+  width: 100%;
   padding: 10px;
   padding-top: 15px;
 `;
+const AddAndIMDbDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 35px;
+`;
 const IMDbInfoDiv = styled.div`
-  height: 205px;
+  height: 280px;
   color: #c1c1c1;
-  font-size: 16px;
+  font-size: 18px;
   padding-top: 10px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
@@ -37,7 +43,7 @@ const StaffInfoDiv = styled.div`
   flex-direction: column;
   align-items: center;
   color: #828282;
-  font-size: 15px;
+  font-size: 16px;
   margin: 10px;
 `;
 const VideoDiv = styled.div`
@@ -53,8 +59,8 @@ const StyledPoster = styled.img`
 
 const MovieModal = (props) => {
   const opts = {
-    height: "180",
-    width: "auto",
+    height: "230",
+    width: "409",
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 0,
@@ -70,16 +76,16 @@ const MovieModal = (props) => {
         <StyledPoster
           src={props.poster}
           alt="oops"
-          width="345px"
-          height="auto"
+          width="auto"
+          height="632px"
         />
         <AllInfoDiv>
           <h1
-            style={{ color: "#c1c1c1", marginBottom: "0px", fontSize: "28px" }}
+            style={{ color: "#c1c1c1", marginBottom: "0px", fontSize: "32px" }}
           >
             {props.movieTitle}
           </h1>
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <AddAndIMDbDiv>
             <IMDbRating
               rating={props.IMDb}
               iconHeight={"26px"}
@@ -94,7 +100,7 @@ const MovieModal = (props) => {
               backgroundColor={"#303030"}
               onClick={() => alert("Joined")}
             />
-          </div>
+          </AddAndIMDbDiv>
           <IMDbInfoDiv>
             <div>
               {props.appropriateAudiance} | {props.runTime} | {props.genres} |{" "}
