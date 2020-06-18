@@ -8,7 +8,7 @@ const StyledDiv = styled.div`
   text-align: center;
 `;
 const StyledRating = styled.div`
-  font-size: 23px;
+  font-size: 18px;
   color: #c1c1c1;
 `;
 const StyledIcon = styled.img`
@@ -20,7 +20,7 @@ const StyledIcon = styled.img`
 const IMDbRating = (props) => {
   return (
     <StyledDiv>
-      <StyledIcon src={IMDbIcon} alt="oops" width="auto" height="25px" />
+      <StyledIcon src={IMDbIcon} alt="oops" width="auto" height="20px" />
       <StyledRating>{props.rating.toFixed(1)}/10</StyledRating>
     </StyledDiv>
   );

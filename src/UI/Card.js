@@ -29,14 +29,15 @@ const IconPosition = {
     top: "20%",
     left: "38%",
     padding: "0",
-    fontSize: "50px",
+    fontSize: "60px",
     color: "white",
-    marginTop: "5px",
+    marginTop: "10px",
 };
 const Info = {
     position: "relative",
-    fontSize: "20px",
-    left: "85%",
+    fontSize: "30px",
+    left: "80%",
+    top: "2%",
     height: "30%",
     color: "white",
 };
@@ -44,7 +45,8 @@ const IconHeight = {
     height: "57%",
 };
 const IMDBStyle = {
-    margin: "1px 1px 1px 25px",
+    margin: "1px 1px 1px 30px",
+    textAlignItems: 'center',
 }
 
 const AppCard = (props) => {
@@ -53,7 +55,7 @@ const AppCard = (props) => {
         v.inVal !== inVal && exVal(!inVal);
     };
 
-    let [inOnHover, exOnHover] = useState(false);
+    let [inOnHover, exOnHover] = useState(true);
     const Hovering = (val) => {
         val.inOnHover !== inOnHover && exOnHover(!inOnHover);
         OnHover();
