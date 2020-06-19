@@ -93,11 +93,15 @@ const AppCard = (props) => {
             )
         }
     }
-
+    let moveRate = 0;
+    const IMDBRate = () => {
+        return (moveRate = props.TheMovieRate)
+    }
     return (
-        <StyledCard onPointerEnter={Hovering} onMouseLeave={Hovering} BackGroundURL={props.BGURL}>
+        <StyledCard onPointerEnter={Hovering} onMouseLeave={Hovering} BackGroundURL={props.BGURL} s={IMDBRate}>
+            {console.log(IMDBRate())}
             <div style={EmptyDiv} > {shouldShowOverlay()}</div>
-            <div style={IMDBStyle} >  <div style={IMDBPostion}> <IMDB rating={7.8} /></div></div>
+            <div style={IMDBStyle} >  <div style={IMDBPostion}> <IMDB rating={moveRate} /></div></div>
             <div >Title {props.title} </div>
         </StyledCard >
 
