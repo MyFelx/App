@@ -4,6 +4,7 @@ import GenericInput from "../UI/Input";
 import Modal from "../UI/Modal";
 import UserIcon from "../UI/UserIcon";
 import MyListIcon from "../UI/MyListIcon";
+import LoginModal from "../UI/LoginModal";
 import { LoginOutlined, UserOutlined, KeyOutlined } from "@ant-design/icons";
 
 const iconStyling = {
@@ -41,7 +42,8 @@ function Login() {
           onIconClick={() => console.log("Open My List")}
         />
       </div>
-      <Modal closeOnClick={() => console.log("object")}>
+      <LoginModal />
+      {/* <Modal closeOnClick={() => console.log("object")}>
         <h1 style={{ color: "#c1c1c1", marginLeft: "9px" }}>Login</h1>
 
         <GenericInput
@@ -64,7 +66,7 @@ function Login() {
           backgroundColor={"#303030"}
           onClick={() => alert("Joined")}
         />
-      </Modal>
+      </Modal> */}
     </div>
   );
 }
