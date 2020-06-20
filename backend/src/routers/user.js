@@ -89,10 +89,10 @@ router.get("/myFlex/api/v1/user/list", auth, async (req, res) => {
 
         const myMovies = []
 
-        movies.forEach(element => {
-            const movieIndex = user.movies.findIndex(movie => movie.TMDB_Id === element.id)
-            element = { ...element._doc, ...user.movies[movieIndex]._doc }
-            myMovies.push(element)
+        movies.forEach(eachMovie => {
+            const movieIndex = user.movies.findIndex(movie => movie.TMDB_Id === eachMovie.id)
+            eachMovie = { ...eachMovie._doc, ...user.movies[movieIndex]._doc }
+            myMovies.push(eachMovie)
         });
 
         res.send(myMovies)
