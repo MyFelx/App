@@ -23,6 +23,7 @@ const StyledNavBar = styled.div`
 `;
 const StyledLogo = styled.img`
   align-self: center;
+  display:flex;
   margin: 5px;
 `;
 const DisplayedUsername = styled.span`
@@ -47,106 +48,67 @@ const MyListIconDiv = styled.div`
 `;
 
 const NavBar = (props) => {
-  let myListIcon = null;
-  if (props.showMyListIcon) {
-    myListIcon = (
-      <Link to="/my-list">
-        <MyListIconDiv>
-          <MyListIcon myListNo={750} />
-        </MyListIconDiv>
-      </Link>
-    );
-  }
-  let searchBar = null;
-  if (props.showSearchbar) {
-    searchBar = <SearchBar />;
-  }
-  let usernameAndAvatar = null;
-  if (props.username !== undefined) {
-    usernameAndAvatar = (
-      <div style={{ display: "flex" }}>
-        <UserIcon username={props.username} />
-        <DisplayedUsername>{props.username}</DisplayedUsername>
-      </div>
-    );
-  }
-  let loginButton = null;
-  if (props.showLoginButton) {
-    loginButton = (
-      <Link to="/login">
-        <AppButton
-          text={"Login"}
-          icon={
-            <LoginOutlined style={{ color: "white", marginRight: "8px" }} />
-          }
-          height={"32px"}
-          width={"95px"}
-          color={"white"}
-          fontSize={"14px"}
-          backgroundColor={"rgba(0,0,0,0)"}
-          border={"1px solid white"}
-          onClick={() => alert("Login Page")}
-        />
-      </Link>
-    );
-  }
-  let signUpButton = null;
-  if (props.showSignUpButton) {
-    signUpButton = (
-      <Link to="/sign-up">
-        <AppButton
-          text={"Sign Up"}
-          icon={
-            <LoginOutlined style={{ color: "white", marginRight: "8px" }} />
-          }
-          height={"32px"}
-          width={"95px"}
-          color={"white"}
-          fontSize={"14px"}
-          backgroundColor={"rgba(0,0,0,0)"}
-          border={"1px solid white"}
-          onClick={<Link to="/sign-up"></Link>}
-        />
-      </Link>
-    );
-  }
-  let logOutButton = null;
-  if (props.showLogOutButton) {
-    logOutButton = (
-      <Link to="/login">
-        <AppButton
-          text={"Log out"}
-          icon={
-            <LogoutOutlined style={{ color: "white", marginRight: "8px" }} />
-          }
-          height={"32px"}
-          width={"95px"}
-          color={"white"}
-          fontSize={"14px"}
-          backgroundColor={"rgba(0,0,0,0)"}
-          border={"1px solid white"}
-          onClick={() => alert("Logged out")}
-        />
-      </Link>
-    );
-  }
+  let myListIcon = props.showMyListIcon ? (<Link to="/my-list">
+    <MyListIconDiv>
+      <MyListIcon myListNo={750} />
+    </MyListIconDiv>
+  </Link>) : null
+
+  let usernameAndAvatar = props.username ? <div style={{ display: "flex", minWidth: 'fit-content' }}>
+    <UserIcon username={props.username} />
+    <DisplayedUsername>{props.username}</DisplayedUsername>
+  </div> : null
+  let buttonsList = []
+  if (props.showLoginButton || true)
+    buttonsList.push({
+      icon: <LoginOutlined style={{ color: "white", marginRight: "8px" }} />,
+      text: "Login",
+      linkTo: "/login",
+    })
+  if (props.showSignUpButton)
+
+    buttonsList.push({
+      icon: <LoginOutlined style={{ color: "white", marginRight: "8px" }} />,
+      text: "Sing Up",
+      linkTo: "/signup",
+    })
+  if (props.showLogOutButton || true)
+    buttonsList.push({
+      icon: <LogoutOutlined style={{ color: "white", marginRight: "8px" }} />,
+      text: "Logout",
+      linkTo: "/login",
+    })
 
   return (
     <StyledNavBar>
       <LeftNavBarItems>
-        <Link to="/">
+        <Link style={{ display: 'flex' }} to="/">
           <StyledLogo src={Logo} alt="oops" width="auto" height="34px" />
         </Link>
         {myListIcon}
       </LeftNavBarItems>
-      {searchBar}
+      {props.showSearchbar ? <SearchBar /> : null}
       <RightNavBarItems>
-        {loginButton}
-        {signUpButton}
-        {logOutButton}
+        {buttonsList.map(button => {
+          return (
+            <Link to={button.linkTo}>
+              <AppButton
+                text={button.text}
+                icon={
+                  button.icon
+                }
+                height={"32px"}
+                width={"95px"}
+                color={"white"}
+                fontSize={"14px"}
+                backgroundColor={"rgba(0,0,0,0)"}
+                border={"1px solid white"}
+              />
+            </Link>)
+        })}
         {usernameAndAvatar}
       </RightNavBarItems>
     </StyledNavBar>
   );
-};
+}
 export default NavBar;
