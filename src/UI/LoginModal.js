@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import validator from "validator";
-import passwordValidator from "password-validator";
 import AppButton from "../UI/Button";
 import GenericInput from "../UI/Input";
 import Modal from "../UI/Modal";
@@ -19,7 +17,7 @@ class LoginModal extends Component {
     usernameValid: false,
     passwordInput: "",
     passwordValid: false,
-    incorrectLogin: <br />,
+    incorrectLogin: false,
   };
 
   usernameInputChangeHandler = (event) => {
@@ -35,15 +33,7 @@ class LoginModal extends Component {
       alert("Logged In");
     } else {
       this.setState({
-        incorrectLogin: (
-          <div style={{ marginLeft: "20px" }}>
-            <ValidationNotice
-              isValid={this.state.confirmPasswordMatched}
-              ifValid={"Password Matches"}
-              ifInvalid={"Incorrect username or password"}
-            />
-          </div>
-        ),
+        incorrectLogin: true
       });
     }
   };
@@ -66,8 +56,15 @@ class LoginModal extends Component {
           inputValue={this.state.passwordInput}
           onInputChange={this.passwordInputChangeHandler}
         />
-        {this.state.incorrectLogin}
-        <br />
+        <div style={{ height: '20px', paddingLeft: '20px' }}>
+          {this.state.incorrectLogin ? <div >
+            <ValidationNotice
+              isValid={this.state.confirmPasswordMatched}
+              ifValid={"Password Matches"}
+              ifInvalid={"Incorrect username or password"}
+            />
+          </div> : null}
+        </div>
         <div style={{ textAlign: "center" }}>
           <AppButton
             text={"Continue"}
