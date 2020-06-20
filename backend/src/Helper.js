@@ -1,21 +1,31 @@
+const movieFilter = ["id", "title", "overview", "poster_path", "release_date"]
 
 class Helper {
-    static formatMovie(movie) {
-        const allowed = ["id", "title", "overview", "poster_path", "release_date"]
-        return Object.keys(movie)
-            .filter(key => allowed.includes(key))
+
+    static filterObject(object, movieFilter = []) {
+        return Object.keys(object)
+            .filter(key => movieFilter.includes(key))
             .reduce((obj, key) => {
-                obj[key] = movie[key];
+                obj[key] = object[key];
                 return obj;
             }, {});
-
     }
+
     static formatMovies(movies) {
         const moviesList = []
         movies.forEach(movie => {
-            moviesList.push(this.formatMovie(movie))
+            moviesList.push(this.filterObject(movie, movieFilter))
         })
         return moviesList
+    }
+
+    static formatMovie(movie) {
+        return this.filterObject(movie, movieFilter)
+    }
+
+    static filterWatchLaterMovie(movie) {
+        const watchLaterFilter = ["watched"]
+        return this.filterObject(movie, watchLaterFilter)
     }
 
 }

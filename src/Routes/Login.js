@@ -45,7 +45,7 @@ function Login() {
           backgroundColor={"#303030"}
           onClick={() => alert("Joined")}
         />
-      </Modal>
+      </Modal> */}
     </div>
   );
 }
