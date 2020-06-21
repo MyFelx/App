@@ -94,7 +94,15 @@ router.get("/myFlex/api/v1/user/list", auth, async (req, res) => {
         }
         const movies = await Movie.find({ _id: { $in: moviesIDList } })
 
-        res.send(movies)
+        const myMovies = []
+
+        movies.forEach(eachMovie => {
+            const movieIndex = user.movies.findIndex(movie => movie.TMDB_Id === eachMovie.id)
+            eachMovie = { ...eachMovie._doc, ...user.movies[movieIndex]._doc }
+            myMovies.push(eachMovie)
+        });
+
+        res.send(myMovies)
     } catch (err) {
         res.status(400).send(err)
     }
