@@ -17,8 +17,8 @@ const PosterStyle = styled.img`
     object-fit: cover;
 `
 const HoverDiv = styled.div`
-    background-color : rgba(0,0,0);
-    opacity: ${(props) => props.opacity}; 
+    background-color : rgba(0,0,0,0.7);
+    /* opacity: ${(props) => props.opacity};  */
     height: 100%;
     top: 0%;
     position: absolute;
@@ -81,30 +81,12 @@ const StyledInfoIcon = styled(InfoCircleFilled)`
 const MovieCard = (props) => {
     const [movieState, setMovieState] = useState(props.isInList ? MOVIE_STATE.ADD : MOVIE_STATE.REMOVE)
     const [hoverOpacity, setHoverOpacity] = useState(0);
-    let [isHovering, setIsHovering] = useState(true);
+    let [isHovering, setIsHovering] = useState(false);
     const toggleHover = () => {
-
         setIsHovering(!isHovering)
     }
-    const onHoverEnter = () => {
-        setIsHovering(true)
-        const fadeIn = setInterval(async () => {
-            await setHoverOpacity(hoverOpacity + 0.01)
-            console.log(isHovering, hoverOpacity)
-            if (hoverOpacity >= 1) clearInterval(fadeIn)
-        }, 200)
-    }
-    const onHoverExit = () => {
-        console.log('hiiii')
-        // setIsHovering(false)
-        // const fadeOut = setInterval(() => {
-        //     setHoverOpacity(hoverOpacity - 0.1)
-        //     console.log('bye')
-        //     if (hoverOpacity <= 0 || isHovering) clearInterval(fadeOut)
-        // }, 200)
-    }
     const hoverDiv = isHovering &&
-        <HoverDiv opacity={hoverOpacity} >
+        <HoverDiv opacity={isHovering} >
             <StyledInfoIcon />
             <ButtonsContainer >
                 {movieState === MOVIE_STATE.REMOVE ?
@@ -124,7 +106,7 @@ const MovieCard = (props) => {
         </HoverDiv>
     return (
         <MainContainer>
-            <CardContainer onMouseEnter={onHoverEnter} onMouseLeave={onHoverExit}>
+            <CardContainer onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
                 <PosterStyle draggable={false} src={props.posterSrc} />
                 {hoverDiv}
                 <IMDBContainer> <IMDB rating={props.moveiRating} /></IMDBContainer>
@@ -132,6 +114,5 @@ const MovieCard = (props) => {
             <TitleContainer > <Popover placement="bottom" content={props.title}><Text ellipsis={true} style={{ width: '200px' }}>Title: {props.title} </Text></Popover></TitleContainer>
         </MainContainer>
     )
-
 };
 export default MovieCard
