@@ -58,11 +58,19 @@ class SignUpModal extends Component {
     this.setState({ emailInput: event.target.value });
   };
 
+  emailValidityNotice = null;
   emailInputBlurHandler = () => {
     this.setState(
       { emailValid: validator.isEmail(this.state.emailInput) },
       () => {
         this.setSignUpValid();
+        this.emailValidityNotice = this.state.emailInput ? (
+          <ValidationNotice
+            isValid={this.state.emailValid}
+            ifValid={"email is valid"}
+            ifInvalid={"email is invalid"}
+          />
+        ) : null;
       }
     );
   };
@@ -71,11 +79,19 @@ class SignUpModal extends Component {
     this.setState({ usernameInput: event.target.value });
   };
 
+  usernameValidityNotice = null;
   usernameInputBlurHandler = () => {
     this.setState(
       { usernameValid: this.state.usernameInput.length > 0 },
       () => {
         this.setSignUpValid();
+        this.usernameValidityNotice = this.state.usernameInput ? (
+          <ValidationNotice
+            isValid={this.state.usernameValid}
+            ifValid={"Username is valid"}
+            ifInvalid={"Username already exists"}
+          />
+        ) : null;
       }
     );
   };
@@ -102,6 +118,7 @@ class SignUpModal extends Component {
     this.setState({ confirmPasswordInput: event.target.value });
   };
 
+  confirmPasswordValidityNotice = null;
   confirmPasswordInputBlurHandler = () => {
     this.setState(
       {
@@ -110,6 +127,13 @@ class SignUpModal extends Component {
       },
       () => {
         this.setSignUpValid();
+        this.confirmPasswordValidityNotice = this.state.confirmPasswordInput ? (
+          <ValidationNotice
+            isValid={this.state.confirmPasswordMatched}
+            ifValid={"Password Matches"}
+            ifInvalid={"Password does not match"}
+          />
+        ) : null;
       }
     );
   };
@@ -127,12 +151,8 @@ class SignUpModal extends Component {
             onInputChange={this.usernameInputChangeHandler}
             onInputBlur={this.usernameInputBlurHandler}
           />
-          <div style={{ marginLeft: "20px" }}>
-            <ValidationNotice
-              isValid={this.state.usernameValid}
-              ifValid={"Username is valid"}
-              ifInvalid={"Username already exists"}
-            />
+          <div style={{ marginLeft: "20px", height: "18px" }}>
+            {this.usernameValidityNotice}
           </div>
           <GenericInput
             inputType={"email"}
@@ -142,13 +162,11 @@ class SignUpModal extends Component {
             onInputChange={this.emailInputChangeHandler}
             onInputBlur={this.emailInputBlurHandler}
           />
-          <div style={{ marginLeft: "20px" }}>
-            <ValidationNotice
-              isValid={this.state.emailValid}
-              ifValid={"email is valid"}
-              ifInvalid={"email is invalid"}
-            />
+
+          <div style={{ marginLeft: "20px", height: "18px" }}>
+            {this.emailValidityNotice}
           </div>
+
           <GenericInput
             inputType={"password"}
             icon={<KeyOutlined style={iconStyling} />}
@@ -187,12 +205,8 @@ class SignUpModal extends Component {
             onInputChange={this.confirmPasswordInputChangeHandler}
             onInputBlur={this.confirmPasswordInputBlurHandler}
           />
-          <div style={{ marginLeft: "20px" }}>
-            <ValidationNotice
-              isValid={this.state.confirmPasswordMatched}
-              ifValid={"Password Matches"}
-              ifInvalid={"Password does not match"}
-            />
+          <div style={{ marginLeft: "20px", height: "18px" }}>
+            {this.confirmPasswordValidityNotice}
           </div>
           <br />
           <br />
