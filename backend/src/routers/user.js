@@ -98,7 +98,8 @@ router.get("/myFlex/api/v1/user/list", auth, async (req, res) => {
 
         movies.forEach(eachMovie => {
             const movieIndex = user.movies.findIndex(movie => movie.TMDB_Id === eachMovie.id)
-            eachMovie = { ...eachMovie._doc, ...user.movies[movieIndex]._doc }
+            const formatResponse = Helper.filterWatchLaterMovie(user.movies[movieIndex]._doc)
+            eachMovie = { ...eachMovie._doc, ...formatResponse }
             myMovies.push(eachMovie)
         });
 

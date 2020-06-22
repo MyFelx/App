@@ -61,9 +61,16 @@ class Modal extends Component {
   };
 
   render() {
+    let closeModalButton = null;
+    if (this.props.closable) {
+      closeModalButton = (
+        <CloseOutlined style={closeIconStyle} onClick={this.modalFadeOut} />
+      );
+    }
+
     return (
       <StyledModal modalOpacity={this.state.modalOpacity}>
-        <CloseOutlined style={closeIconStyle} onClick={this.modalFadeOut} />
+        {closeModalButton}
         {this.props.children}
       </StyledModal>
     );
