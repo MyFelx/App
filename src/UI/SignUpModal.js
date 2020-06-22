@@ -41,7 +41,7 @@ class SignUpModal extends Component {
     signUpValid: false,
   };
 
-  setSignUpValid = () => {
+  checkSignupValidity = () => {
     this.setState({
       signUpValid:
         this.state.usernameValid &&
@@ -63,7 +63,7 @@ class SignUpModal extends Component {
     this.setState(
       { emailValid: validator.isEmail(this.state.emailInput) },
       () => {
-        this.setSignUpValid();
+        this.checkSignupValidity();
         this.emailValidityNotice = this.state.emailInput ? (
           <ValidationNotice
             isValid={this.state.emailValid}
@@ -84,7 +84,7 @@ class SignUpModal extends Component {
     this.setState(
       { usernameValid: this.state.usernameInput.length > 0 },
       () => {
-        this.setSignUpValid();
+        this.checkSignupValidity();
         this.usernameValidityNotice = this.state.usernameInput ? (
           <ValidationNotice
             isValid={this.state.usernameValid}
@@ -109,7 +109,7 @@ class SignUpModal extends Component {
         passwordSpecial: passwordSymbols.validate(this.state.passwordInput),
       },
       () => {
-        this.setSignUpValid();
+        this.checkSignupValidity();
       }
     );
   };
@@ -126,7 +126,7 @@ class SignUpModal extends Component {
           this.state.confirmPasswordInput === this.state.passwordInput,
       },
       () => {
-        this.setSignUpValid();
+        this.checkSignupValidity();
         this.confirmPasswordValidityNotice = this.state.confirmPasswordInput ? (
           <ValidationNotice
             isValid={this.state.confirmPasswordMatched}
@@ -208,9 +208,7 @@ class SignUpModal extends Component {
           <div style={{ marginLeft: "20px", height: "18px" }}>
             {this.confirmPasswordValidityNotice}
           </div>
-          <br />
-          <br />
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center", marginTop: "35px" }}>
             <AppButton
               text={"Join"}
               height={"53px"}
@@ -219,7 +217,9 @@ class SignUpModal extends Component {
               fontSize={"24px"}
               backgroundColor={"#303030"}
               onClick={() => alert("Joined")}
-              disabledButton={!this.state.signUpValid}
+              disabled={!this.state.signUpValid}
+              disabledColor={"#505050"}
+              disabledBackgroundColor={"#262626"}
             />
           </div>
           <div>

@@ -56,7 +56,6 @@ class GenericInput extends Component {
     return (
       <OuterDiv>
         <div style={{ marginRight: "3px", display: "flex" }}>
-          {" "}
           {this.props.icon}
         </div>
         <StyledInput
