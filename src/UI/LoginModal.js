@@ -33,7 +33,7 @@ class LoginModal extends Component {
       alert("Logged In");
     } else {
       this.setState({
-        incorrectLogin: true
+        incorrectLogin: true,
       });
     }
   };
@@ -56,14 +56,16 @@ class LoginModal extends Component {
           inputValue={this.state.passwordInput}
           onInputChange={this.passwordInputChangeHandler}
         />
-        <div style={{ height: '20px', paddingLeft: '20px' }}>
-          {this.state.incorrectLogin ? <div >
-            <ValidationNotice
-              isValid={this.state.confirmPasswordMatched}
-              ifValid={"Password Matches"}
-              ifInvalid={"Incorrect username or password"}
-            />
-          </div> : null}
+        <div style={{ height: "20px", paddingLeft: "20px" }}>
+          {this.state.incorrectLogin ? (
+            <div>
+              <ValidationNotice
+                isValid={this.state.confirmPasswordMatched}
+                ifValid={"Password Matches"}
+                ifInvalid={"Incorrect username or password"}
+              />
+            </div>
+          ) : null}
         </div>
         <div style={{ textAlign: "center" }}>
           <AppButton
@@ -78,7 +80,7 @@ class LoginModal extends Component {
         </div>
         <div>
           <span style={{ color: "#c1c1c1" }}>Don't have an acount?</span>
-          <a href="/sign-up"> Sign Up</a>
+          <a href="/signup"> Sign Up</a>
         </div>
       </Modal>
     );
