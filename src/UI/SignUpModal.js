@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import validator from "validator";
 import passwordValidator from "password-validator";
 import AppButton from "./Button";
@@ -224,7 +225,7 @@ class SignUpModal extends Component {
           </div>
           <div>
             <span style={{ color: "#c1c1c1" }}>Already have an acount?</span>
-            <a href="/login"> Login</a>
+            <Link to={"/login"}> Login</Link>
           </div>
         </Modal>
       </div>
