@@ -4,11 +4,13 @@ import NavBar from "../UI/NavBar";
 import LoginModal from "../UI/LoginModal";
 import BlurDiv from "../UI/BlurDiv";
 import backgroundImage from "../StarsBG.jpg";
+
 const StyledImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
 `;
+
 function Login() {
   return (
     <div style={{ height: "100%" }}>
