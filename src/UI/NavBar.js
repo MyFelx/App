@@ -9,6 +9,7 @@ import Logo from "../MovieLogo.png";
 import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 
 const StyledNavBar = styled.div`
+  z-index: 2;
   background-color: black;
   height: 50px;
   display: flex;
@@ -23,7 +24,7 @@ const StyledNavBar = styled.div`
 `;
 const StyledLogo = styled.img`
   align-self: center;
-  display:flex;
+  display: flex;
   margin: 5px;
 `;
 const DisplayedUsername = styled.span`
@@ -48,55 +49,56 @@ const MyListIconDiv = styled.div`
 `;
 
 const NavBar = (props) => {
-  let myListIcon = props.showMyListIcon ? (<Link to="/my-list">
-    <MyListIconDiv>
-      <MyListIcon myListNo={750} />
-    </MyListIconDiv>
-  </Link>) : null
+  let myListIcon = props.showMyListIcon ? (
+    <Link to="/my-list">
+      <MyListIconDiv>
+        <MyListIcon myListNo={750} />
+      </MyListIconDiv>
+    </Link>
+  ) : null;
 
-  let usernameAndAvatar = props.username ? <div style={{ display: "flex", minWidth: 'fit-content' }}>
-    <UserIcon username={props.username} />
-    <DisplayedUsername>{props.username}</DisplayedUsername>
-  </div> : null
-  let buttonsList = []
-  if (props.showLoginButton || true)
+  let usernameAndAvatar = props.username ? (
+    <div style={{ display: "flex", minWidth: "fit-content" }}>
+      <UserIcon username={props.username} />
+      <DisplayedUsername>{props.username}</DisplayedUsername>
+    </div>
+  ) : null;
+  let buttonsList = [];
+  if (props.showLoginButton)
     buttonsList.push({
       icon: <LoginOutlined style={{ color: "white", marginRight: "8px" }} />,
       text: "Login",
       linkTo: "/login",
-    })
+    });
   if (props.showSignUpButton)
-
     buttonsList.push({
       icon: <LoginOutlined style={{ color: "white", marginRight: "8px" }} />,
       text: "Sing Up",
       linkTo: "/signup",
-    })
-  if (props.showLogOutButton || true)
+    });
+  if (props.showLogOutButton)
     buttonsList.push({
       icon: <LogoutOutlined style={{ color: "white", marginRight: "8px" }} />,
       text: "Logout",
       linkTo: "/login",
-    })
+    });
 
   return (
     <StyledNavBar>
       <LeftNavBarItems>
-        <Link style={{ display: 'flex' }} to="/">
+        <Link style={{ display: "flex" }} to="/">
           <StyledLogo src={Logo} alt="oops" width="auto" height="34px" />
         </Link>
         {myListIcon}
       </LeftNavBarItems>
       {props.showSearchbar ? <SearchBar /> : null}
       <RightNavBarItems>
-        {buttonsList.map(button => {
+        {buttonsList.map((button) => {
           return (
             <Link to={button.linkTo}>
               <AppButton
                 text={button.text}
-                icon={
-                  button.icon
-                }
+                icon={button.icon}
                 height={"32px"}
                 width={"95px"}
                 color={"white"}
@@ -104,11 +106,12 @@ const NavBar = (props) => {
                 backgroundColor={"rgba(0,0,0,0)"}
                 border={"1px solid white"}
               />
-            </Link>)
+            </Link>
+          );
         })}
         {usernameAndAvatar}
       </RightNavBarItems>
     </StyledNavBar>
   );
-}
+};
 export default NavBar;

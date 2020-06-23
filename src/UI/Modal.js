@@ -4,7 +4,7 @@ import { CloseOutlined } from "@ant-design/icons";
 
 const StyledModal = styled.div`
   position: absolute;
-  z-index: 500;
+  z-index: 3;
   background-color: #202020;
   width: auto;
   padding: 16px;
