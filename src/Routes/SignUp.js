@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 import MovieCard from '../UI/MovieCard'
 const SignUp = (props) => {
   return (
@@ -16,6 +17,12 @@ const SignUp = (props) => {
       <MovieCard isInList={true} posterSrc={"https://m.media-amazon.com/images/M/MV5BY2Y4MTE2MDEtOTRhNS00Yzk0LTk0M2MtNzJmMGI5YmIxNmE1XkEyXkFqcGdeQXVyMzE4MDkyNTA@._V1_.jpg"} title={"Hello Shanga"} moveiRating={7.7} />
     </div>
   )
+=======
+import SignUpModal from "../UI/SignUpModal";
+
+const SignUp = (props) => {
+  return <SignUpModal />;
+>>>>>>> 73b4c0c93cd477a6d208424072ce519346ba1180
 };
 
 export default SignUp;

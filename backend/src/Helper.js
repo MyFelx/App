@@ -24,7 +24,7 @@ class Helper {
     }
 
     static filterWatchLaterMovie(movie) {
-        const watchLaterFilter = ["id", "watched"]
+        const watchLaterFilter = ["watched"]
         return this.filterObject(movie, watchLaterFilter)
     }
 
