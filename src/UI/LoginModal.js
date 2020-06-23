@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import API from "../API/API";
 import AppButton from "../UI/Button";
 import GenericInput from "../UI/Input";
 import Modal from "../UI/Modal";
@@ -14,29 +15,25 @@ const iconStyling = {
 
 class LoginModal extends Component {
   state = {
-    usernameInput: "",
-    usernameValid: false,
+    emailInput: "",
+    emailValid: false,
     passwordInput: "",
     passwordValid: false,
     incorrectLogin: false,
   };
 
-  usernameInputChangeHandler = (event) => {
-    this.setState({ usernameInput: event.target.value });
+  emailInputChangeHandler = (event) => {
+    this.setState({ emailInput: event.target.value });
   };
 
   passwordInputChangeHandler = (event) => {
     this.setState({ passwordInput: event.target.value });
   };
 
-  contiueButtonClick = () => {
-    if (false) {
-      alert("Logged In");
-    } else {
-      this.setState({
-        incorrectLogin: true,
-      });
-    }
+  loginFailed = () => {
+    this.setState({
+      incorrectLogin: true,
+    });
   };
 
   render() {
@@ -46,9 +43,9 @@ class LoginModal extends Component {
         <GenericInput
           inputType={"text"}
           icon={<UserOutlined style={iconStyling} />}
-          placeholderValue={"Username"}
-          inputValue={this.state.usernameInput}
-          onInputChange={this.usernameInputChangeHandler}
+          placeholderValue={"email"}
+          inputValue={this.state.emailInput}
+          onInputChange={this.emailInputChangeHandler}
         />
         <GenericInput
           inputType={"password"}
@@ -61,9 +58,8 @@ class LoginModal extends Component {
           {this.state.incorrectLogin ? (
             <div>
               <ValidationNotice
-                isValid={this.state.confirmPasswordMatched}
-                ifValid={"Password Matches"}
-                ifInvalid={"Incorrect username or password"}
+                isValid={false}
+                ifInvalid={"Incorrect email or password"}
               />
             </div>
           ) : null}
@@ -76,7 +72,13 @@ class LoginModal extends Component {
             color={"#c1c1c1"}
             fontSize={"24px"}
             backgroundColor={"#303030"}
-            onClick={this.contiueButtonClick}
+            onClick={() =>
+              API.login(
+                this.state.emailInput,
+                this.state.passwordInput,
+                this.loginFailed()
+              )
+            }
           />
         </div>
         <div>

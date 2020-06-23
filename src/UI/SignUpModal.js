@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import validator from "validator";
 import passwordValidator from "password-validator";
+import API from "../API/API";
 import AppButton from "./Button";
 import GenericInput from "./Input";
 import Modal from "./Modal";
@@ -40,6 +41,7 @@ class SignUpModal extends Component {
     confirmPasswordInput: "",
     confirmPasswordMatched: false,
     signUpValid: false,
+    emailValidityNoticeNote: null,
   };
 
   checkSignupValidity = () => {
@@ -59,19 +61,14 @@ class SignUpModal extends Component {
     this.setState({ emailInput: event.target.value });
   };
 
-  emailValidityNotice = null;
   emailInputBlurHandler = () => {
     this.setState(
-      { emailValid: validator.isEmail(this.state.emailInput) },
+      {
+        emailValid: validator.isEmail(this.state.emailInput),
+        emailValidityNoticeNote: "Email is invalid",
+      },
       () => {
         this.checkSignupValidity();
-        this.emailValidityNotice = this.state.emailInput ? (
-          <ValidationNotice
-            isValid={this.state.emailValid}
-            ifValid={"email is valid"}
-            ifInvalid={"email is invalid"}
-          />
-        ) : null;
       }
     );
   };
@@ -83,14 +80,16 @@ class SignUpModal extends Component {
   usernameValidityNotice = null;
   usernameInputBlurHandler = () => {
     this.setState(
-      { usernameValid: this.state.usernameInput.length > 0 },
+      {
+        usernameValid: this.state.usernameInput.length > 0,
+      },
       () => {
         this.checkSignupValidity();
         this.usernameValidityNotice = this.state.usernameInput ? (
           <ValidationNotice
             isValid={this.state.usernameValid}
             ifValid={"Username is valid"}
-            ifInvalid={"Username already exists"}
+            ifInvalid={"Username is Invalid"}
           />
         ) : null;
       }
@@ -139,6 +138,22 @@ class SignUpModal extends Component {
     );
   };
 
+  onSignup = () =>
+    API.signUp(
+      this.state.usernameInput,
+      this.state.emailInput,
+      this.state.passwordInput
+    ).catch((err) => {
+      if (true) {
+        this.setState(
+          {
+            emailValid: false,
+            emailValidityNoticeNote: "email already exists",
+          }
+          // () => console.log(this.state.emailValidityNoticeNote)
+        );
+      }
+    });
   render() {
     return (
       <div>
@@ -165,7 +180,13 @@ class SignUpModal extends Component {
           />
 
           <div style={{ marginLeft: "20px", height: "18px" }}>
-            {this.emailValidityNotice}
+            {this.state.emailInput ? (
+              <ValidationNotice
+                isValid={this.state.passwordLen}
+                ifValid={"email is valid"}
+                ifInvalid={this.state.emailValidityNoticeNote}
+              />
+            ) : null}
           </div>
 
           <GenericInput
@@ -217,7 +238,7 @@ class SignUpModal extends Component {
               color={"#c1c1c1"}
               fontSize={"24px"}
               backgroundColor={"#303030"}
-              onClick={() => alert("Joined")}
+              onClick={this.onSignup}
               disabled={!this.state.signUpValid}
               disabledColor={"#505050"}
               disabledBackgroundColor={"#262626"}
