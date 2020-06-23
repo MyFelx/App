@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import AppButton from "../UI/Button";
 import GenericInput from "../UI/Input";
 import Modal from "../UI/Modal";
@@ -80,7 +81,7 @@ class LoginModal extends Component {
         </div>
         <div>
           <span style={{ color: "#c1c1c1" }}>Don't have an acount?</span>
-          <a href="/signup"> Sign Up</a>
+          <Link to={"/signup"}> Sign Up</Link>
         </div>
       </Modal>
     );
