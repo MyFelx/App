@@ -17,7 +17,7 @@ router.get("/myFlex/api/v1/search/movie", async (req, res) => {
 router.post("/myFlex/api/v1/movie", async (req, res) => {
     try {
         const movie = await TMDBApi.movieDetails(req.body.id, ["videos", "images", "credits"])
-        res.send(formatMovie)
+        res.send(movie)
     } catch (e) {
         res.status(400).send(e)
     }
