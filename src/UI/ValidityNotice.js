@@ -15,7 +15,7 @@ const ValidationNotice = (props) => {
       ) : (
         <CloseOutlined style={{ marginRight: "4px" }} />
       )}
-      {props.isValid ? props.ifValid : props.ifInvalid}
+      {props.noticeMessage}
     </StyledNotice>
   );
 };

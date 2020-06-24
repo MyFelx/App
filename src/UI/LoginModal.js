@@ -59,7 +59,7 @@ class LoginModal extends Component {
             <div>
               <ValidationNotice
                 isValid={false}
-                ifInvalid={"Incorrect email or password"}
+                noticeMessage={"Incorrect email or password"}
               />
             </div>
           ) : null}
