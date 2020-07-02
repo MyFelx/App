@@ -34,7 +34,7 @@ class Helper {
     static formatMovie(movie) {
         const movieExtraInfoFilter = {
             id: true, title: true, overview: true, poster_path: true, release_date: true, genres: [{ name: true }], runtime: true,
-            videos: { results: [{ id: true }] }, credits: { cast: [{ name: true }] }
+            videos: { results: [{ key: true }] }, credits: { cast: [{ name: true }] }
         }
         return this.filterObj(movie, movieExtraInfoFilter)
     }
