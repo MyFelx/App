@@ -1,31 +1,47 @@
-const movieFilter = ["id", "title", "overview", "poster_path", "release_date"]
-
 class Helper {
 
-    static filterObject(object, movieFilter = []) {
-        return Object.keys(object)
-            .filter(key => movieFilter.includes(key))
-            .reduce((obj, key) => {
-                obj[key] = object[key];
-                return obj;
-            }, {});
-    }
+    static filterObj(obj, filter) {
+        let result = {}
+        for (let [key, value] of Object.entries(filter)) {
+            if (obj[key] !== undefined) {
+
+                if (typeof filter[key] === "object" && !Array.isArray(value)) {
+                    result[key] = this.filterObj(obj[key], value)
+                } else if (Array.isArray(value)) {
+                    const formatedArray = []
+                    obj[key].forEach(eachObj => {
+                        formatedArray.push(this.filterObj(eachObj, value[0]))
+                    })
+                    result[key] = formatedArray
+                }
+                else {
+                    result[key] = obj[key]
+                }
+            }
+        }
+        return result
+    };
 
     static formatMovies(movies) {
+        const movieFilter = { id: true, title: true, overview: true, poster_path: true, release_date: true, }
         const moviesList = []
         movies.forEach(movie => {
-            moviesList.push(this.filterObject(movie, movieFilter))
+            moviesList.push(this.filterObj(movie, movieFilter))
         })
         return moviesList
     }
 
     static formatMovie(movie) {
-        return this.filterObject(movie, movieFilter)
+        const movieExtraInfoFilter = {
+            id: true, title: true, overview: true, poster_path: true, release_date: true, genres: [{ name: true }], runtime: true,
+            videos: { results: [{ id: true }] }, credits: { cast: [{ name: true }] }
+        }
+        return this.filterObj(movie, movieExtraInfoFilter)
     }
 
     static filterWatchLaterMovie(movie) {
-        const watchLaterFilter = ["watched"]
-        return this.filterObject(movie, watchLaterFilter)
+        const watchLaterFilter = { watched: "true" }
+        return this.filterObj(movie, watchLaterFilter)
     }
 
 }
