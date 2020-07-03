@@ -14,6 +14,14 @@ router.get("/myFlex/api/v1/search/movie", async (req, res) => {
     }
 })
 
+router.get("/myFlex/api/v1/movie", async (req, res) => {
+    try {
+        const movie = await TMDBApi.movieDetails(req.query.searchQuery, ["videos", "images", "credits"])
+        res.send(movie)
+    } catch (e) {
+        res.status(400).send(e)
+    }
 
+})
 
 module.exports = router
