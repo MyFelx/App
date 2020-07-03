@@ -41,8 +41,7 @@ router.get("/myFlex/api/v1/user", auth, async (req, res) => {
     res.status(200).send(req.user.name)
 })
 
-
-
+// logout the user
 router.post("/myFlex/api/v1/logout", auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter(eachToken => {
