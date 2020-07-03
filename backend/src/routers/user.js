@@ -6,17 +6,22 @@ const Movie = require("../models/Movie")
 const { ObjectID } = require("mongodb")
 const Helper = require("../Helper")
 const TMDBApi = require("../TMDBApi")
+const ERRORS = require("../../enums/Errors")
 
 //create a new user
 router.post("/myFlex/api/v1/signgup", async (req, res) => {
-
+    const UserExists = await User.findOne({ email: req.body.email }).countDocuments() !== 0
     const user = new User(req.body)
     try {
         await user.save()
         const token = await user.generatingTokens()
         res.status(201).send({ user, token })
     } catch (e) {
-        res.status(400).send(e)
+        if (UserExists) {
+            res.status(400).send({ ErrorCode: ERRORS.EMAIL_EXISTS })
+        } else if (e.message) {
+            res.status(400).send({ ErrorCode: ERRORS.INVALID_EMAIL })
+        }
     }
 })
 
@@ -27,7 +32,7 @@ router.post("/myFlex/api/v1/login", async (req, res) => {
         const token = await user.generatingTokens()
         res.send({ user, token })
     } catch (e) {
-        res.status(400).send()
+        res.status(400).send({ ErrorCode: ERRORS.UNABLE_TO_LOGIN })
     }
 })
 

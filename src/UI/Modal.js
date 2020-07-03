@@ -4,7 +4,7 @@ import { CloseOutlined } from "@ant-design/icons";
 
 const StyledModal = styled.div`
   position: absolute;
-  z-index: 500;
+  z-index: 3;
   background-color: #202020;
   width: auto;
   padding: 16px;
@@ -61,9 +61,16 @@ class Modal extends Component {
   };
 
   render() {
+    let closeModalButton = null;
+    if (this.props.closable) {
+      closeModalButton = (
+        <CloseOutlined style={closeIconStyle} onClick={this.modalFadeOut} />
+      );
+    }
+
     return (
       <StyledModal modalOpacity={this.state.modalOpacity}>
-        <CloseOutlined style={closeIconStyle} onClick={this.modalFadeOut} />
+        {closeModalButton}
         {this.props.children}
       </StyledModal>
     );

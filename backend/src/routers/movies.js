@@ -14,7 +14,7 @@ router.get("/myFlex/api/v1/search/movie", async (req, res) => {
     }
 })
 
-router.post("/myFlex/api/v1/movie", async (req, res) => {
+router.get("/myFlex/api/v1/movie", async (req, res) => {
     try {
         const movie = await TMDBApi.movieDetails(req.body.id, ["videos", "credits"])
         const formatedResponse = Helper.formatMovie(movie)

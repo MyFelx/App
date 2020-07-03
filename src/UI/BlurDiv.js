@@ -7,11 +7,9 @@ const StyledBlurDiv = styled.div`
 
 const BlurDiv = (props) => {
   return (
-    <div>
-      <StyledBlurDiv blurDegree={props.blurDegree}>
-        {props.children}
-      </StyledBlurDiv>
-    </div>
+    <StyledBlurDiv style={props.style} blurDegree={props.blurDegree}>
+      {props.children}
+    </StyledBlurDiv>
   );
 };
 

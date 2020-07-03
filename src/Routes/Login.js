@@ -1,51 +1,32 @@
 import React from "react";
-import AppButton from "../UI/Button";
-import GenericInput from "../UI/Input";
-import Modal from "../UI/Modal";
+import styled from "styled-components";
 import NavBar from "../UI/NavBar";
-import { UserOutlined, KeyOutlined } from "@ant-design/icons";
+import LoginModal from "../UI/LoginModal";
+import BlurDiv from "../UI/BlurDiv";
+import backgroundImage from "../StarsBG.jpg";
 
-const iconStyling = {
-  color: "#c1c1c1",
-  fontSize: "18px",
-  marginLeft: "8px",
-};
+const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
 
 function Login() {
   return (
-    <div className="App">
+    <div style={{ height: "100%" }}>
       <NavBar
-        username={"Fady Philips"}
-        showMyListIcon={true}
-        showSearchbar={true}
+        username={null}
+        showMyListIcon={false}
+        showSearchbar={false}
         showLoginButton={false}
         showSignUpButton={true}
         showLogOutButton={false}
       />
-      <Modal closeOnClick={() => console.log("object")}>
-        <h1 style={{ color: "#c1c1c1", marginLeft: "9px" }}>Login</h1>
+      <BlurDiv style={{ height: "100%" }} blurDegree={"3px"}>
+        <StyledImage src={backgroundImage} alt="oops" />
+      </BlurDiv>
 
-        <GenericInput
-          inputType={"text"}
-          icon={<UserOutlined style={iconStyling} />}
-          placeholderValue={"Username"}
-        />
-
-        <GenericInput
-          inputType={"password"}
-          icon={<KeyOutlined style={iconStyling} />}
-          placeholderValue={"password"}
-        />
-        <AppButton
-          text={"Join"}
-          height={"53px"}
-          width={"165px"}
-          color={"#c1c1c1"}
-          fontSize={"24px"}
-          backgroundColor={"#303030"}
-          onClick={() => alert("Joined")}
-        />
-      </Modal> */}
+      <LoginModal />
     </div>
   );
 }
