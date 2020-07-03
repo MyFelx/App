@@ -24,7 +24,9 @@ const ArrowIcon = styled(DownOutlined)`
 `;
 const ExpandingDiv = styled.div`
   opacity: ${(props) => (props.show ? 1 : 0)};
-  max-height: ${(props) => (props.show ? "100vh" : 0)};
+  max-height: ${(props) => (props.show ? props.height ? props.height + "px" : "unset" : 0)};
+  /* display: ${(props) => (props.show ? "block" : "none")}; */
+  overflow: hidden;
   left: 0;
   background-color: #22dd22;
   transition: all 0.5s ease;
@@ -36,11 +38,14 @@ class ExpandingDivider extends Component {
   };
 
   toggleShowContent = () => {
-    this.setState({ showContent: !this.state.showContent }, () =>
-      console.log(this.state.showContent)
-    );
+    this.setState({ showContent: !this.state.showContent });
+    this.setState({
+      expandingDivHeight: document.getElementById("expandingDiv").scrollHeight
+    })
   };
-
+  getContentHeight() {
+    return document.getElementById("expandingDiv")?.scrollHeight
+  }
   render() {
     return (
       <div>
@@ -56,9 +61,8 @@ class ExpandingDivider extends Component {
           />
           <DividerLine color={this.props.lineColor} />
         </DividerDiv>
-        <ExpandingDiv show={this.state.showContent}>
-          {this.state.showContent ? this.props.children : null}
-          {/* {this.props.children} */}
+        <ExpandingDiv id={"expandingDiv"} height={this.getContentHeight()} show={this.state.showContent}>
+          {this.props.children}
         </ExpandingDiv>
       </div>
     );

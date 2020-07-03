@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ExpandingDivider from "../UI/ExpandingDivider";
 
 const Home = (props) => {
+  const [bla, setBla] = useState([])
+  console.log(bla)
   return (
     <div>
+      <button onClick={() => {
+
+        setBla([...bla, 0])
+      }}>dwdaw </button>
       <ExpandingDivider
         lineColor={"#606060"}
         titleColor={"#dbdbdb"}
@@ -12,6 +18,17 @@ const Home = (props) => {
         title={"Movies"}
       >
         <div>Hello</div>
+        <div>Hello</div>
+        <div>Hello</div>
+        <div>Hello</div>
+        <div>Hello</div>
+        <div>Hello</div>
+        <div>Hello</div>
+        <div>Hello</div>
+        <div>Hello</div>
+        {bla.map(() => {
+          return <div>wadadwa</div>
+        })}
         <div>Hello</div>
         <div>Hello</div>
         <div>Hello</div>
@@ -31,6 +48,62 @@ const Home = (props) => {
         <div>Hello</div>
         <div>Hello</div>
       </ExpandingDivider>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+      <div>Hello</div>
+
     </div>
   );
 };
