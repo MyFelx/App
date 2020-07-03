@@ -1,6 +1,6 @@
 const User = require("../models/User")
 const jwt = require('jsonwebtoken');
-const ERRORS = require("../../ErrorHandler")
+const ERRORS = require("../../enums/Errors")
 
 const auth = async (req, res, next) => {
 
@@ -18,7 +18,7 @@ const auth = async (req, res, next) => {
         next()
 
     } catch (e) {
-        res.status(401).send(ERRORS.UNAUTHORIZED.toString())
+        res.status(401).send({ ErrorCode: ERRORS.UNAUTHORIZED })
     }
 }
 
