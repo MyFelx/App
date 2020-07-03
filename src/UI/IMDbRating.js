@@ -8,7 +8,7 @@ const StyledDiv = styled.div`
   align-items: center;
 `;
 const StyledRating = styled.div`
-  font-size: ${(props) => props.height};
+  font-size: 18px;
   color: #c1c1c1;
 `;
 const StyledIcon = styled.img`
@@ -20,15 +20,8 @@ const StyledIcon = styled.img`
 const IMDbRating = (props) => {
   return (
     <StyledDiv>
-      <StyledIcon
-        src={IMDbIcon}
-        alt="oops"
-        width="auto"
-        height={props.iconHeight}
-      />
-      <StyledRating height={props.textHeight}>
-        {props.rating.toFixed(1)}/10
-      </StyledRating>
+      <StyledIcon src={IMDbIcon} alt="oops" width="auto" height="20px" />
+      <StyledRating>{props.rating.toFixed(1)}/10</StyledRating>
     </StyledDiv>
   );
 };
