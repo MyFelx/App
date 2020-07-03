@@ -4,7 +4,7 @@ import axios from "axios"
 
 class API {
     static signUp(email, password) {
-        return axios.post('http://localhost:5000/signUp', {
+        return axios.post('http://localhost:5000/myFlex/api/v1/signgup', {
             name: "youssef",
             email,
             password
@@ -12,6 +12,8 @@ class API {
             // handle success
             console.log(response);
             localStorage.setItem("token", response.data.token)
+        }).catch((e) => {
+            console.log(e.response.data)
         })
     }
 
@@ -35,12 +37,14 @@ class API {
     }
 
     static login(email, password) {
-        return axios.post("http://localhost:5000/login", {
+        return axios.post("http://localhost:5000/myFlex/api/v1/login", {
             email,
             password
         }).then((res) => {
             localStorage.setItem("token", res.data.token)
-            console.log("loggedIn")
+            console.log("Logged In")
+        }).catch((e) => {
+            console.log(e.response.data)
         })
     }
 }
