@@ -33,7 +33,7 @@ class Test extends React.Component {
                     onChange={(event) => this.setState({ password: event.target.value })}
                 />
                 <button onClick={() => API.signUp(this.state.email, this.state.password)} > Submit </button>
-                <button onClick={() => this.isLoggedIn()} >isLoggedIn</button>
+                {/* <button onClick={() => this.isLoggedIn()} >isLoggedIn</button> */}
                 <button onClick={() => API.logout()}>logout</button>
                 <button onClick={() => API.login(this.state.email, this.state.password)}>login</button>
             </div>
