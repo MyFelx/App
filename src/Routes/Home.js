@@ -15,18 +15,6 @@ const Home = (props) => {
         </div>
         <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
           Hello
-        </div>{" "}
-        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
-          Hello
-        </div>{" "}
-        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
-          Hello
-        </div>{" "}
-        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
-          Hello
-        </div>{" "}
-        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
-          Hello
         </div>
       </ExpandingDivider>
       <ExpandingDivider
@@ -37,16 +25,16 @@ const Home = (props) => {
       >
         <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
           Hello
-        </div>{" "}
+        </div>
         <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
           Hello
-        </div>{" "}
+        </div>
         <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
           Hello
-        </div>{" "}
+        </div>
         <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
           Hello
-        </div>{" "}
+        </div>
         <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
           Hello
         </div>

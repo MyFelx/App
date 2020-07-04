@@ -38,14 +38,13 @@ class ExpandingDivider extends Component {
     showContent: false,
   };
 
+  expandingDivRef = React.createRef();
+
   toggleShowContent = () => {
     this.setState({ showContent: !this.state.showContent });
-    this.setState({
-      expandingDivHeight: document.getElementById("expandingDiv").scrollHeight,
-    });
   };
   getContentHeight() {
-    return document.getElementById("expandingDiv")?.scrollHeight;
+    return this.expandingDivRef.current?.scrollHeight;
   }
   render() {
     return (
@@ -64,7 +63,7 @@ class ExpandingDivider extends Component {
           <DividerLine color={this.props.lineColor} />
         </DividerDiv>
         <ExpandingDiv
-          id={"expandingDiv"}
+          ref={this.expandingDivRef}
           height={this.getContentHeight()}
           show={this.state.showContent}
         >
