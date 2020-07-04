@@ -1,39 +1,33 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React from "react";
 import ExpandingDivider from "../UI/ExpandingDivider";
 
 const Home = (props) => {
-  const [bla, setBla] = useState([])
-  console.log(bla)
   return (
     <div>
-      <button onClick={() => {
-
-        setBla([...bla, 0])
-      }}>dwdaw </button>
       <ExpandingDivider
         lineColor={"#606060"}
         titleColor={"#dbdbdb"}
         fontSize={21}
         title={"Movies"}
       >
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        {bla.map(() => {
-          return <div>wadadwa</div>
-        })}
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>{" "}
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>{" "}
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>{" "}
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>{" "}
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>
       </ExpandingDivider>
       <ExpandingDivider
         lineColor={"#606060"}
@@ -41,69 +35,22 @@ const Home = (props) => {
         fontSize={21}
         title={"Filters"}
       >
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>{" "}
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>{" "}
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>{" "}
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>{" "}
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>
       </ExpandingDivider>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-      <div>Hello</div>
-
     </div>
   );
 };

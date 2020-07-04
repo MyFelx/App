@@ -21,14 +21,15 @@ const ArrowIcon = styled(DownOutlined)`
   padding: 0px 10px;
   font-size: calc(${(props) => props.fontSize}px * (2 / 3));
   color: ${(props) => props.color};
+  transition: all 0.5s ease;
+  transform: ${(props) => (!props.showing ? "rotate(-90deg)" : null)};
 `;
 const ExpandingDiv = styled.div`
   opacity: ${(props) => (props.show ? 1 : 0)};
-  max-height: ${(props) => (props.show ? props.height ? props.height + "px" : "unset" : 0)};
-  /* display: ${(props) => (props.show ? "block" : "none")}; */
+  max-height: ${(props) =>
+    props.show ? (props.height ? props.height + "px" : "unset") : 0};
   overflow: hidden;
   left: 0;
-  background-color: #22dd22;
   transition: all 0.5s ease;
 `;
 
@@ -40,11 +41,11 @@ class ExpandingDivider extends Component {
   toggleShowContent = () => {
     this.setState({ showContent: !this.state.showContent });
     this.setState({
-      expandingDivHeight: document.getElementById("expandingDiv").scrollHeight
-    })
+      expandingDivHeight: document.getElementById("expandingDiv").scrollHeight,
+    });
   };
   getContentHeight() {
-    return document.getElementById("expandingDiv")?.scrollHeight
+    return document.getElementById("expandingDiv")?.scrollHeight;
   }
   render() {
     return (
@@ -56,12 +57,17 @@ class ExpandingDivider extends Component {
         >
           <TitleDiv color={this.props.titleColor}>{this.props.title}</TitleDiv>
           <ArrowIcon
+            showing={this.state.showContent}
             fontSize={this.props.fontSize}
             color={this.props.titleColor}
           />
           <DividerLine color={this.props.lineColor} />
         </DividerDiv>
-        <ExpandingDiv id={"expandingDiv"} height={this.getContentHeight()} show={this.state.showContent}>
+        <ExpandingDiv
+          id={"expandingDiv"}
+          height={this.getContentHeight()}
+          show={this.state.showContent}
+        >
           {this.props.children}
         </ExpandingDiv>
       </div>
