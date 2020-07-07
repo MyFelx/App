@@ -64,19 +64,21 @@ router.patch("/myFlex/api/v1/user/list", auth, async (req, res) => {
         const formatResponse = Helper.filterWatchLaterMovie(req.body)
         const movieIndex = user.movies.findIndex(movie => movie.TMDB_Id === req.body.id)
 
+        // checking if the user has this movie?
         if (movieIndex !== -1) {
             user.movies[movieIndex] = { ...user.movies[movieIndex]._doc, ...formatResponse }
         } else {
             const movieExists = await Movie.findOne({ id: req.body.id })
+            // checking if the movie exists in the movies collection 
             if (movieExists === null) {
                 const movie = await TMDBApi.movieDetails(req.body.id)
                 const formatedMovie = Helper.formatMovie(movie)
                 const movieID = new ObjectID()
                 const mongoMovie = new Movie({ ...formatedMovie, _id: movieID })
                 await mongoMovie.save()
-                user.movies = user.movies.concat({ _id: movieID, TMDB_Id: req.body.id, ...formatResponse })
+                user.movies = user.movies.concat({ _id: movieID, TMDB_Id: req.body.id, ...formatResponse, genres: formatedMovie.genres })
             } else {
-                user.movies = user.movies.concat({ _id: movieExists._id, TMDB_Id: req.body.id, ...formatResponse })
+                user.movies = user.movies.concat({ _id: movieExists._id, TMDB_Id: req.body.id, ...formatResponse, genres: movieExists.genres })
             }
         }
 
@@ -127,5 +129,58 @@ router.delete("/myFlex/api/v1/user/list", auth, async (req, res) => {
     }
 })
 
+//recommendations
+router.get("/myFlex/api/v1/user/recommendations", auth, async (req, res) => {
+    try {
+        const user = req.user
+        const genresPref = {}
+        let firstGenres = Number
+        for (let i = 0; i < user.movies.length; i++) {
+
+            rating = user.movies[i].rating === null ? 5 : user.movies[i].rating
+
+            for (let j = 0; j < user.movies[i].genres.length; j++) {
+                if (i === 0 && j === 0) {
+                    firstGenres = user.movies[i].genres[j].id
+                }
+
+                if (genresPref[user.movies[i].genres[j].id]) {
+                    genresPref[user.movies[i].genres[j].id] += rating
+
+                } else {
+                    genresPref[user.movies[i].genres[j].id] = rating
+                }
+            }
+        }
+        let max = genresPref[firstGenres]
+        let min = genresPref[firstGenres]
+        for (const rating in genresPref) {
+            if (genresPref[rating] > max) {
+                max = genresPref[rating]
+            } else if (genresPref[rating] < min) {
+                min = genresPref[rating]
+            }
+        }
+        const range = max - min
+        const with_genres = []
+        const without_genres = []
+
+        for (const rating in genresPref) {
+            if (genresPref[rating] > (range / 2)) {
+                with_genres.push(rating)
+            } else {
+                without_genres.push(rating)
+            }
+        }
+        const movies = await TMDBApi.discoverForRecommendations(with_genres, without_genres)
+        const formatedResponse = Helper.formatMovies(movies)
+        res.send(formatedResponse)
+    } catch (err) {
+        res.status(400).send(err)
+    }
+})
 
 module.exports = router
+
+
+

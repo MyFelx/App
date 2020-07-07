@@ -33,14 +33,14 @@ class Helper {
 
     static formatMovie(movie) {
         const movieExtraInfoFilter = {
-            id: true, title: true, overview: true, poster_path: true, release_date: true, genres: [{ name: true }], runtime: true,
+            id: true, title: true, overview: true, poster_path: true, release_date: true, genres: true, runtime: true,
             videos: { results: [{ key: true }] }, credits: { cast: [{ name: true }] }
         }
         return this.filterObj(movie, movieExtraInfoFilter)
     }
 
     static filterWatchLaterMovie(movie) {
-        const watchLaterFilter = { watched: "true" }
+        const watchLaterFilter = { watched: "true", rating: "true" }
         return this.filterObj(movie, watchLaterFilter)
     }
 

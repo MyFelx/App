@@ -21,6 +21,9 @@ const movieSchema = new Schema({
     release_date: {
         type: String,
         required: true
+    },
+    genres: {
+        type: Object
     }
 })
 const Movie = mongoose.model("Movie", movieSchema)
