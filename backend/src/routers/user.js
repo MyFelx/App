@@ -13,6 +13,7 @@ router.post("/myFlex/api/v1/signgup", async (req, res) => {
     const UserExists = await User.findOne({ email: req.body.email }).countDocuments() !== 0
     const user = new User(req.body)
     try {
+        await user.HashThePassword()
         await user.save()
         const token = await user.generatingTokens()
         res.status(201).send({ user, token })
