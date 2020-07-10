@@ -84,7 +84,6 @@ const StyledInfoIcon = styled(InfoCircleFilled)`
   color: white;
 `;
 
-
 const MovieCard = (props) => {
   const [movieState, setMovieState] = useState(
     props.isInList ? MOVIE_STATE.ADD : MOVIE_STATE.REMOVE
@@ -108,21 +107,21 @@ const MovieCard = (props) => {
             />
           </FadeIn>
         ) : (
-            [
-              <FadeIn>
-                <CheckCircleFilled style={IconStyling} />
-              </FadeIn>,
-              <FadeIn>
-                <MinusCircleFilled
-                  style={IconStyling}
-                  onClick={() => {
-                    setMovieState(MOVIE_STATE.REMOVE);
-                    props.removeFromList && props.removeFromList(props.id);
-                  }}
-                />
-              </FadeIn>,
-            ]
-          )}
+          [
+            <FadeIn>
+              <CheckCircleFilled style={IconStyling} />
+            </FadeIn>,
+            <FadeIn>
+              <MinusCircleFilled
+                style={IconStyling}
+                onClick={() => {
+                  setMovieState(MOVIE_STATE.REMOVE);
+                  props.removeFromList && props.removeFromList(props.id);
+                }}
+              />
+            </FadeIn>,
+          ]
+        )}
       </ButtonsContainer>
     </HoverDiv>
   );
