@@ -1,8 +1,46 @@
 import React from "react";
-import MovieCard from "../UI/MovieCard"
+import ExpandingDivider from "../UI/ExpandingDivider";
 
 const Home = (props) => {
-  return <MovieCard movieRating={3} posterSrc={"https://images.moviepostershop.com/dora-and-the-lost-city-of-gold-movie-poster-1000779403.jpg"} title="dwadwd" isInList={false} />;
+  return (
+    <div>
+      <ExpandingDivider
+        lineColor={"#606060"}
+        titleColor={"#dbdbdb"}
+        fontSize={21}
+        title={"Movies"}
+      >
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>
+      </ExpandingDivider>
+      <ExpandingDivider
+        lineColor={"#606060"}
+        titleColor={"#dbdbdb"}
+        fontSize={21}
+        title={"Filters"}
+      >
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>
+        <div style={{ fontSize: "14px", color: "#c1c1c1", padding: "5px" }}>
+          Hello
+        </div>
+      </ExpandingDivider>
+    </div>
+  );
 };
 
 export default Home;
