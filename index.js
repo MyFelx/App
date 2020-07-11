@@ -29,6 +29,3 @@ app.use(moviesRouter)
 app.listen(5000, () => {
     console.log("the server is running ")
 })
-
-
-
