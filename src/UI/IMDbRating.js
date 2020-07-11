@@ -21,7 +21,9 @@ const IMDbRating = (props) => {
   return (
     <StyledDiv>
       <StyledIcon src={IMDbIcon} alt="oops" width="auto" height="20px" />
-      <StyledRating>{props.rating.toFixed(1)}/10</StyledRating>
+      <StyledRating>
+        {props.rating ? props.rating.toFixed(1) : 0}/10
+      </StyledRating>
     </StyledDiv>
   );
 };

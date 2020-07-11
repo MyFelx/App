@@ -5,11 +5,15 @@ import {
   CheckCircleFilled,
   MinusCircleFilled,
   InfoCircleFilled,
+  PlusCircleOutlined,
+  MinusCircleOutlined,
 } from "@ant-design/icons";
 import IMDbRating from "./IMDbRating";
 import { Typography, Popover } from "antd";
 import FadeIn from "react-fade-in";
+
 const { Text } = Typography;
+
 const MOVIE_STATE = {
   ADD: "add",
   REMOVE: "remove",
@@ -74,7 +78,6 @@ const ButtonsContainer = styled.div`
 const IconStyling = {
   fontSize: "60px",
   color: "white",
-  padding: "7px",
 };
 const StyledInfoIcon = styled(InfoCircleFilled)`
   position: absolute;
@@ -84,6 +87,9 @@ const StyledInfoIcon = styled(InfoCircleFilled)`
   color: white;
 `;
 
+const IconDiv = styled.div`
+  border-radius: 50%;
+`;
 
 const MovieCard = (props) => {
   const [movieState, setMovieState] = useState(
@@ -93,58 +99,100 @@ const MovieCard = (props) => {
   const toggleHover = () => {
     setIsHovering(!isHovering);
   };
+  //this is for plus hoverign
+  let [isPlusHovering, setIsPlusHovering] = useState(false);
+  const togglePlusHover = () => {
+    setIsPlusHovering(!isPlusHovering);
+  };
+  //this is for minus hoverign
+  let [isMinusHovering, setIsMinusHovering] = useState(false);
+  const toggleMinusHover = () => {
+    setIsMinusHovering(!isMinusHovering);
+  };
+
   const hoverDiv = isHovering && (
     <HoverDiv>
-      <StyledInfoIcon />
+      <StyledInfoIcon
+        onClick={() => {
+          props.showModal(23313);
+        }}
+      />
       <ButtonsContainer>
         {movieState === MOVIE_STATE.REMOVE ? (
           <FadeIn>
-            <PlusCircleFilled
-              style={IconStyling}
-              onClick={() => {
-                setMovieState(MOVIE_STATE.ADD);
-                props.addToList && props.addToList(props.id);
-              }}
-            />
+            <IconDiv>
+              {isPlusHovering ? (
+                <PlusCircleFilled
+                  style={IconStyling}
+                  onMouseLeave={togglePlusHover}
+                  onClick={() => {
+                    setMovieState(MOVIE_STATE.ADD);
+                    props.addToList && props.addToList(props.id);
+                  }}
+                />
+              ) : (
+                <PlusCircleOutlined
+                  style={IconStyling}
+                  onMouseEnter={togglePlusHover}
+                />
+              )}
+            </IconDiv>
           </FadeIn>
         ) : (
-            [
-              <FadeIn>
-                <CheckCircleFilled style={IconStyling} />
-              </FadeIn>,
-              <FadeIn>
+          [
+            <FadeIn>
+              <CheckCircleFilled style={IconStyling} />
+            </FadeIn>,
+            <FadeIn>
+              {isMinusHovering ? (
                 <MinusCircleFilled
+                  onMouseLeave={toggleMinusHover}
                   style={IconStyling}
                   onClick={() => {
                     setMovieState(MOVIE_STATE.REMOVE);
                     props.removeFromList && props.removeFromList(props.id);
                   }}
                 />
-              </FadeIn>,
-            ]
-          )}
+              ) : (
+                <MinusCircleOutlined
+                  onMouseEnter={toggleMinusHover}
+                  style={IconStyling}
+                  onClick={() => {
+                    setMovieState(MOVIE_STATE.REMOVE);
+                    props.removeFromList && props.removeFromList(props.id);
+                  }}
+                />
+              )}
+            </FadeIn>,
+          ]
+        )}
       </ButtonsContainer>
     </HoverDiv>
   );
   return (
-    <FadeIn>
-      <MainContainer>
-        <CardContainer onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
-          <PosterStyle draggable={false} src={props.posterSrc} />
-          {hoverDiv}
-          <IMDBContainer>
-            <IMDbRating rating={props.movieRating} />
-          </IMDBContainer>
-        </CardContainer>
-        <TitleContainer>
-          <Popover placement="bottom" content={props.title}>
-            <Text ellipsis={true} style={{ width: "200px" }}>
-              Title: {props.title}
-            </Text>
-          </Popover>
-        </TitleContainer>
-      </MainContainer>
-    </FadeIn>
+    <div>
+      <FadeIn>
+        <MainContainer>
+          <CardContainer onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
+            <PosterStyle draggable={false} src={props.posterSrc} />
+            {hoverDiv}
+            <IMDBContainer>
+              <IMDbRating rating={props.movieRating} />
+            </IMDBContainer>
+          </CardContainer>
+          <TitleContainer>
+            <Popover placement="bottom" content={props.title}>
+              <Text
+                ellipsis={true}
+                style={{ width: "200px", color: "#c1c1c1" }}
+              >
+                {props.title}
+              </Text>
+            </Popover>
+          </TitleContainer>
+        </MainContainer>
+      </FadeIn>
+    </div>
   );
 };
 export default MovieCard;
