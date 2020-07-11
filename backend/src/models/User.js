@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -52,11 +53,9 @@ userSchema.statics.findByCredentials = async (email, password) => {
     if (!user) {
         throw new Error("Unable to login")
     }
+    const checkPass = await bcrypt.compare(password, user.password)
 
-    // const checkPass = await bcrypt.compare(password, user.password)
-    const passCheck = user.password === password
-
-    if (!passCheck) {
+    if (!checkPass) {
         throw new Error("Unable to login")
     }
 
@@ -67,17 +66,14 @@ userSchema.statics.findByCredentials = async (email, password) => {
 userSchema.methods.generatingTokens = async function () {
     const token = jwt.sign({ _id: this._id }, 'myFlex');
     this.tokens = this.tokens.concat({ token })
-    this.save()
+    await this.save()
     return token
 }
 
-// hash the password before saving into the db in the signup level 
-// userSchema.pre("save", async function () {
-
-//     this.password = await bcrypt.hash(this.password, 7)
-
-// })
-
+// hash the password before saving into the db in the signup level
+userSchema.methods.HashThePassword = async function () {
+    this.password = await bcrypt.hash(this.password, 7)
+}
 
 const User = mongoose.model("User", userSchema)
 
