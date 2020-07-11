@@ -42,6 +42,13 @@ const userSchema = new mongoose.Schema({
         watched: {
             type: Boolean,
             default: false
+        },
+        rating: {
+            type: Number,
+            default: null
+        },
+        genres: {
+            type: Object
         }
 
     }]

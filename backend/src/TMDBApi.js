@@ -30,6 +30,15 @@ class TMDBApi {
             return undefined
         })
     }
+
+    static async discoverForRecommendations(with_genres = [], without_genres = []) {
+        const url = `${API_URL}discover/movie?api_key=${API_KEY}&without_genres=${without_genres.join(",")}&with_genres=${with_genres.join(",")}`
+        return await axios.get(url).then(res => {
+            return res.data.results
+        }).catch(err => {
+            return undefined
+        })
+    }
 }
 
 module.exports = TMDBApi
