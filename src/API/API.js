@@ -1,17 +1,22 @@
 import axios from "axios";
 
 class API {
-  static signUp(name, email, password) {
+  static getMoveDetails(id) {}
+  static addMovieToList(id) {}
+  static signUp(email, password) {
     return axios
       .post("http://localhost:5000/myFlex/api/v1/signgup", {
-        name,
+        name: "youssef",
         email,
         password,
       })
       .then((response) => {
         // handle success
-        // console.log(response);
+        console.log(response);
         localStorage.setItem("token", response.data.token);
+      })
+      .catch((e) => {
+        console.log(e.response.data);
       });
   }
 
@@ -39,7 +44,7 @@ class API {
       });
   }
 
-  static login(email, password, error) {
+  static login(email, password) {
     return axios
       .post("http://localhost:5000/myFlex/api/v1/login", {
         email,
@@ -47,10 +52,10 @@ class API {
       })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
-        console.log("loggedIn");
+        console.log("Logged In");
       })
       .catch((e) => {
-        return () => error;
+        console.log(e.response.data);
       });
   }
 }
