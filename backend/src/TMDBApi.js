@@ -22,8 +22,8 @@ class TMDBApi {
         })
     }
 
-    static async movieDetails(movieId) {
-        const url = `${API_URL}movie/${movieId}?api_key=${API_KEY}`
+    static async movieDetails(movieId, extraMovieInfo = []) {
+        const url = `${API_URL}movie/${movieId}?api_key=${API_KEY}&append_to_response=${extraMovieInfo.join(",")}`
         return await axios.get(url).then(res => {
             return res.data
         }).catch(err => {
