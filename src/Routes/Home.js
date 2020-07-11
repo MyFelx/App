@@ -1,8 +1,30 @@
 import React from "react";
-import MovieCard from "../UI/MovieCard"
+import MovieCard from "../UI/MovieCard";
+class Home extends React.Component {
+  state = {};
 
-const Home = (props) => {
-  return <MovieCard movieRating={3} posterSrc={"https://images.moviepostershop.com/dora-and-the-lost-city-of-gold-movie-poster-1000779403.jpg"} title="dwadwd" isInList={false} />;
-};
+  addToList = () => {
+    console.log("hi");
+  };
+  removeFromList = () => {};
+  toggleWtach = () => {};
+  render() {
+    return (
+      <div>
+        <MovieCard
+          isInList={true}
+          addToList={this.addToList}
+          title={"HJello There"}
+          movieRating={3}
+          removeFromList={this.removeFromList}
+          posterSrc={
+            "https://www.washingtonpost.com/graphics/2019/entertainment/oscar-nominees-movie-poster-design/img/black-panther-web.jpg"
+          }
+          toggleWatch={this.toggleWtach}
+        ></MovieCard>
+      </div>
+    );
+  }
+}
 
 export default Home;
