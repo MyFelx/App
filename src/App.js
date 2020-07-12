@@ -15,19 +15,21 @@ const ContainerDiv = styled.div`
   background-color: #333333;
 `;
 
-function App() {
-  return (
-    <ContainerDiv>
-      <Router>
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/login" component={Login} />
-          <Route path="/my-list" component={MyList} />
-          <Route path="/signup" component={SignUp} />
-        </Switch>
-      </Router>
-    </ContainerDiv>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <ContainerDiv>
+        <Router>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/my-list" component={MyList} />
+            <Route path="/signup" component={SignUp} />
+          </Switch>
+        </Router>
+      </ContainerDiv>
+    );
+  }
 }
 
 export default App;

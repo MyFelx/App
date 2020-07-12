@@ -1,53 +1,65 @@
-import axios from "axios"
-
-
+import axios from "axios";
 
 class API {
-    static signUp(email, password) {
-        return axios.post('http://localhost:5000/myFlex/api/v1/signgup', {
-            name: "youssef",
-            email,
-            password
-        }).then((response) => {
-            // handle success
-            console.log(response);
-            localStorage.setItem("token", response.data.token)
-        }).catch((e) => {
-            console.log(e.response.data)
-        })
-    }
+  static signUp(username, email, password, onSuccess, onFail) {
+    return axios
+      .post("http://localhost:5000/myFlex/api/v1/signgup", {
+        username: username,
+        email,
+        password,
+      })
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        onSuccess(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        onFail(e.response.data);
+      });
+  }
 
-    static isLoggedIn() {
-        return axios.post("http://localhost:5000/profile", {
-            token: localStorage.getItem("token")
-        }).then((res) => {
-            return true
-        }).catch(() => {
-            return false
-        })
-    }
+  static isLoggedIn() {
+    return axios
+      .get("http://localhost:5000/myFlex/api/v1/user", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      })
+      .then((res) => {
+        return true;
+      })
+      .catch(() => {
+        return false;
+      });
+  }
 
-    static logout() {
-        return axios.post("http://localhost:5000/logout", {
-            token: localStorage.getItem("token")
-        }).then(() => {
-            localStorage.removeItem("token")
-            console.log("LoggedOut")
-        })
-    }
+  static logout() {
+    return axios
+      .post("http://localhost:5000/logout", {
+        token: localStorage.getItem("token"),
+      })
+      .finally(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        console.log("LoggedOut");
+      });
+  }
 
-    static login(email, password) {
-        return axios.post("http://localhost:5000/myFlex/api/v1/login", {
-            email,
-            password
-        }).then((res) => {
-            localStorage.setItem("token", res.data.token)
-            console.log("Logged In")
-        }).catch((e) => {
-            console.log(e.response.data)
-        })
-    }
+  static login(loginValue, password, onSuccess, onFail) {
+    return axios
+      .post("http://localhost:5000/myFlex/api/v1/login", {
+        loginValue,
+        password,
+      })
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        onSuccess(res);
+      })
+      .catch((e) => {
+        onFail(e.response.data);
+      });
+  }
 }
 
-export default API
-
+export default API;

@@ -25,13 +25,16 @@ const UserIconDiv = styled.div`
   border-radius: 50%;
   background-color: ${randomColor};
   text-align: center;
-  line-height: 32px;
-  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
-const StyledLetter = styled.div`
+const StyledLetter = styled.p`
   font-size: 25px;
   font-weight: bold;
   color: #fff;
+  margin: 0;
+  margin-bottom: 25%;
 `;
 
 const UserIcon = (props) => {

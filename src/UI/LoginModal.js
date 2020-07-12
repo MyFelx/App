@@ -5,6 +5,7 @@ import GenericInput from "../UI/Input";
 import Modal from "../UI/Modal";
 import ValidationNotice from "./ValidityNotice";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
+import API from "../API/API";
 
 const iconStyling = {
   color: "#c1c1c1",
@@ -29,14 +30,17 @@ class LoginModal extends Component {
     this.setState({ passwordInput: event.target.value });
   };
 
-  contiueButtonClick = () => {
-    if (false) {
-      alert("Logged In");
-    } else {
-      this.setState({
-        incorrectLogin: true,
-      });
-    }
+  continueButtonClick = () => {
+    API.login(
+      this.state.usernameInput,
+      this.state.passwordInput,
+      () => {
+        this.props.history.push("/");
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   };
 
   render() {
@@ -76,7 +80,7 @@ class LoginModal extends Component {
             color={"#c1c1c1"}
             fontSize={"24px"}
             backgroundColor={"#303030"}
-            onClick={this.contiueButtonClick}
+            onClick={this.continueButtonClick}
           />
         </div>
         <div>
