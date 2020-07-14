@@ -13,7 +13,7 @@ const StyledNavBar = styled.div`
   background-color: black;
   height: 50px;
   display: flex;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;

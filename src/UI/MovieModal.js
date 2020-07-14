@@ -71,7 +71,7 @@ const MovieModal = (props) => {
   };
 
   return (
-    <Modal closable={true}>
+    <Modal closable={true} closeModal={props.closeModal}>
       <OuterDiv>
         <StyledPoster
           src={props.poster}

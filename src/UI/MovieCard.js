@@ -74,7 +74,6 @@ const ButtonsContainer = styled.div`
 const IconStyling = {
   fontSize: "60px",
   color: "white",
-  padding: "7px",
 };
 const StyledInfoIcon = styled(InfoCircleFilled)`
   position: absolute;
@@ -83,7 +82,6 @@ const StyledInfoIcon = styled(InfoCircleFilled)`
   top: 5%;
   color: white;
 `;
-
 
 const MovieCard = (props) => {
   const [movieState, setMovieState] = useState(
@@ -95,7 +93,11 @@ const MovieCard = (props) => {
   };
   const hoverDiv = isHovering && (
     <HoverDiv>
-      <StyledInfoIcon />
+      <StyledInfoIcon
+        onClick={() => {
+          props.showModal(23313);
+        }}
+      />
       <ButtonsContainer>
         {movieState === MOVIE_STATE.REMOVE ? (
           <FadeIn>
@@ -108,21 +110,21 @@ const MovieCard = (props) => {
             />
           </FadeIn>
         ) : (
-            [
-              <FadeIn>
-                <CheckCircleFilled style={IconStyling} />
-              </FadeIn>,
-              <FadeIn>
-                <MinusCircleFilled
-                  style={IconStyling}
-                  onClick={() => {
-                    setMovieState(MOVIE_STATE.REMOVE);
-                    props.removeFromList && props.removeFromList(props.id);
-                  }}
-                />
-              </FadeIn>,
-            ]
-          )}
+          [
+            <FadeIn>
+              <CheckCircleFilled style={IconStyling} />
+            </FadeIn>,
+            <FadeIn>
+              <MinusCircleFilled
+                style={IconStyling}
+                onClick={() => {
+                  setMovieState(MOVIE_STATE.REMOVE);
+                  props.removeFromList && props.removeFromList(props.id);
+                }}
+              />
+            </FadeIn>,
+          ]
+        )}
       </ButtonsContainer>
     </HoverDiv>
   );
@@ -138,7 +140,7 @@ const MovieCard = (props) => {
         </CardContainer>
         <TitleContainer>
           <Popover placement="bottom" content={props.title}>
-            <Text ellipsis={true} style={{ width: "200px" }}>
+            <Text ellipsis={true} style={{ width: "200px", color: "#c1c1c1" }}>
               Title: {props.title}
             </Text>
           </Popover>
