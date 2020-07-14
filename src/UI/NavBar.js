@@ -7,6 +7,7 @@ import AppButton from "./Button";
 import SearchBar from "./SearchBar";
 import Logo from "../MovieLogo.png";
 import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
+import API from "../API/API";
 
 const StyledNavBar = styled.div`
   z-index: 2;
@@ -56,7 +57,9 @@ const NavBar = (props) => {
       </MyListIconDiv>
     </Link>
   ) : null;
-
+  const handleLogout = async () => {
+    await API.logout();
+  };
   let usernameAndAvatar = props.username ? (
     <div style={{ display: "flex", minWidth: "fit-content" }}>
       <UserIcon username={props.username} />
@@ -81,6 +84,7 @@ const NavBar = (props) => {
       icon: <LogoutOutlined style={{ color: "white", marginRight: "8px" }} />,
       text: "Logout",
       linkTo: "/login",
+      onClick: handleLogout,
     });
 
   return (
@@ -91,7 +95,7 @@ const NavBar = (props) => {
         </Link>
         {myListIcon}
       </LeftNavBarItems>
-      {props.showSearchbar ? <SearchBar /> : null}
+      {props.showSearchBar ? <SearchBar /> : null}
       <RightNavBarItems>
         {buttonsList.map((button) => {
           return (
@@ -102,6 +106,7 @@ const NavBar = (props) => {
                 height={"32px"}
                 width={"95px"}
                 color={"white"}
+                onClick={(e) => button.onClick && button.onClick(e)}
                 fontSize={"14px"}
                 backgroundColor={"rgba(0,0,0,0)"}
                 border={"1px solid white"}
