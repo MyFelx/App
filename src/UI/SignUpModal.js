@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import validator from "validator";
 import passwordValidator from "password-validator";
+import styled from "styled-components";
+import API from "../API/API";
 import AppButton from "./Button";
 import GenericInput from "./Input";
 import Modal from "./Modal";
+import ERROR_MESSAGES from "../enums/ErrorMessages";
+
 import ValidationNotice from "./ValidityNotice";
 import { UserOutlined, KeyOutlined, MailOutlined } from "@ant-design/icons";
 
@@ -13,6 +17,10 @@ const iconStyling = {
   fontSize: "18px",
   marginLeft: "8px",
 };
+const NoticeContainer = styled.div`
+  margin-left: 20px;
+  height: 18px;
+`;
 
 var passwordLength = new passwordValidator();
 passwordLength.is().min(8);
@@ -41,7 +49,6 @@ class SignUpModal extends Component {
     confirmPasswordMatched: false,
     signUpValid: false,
   };
-
   checkSignupValidity = () => {
     this.setState({
       signUpValid:
@@ -55,53 +62,54 @@ class SignUpModal extends Component {
     });
   };
 
-  emailInputChangeHandler = (event) => {
-    this.setState({ emailInput: event.target.value });
+  onInputChangeHandler = (event, inputToChange, callbackFunction) => {
+    this.setState({ [inputToChange]: event.target.value }, callbackFunction);
   };
 
-  emailValidityNotice = null;
-  emailInputBlurHandler = () => {
+  isUsernameValid = (username) => {
+    // this is temporary check until we can replace it with a proper
+    // check against the uniqueness of the username.
+    return username.length > 0;
+  };
+
+  emailValidate = () => {
+    const emailValid = validator.isEmail(this.state.emailInput);
+    let emailValidityString;
+    if (emailValid) {
+      emailValidityString = "Email is Valid!";
+    } else {
+      emailValidityString = "Email is InValid!";
+    }
     this.setState(
-      { emailValid: validator.isEmail(this.state.emailInput) },
+      {
+        emailValid,
+        emailValidityString,
+      },
       () => {
         this.checkSignupValidity();
-        this.emailValidityNotice = this.state.emailInput ? (
-          <ValidationNotice
-            isValid={this.state.emailValid}
-            ifValid={"email is valid"}
-            ifInvalid={"email is invalid"}
-          />
-        ) : null;
       }
     );
   };
 
-  usernameInputChangeHandler = (event) => {
-    this.setState({ usernameInput: event.target.value });
-  };
-
-  usernameValidityNotice = null;
-  usernameInputBlurHandler = () => {
+  usernameValidate = () => {
+    const usernameValid = this.isUsernameValid(this.state.usernameInput);
+    let usernameValidityString;
+    if (usernameValid) {
+      usernameValidityString = "";
+    } else {
+      usernameValidityString = "";
+    }
     this.setState(
-      { usernameValid: this.state.usernameInput.length > 0 },
+      {
+        usernameValid,
+        usernameValidityString,
+      },
       () => {
         this.checkSignupValidity();
-        this.usernameValidityNotice = this.state.usernameInput ? (
-          <ValidationNotice
-            isValid={this.state.usernameValid}
-            ifValid={"Username is valid"}
-            ifInvalid={"Username already exists"}
-          />
-        ) : null;
       }
     );
   };
-
-  passwordInputChangeHandler = (event) => {
-    this.setState({ passwordInput: event.target.value });
-  };
-
-  passwordInputBlurHandler = () => {
+  passwordValidate = () => {
     this.setState(
       {
         passwordLen: passwordLength.validate(this.state.passwordInput),
@@ -115,30 +123,48 @@ class SignUpModal extends Component {
     );
   };
 
-  confirmPasswordInputChangeHandler = (event) => {
-    this.setState({ confirmPasswordInput: event.target.value });
-  };
-
-  confirmPasswordValidityNotice = null;
-  confirmPasswordInputBlurHandler = () => {
+  confirmPasswordValidate = () => {
+    const confirmPasswordMatched =
+      this.state.confirmPasswordInput === this.state.passwordInput;
+    let confirmPasswordValidityString;
+    if (confirmPasswordMatched) {
+      confirmPasswordValidityString = "Password does not match!";
+    } else {
+      confirmPasswordValidityString = "Password Matches!";
+    }
     this.setState(
       {
-        confirmPasswordMatched:
-          this.state.confirmPasswordInput === this.state.passwordInput,
+        confirmPasswordMatched,
+        confirmPasswordValidityString,
       },
       () => {
         this.checkSignupValidity();
-        this.confirmPasswordValidityNotice = this.state.confirmPasswordInput ? (
-          <ValidationNotice
-            isValid={this.state.confirmPasswordMatched}
-            ifValid={"Password Matches"}
-            ifInvalid={"Password does not match"}
-          />
-        ) : null;
       }
     );
   };
 
+  onSignup = () => {
+    API.signUp(
+      this.state.usernameInput,
+      this.state.emailInput,
+      this.state.passwordInput,
+      () => {
+        this.props.history.push("/");
+      },
+      (err) => {
+        console.log(err);
+        if (err) {
+          this.setState({
+            emailValidityString: ERROR_MESSAGES[err.errorCode],
+          });
+        }
+      }
+    );
+  };
+
+  createValidityNotice(noticeMessage, isValid) {
+    return <ValidationNotice noticeMessage={noticeMessage} isValid={isValid} />;
+  }
   render() {
     return (
       <div>
@@ -149,66 +175,95 @@ class SignUpModal extends Component {
             icon={<UserOutlined style={iconStyling} />}
             placeholderValue={"Username"}
             inputValue={this.state.usernameInput}
-            onInputChange={this.usernameInputChangeHandler}
-            onInputBlur={this.usernameInputBlurHandler}
+            onInputChange={(event) =>
+              this.onInputChangeHandler(
+                event,
+                "usernameInput",
+                this.usernameValidate
+              )
+            }
           />
-          <div style={{ marginLeft: "20px", height: "18px" }}>
-            {this.usernameValidityNotice}
-          </div>
+          <NoticeContainer>
+            {this.state.usernameValidityString
+              ? this.createValidityNotice(
+                  this.state.usernameValidityString,
+                  this.state.usernameValid
+                )
+              : null}
+          </NoticeContainer>
+
           <GenericInput
             inputType={"email"}
             icon={<MailOutlined style={iconStyling} />}
             placeholderValue={"Email"}
             inputValue={this.state.emailInput}
-            onInputChange={this.emailInputChangeHandler}
-            onInputBlur={this.emailInputBlurHandler}
+            onInputChange={(event) =>
+              this.onInputChangeHandler(event, "emailInput", this.emailValidate)
+            }
           />
-
-          <div style={{ marginLeft: "20px", height: "18px" }}>
-            {this.emailValidityNotice}
-          </div>
+          <NoticeContainer>
+            {this.state.emailValidityString
+              ? this.createValidityNotice(
+                  this.state.emailValidityString,
+                  this.state.emailValid
+                )
+              : null}
+          </NoticeContainer>
 
           <GenericInput
             inputType={"password"}
             icon={<KeyOutlined style={iconStyling} />}
             placeholderValue={"Password"}
             inputValue={this.state.passwordInput}
-            onInputChange={this.passwordInputChangeHandler}
-            onInputBlur={this.passwordInputBlurHandler}
+            onInputChange={(event) => {
+              this.onInputChangeHandler(
+                event,
+                "passwordInput",
+                this.passwordValidate
+              );
+            }}
           />
           <div style={{ marginLeft: "20px" }}>
-            <ValidationNotice
-              isValid={this.state.passwordLen}
-              ifValid={"More Than 8 Characters"}
-              ifInvalid={"More Than 8 Characters"}
-            />
-            <ValidationNotice
-              isValid={this.state.passwordLetter}
-              ifValid={"Atleast 1 uppercase and 1 lowercase letters"}
-              ifInvalid={"Atleast 1 uppercase and 1 lowercase letters"}
-            />
-            <ValidationNotice
-              isValid={this.state.passwordNumber}
-              ifValid={"Atleast 1 number"}
-              ifInvalid={"Atleast 1 number"}
-            />
-            <ValidationNotice
-              isValid={this.state.passwordSpecial}
-              ifValid={"Atleast 1 special character"}
-              ifInvalid={"Atleast 1 special character"}
-            />
+            {this.createValidityNotice(
+              "More Than 8 Characters",
+              this.state.passwordLen
+            )}
+            {this.createValidityNotice(
+              "Atleast 1 uppercase and 1 lowercase letters",
+              this.state.passwordLetter
+            )}
+            {this.createValidityNotice(
+              "Atleast 1 number",
+              this.state.passwordNumber
+            )}
+            {this.createValidityNotice(
+              "Atleast 1 special character",
+              this.state.passwordSpecial
+            )}
           </div>
+
           <GenericInput
             inputType={"password"}
             icon={<KeyOutlined style={iconStyling} />}
             placeholderValue={"Confirm Password"}
             inputValue={this.state.confirmPasswordInput}
-            onInputChange={this.confirmPasswordInputChangeHandler}
-            onInputBlur={this.confirmPasswordInputBlurHandler}
+            onInputChange={(event) =>
+              this.onInputChangeHandler(
+                event,
+                "confirmPasswordInput",
+                this.confirmPasswordValidate
+              )
+            }
           />
-          <div style={{ marginLeft: "20px", height: "18px" }}>
-            {this.confirmPasswordValidityNotice}
-          </div>
+          <NoticeContainer>
+            {this.state.confirmPasswordValidityString
+              ? this.createValidityNotice(
+                  this.state.confirmPasswordValidityString,
+                  this.state.confirmPasswordMatched
+                )
+              : null}
+          </NoticeContainer>
+
           <div style={{ textAlign: "center", marginTop: "35px" }}>
             <AppButton
               text={"Join"}
@@ -217,7 +272,7 @@ class SignUpModal extends Component {
               color={"#c1c1c1"}
               fontSize={"24px"}
               backgroundColor={"#303030"}
-              onClick={() => alert("Joined")}
+              onClick={this.onSignup}
               disabled={!this.state.signUpValid}
               disabledColor={"#505050"}
               disabledBackgroundColor={"#262626"}
