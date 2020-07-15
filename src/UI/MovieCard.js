@@ -129,24 +129,22 @@ const MovieCard = (props) => {
     </HoverDiv>
   );
   return (
-    <FadeIn>
-      <MainContainer>
-        <CardContainer onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
-          <PosterStyle draggable={false} src={props.posterSrc} />
-          {hoverDiv}
-          <IMDBContainer>
-            <IMDbRating rating={props.movieRating} />
-          </IMDBContainer>
-        </CardContainer>
-        <TitleContainer>
-          <Popover placement="bottom" content={props.title}>
-            <Text ellipsis={true} style={{ width: "200px", color: "#c1c1c1" }}>
-              Title: {props.title}
-            </Text>
-          </Popover>
-        </TitleContainer>
-      </MainContainer>
-    </FadeIn>
+    <MainContainer>
+      <CardContainer onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
+        <PosterStyle draggable={false} src={props.posterSrc} />
+        {hoverDiv}
+        <IMDBContainer>
+          <IMDbRating rating={props.movieRating} />
+        </IMDBContainer>
+      </CardContainer>
+      <TitleContainer>
+        <Popover placement="bottom" content={props.title}>
+          <Text ellipsis={true} style={{ width: "200px", color: "#c1c1c1" }}>
+            {props.title}
+          </Text>
+        </Popover>
+      </TitleContainer>
+    </MainContainer>
   );
 };
 export default MovieCard;

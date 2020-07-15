@@ -22,7 +22,7 @@ const IMDbRating = (props) => {
     <StyledDiv>
       <StyledIcon src={IMDbIcon} alt="oops" width="auto" height="20px" />
       <StyledRating>
-        {props.rating ? props.rating.toFixed(1) : 0}/10
+        {props.rating ? `${props.rating.toFixed(1)} / 10` : "N/A"}
       </StyledRating>
     </StyledDiv>
   );

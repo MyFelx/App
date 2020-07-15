@@ -60,6 +60,26 @@ class API {
         onFail(e.response.data);
       });
   }
+
+  static search(searchValue) {
+    return (
+      axios
+        .get(
+          `http://localhost:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}`
+        )
+        // .then((res) => console.log(res.data))
+        .catch((e) => console.log(e))
+    );
+  }
+
+  static movieDetails(movieID) {
+    return (
+      axios
+        .get(`http://localhost:5000/myFlex/api/v1/movie?searchQuery=${movieID}`)
+        // .then((res) => console.log(res.data))
+        .catch((e) => console.log(e))
+    );
+  }
 }
 
 export default API;

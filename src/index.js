@@ -15,6 +15,18 @@ const ContainerDiv = styled.div`
   top: 0;
   left: 0;
   background-color: #333333;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    width: 6px;
+    position: fixed;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #454545;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 `;
 
 ReactDOM.render(

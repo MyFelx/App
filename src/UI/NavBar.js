@@ -95,7 +95,12 @@ const NavBar = (props) => {
         </Link>
         {myListIcon}
       </LeftNavBarItems>
-      {props.showSearchBar ? <SearchBar /> : null}
+      {/* <SearchBar /> */}
+      {props.showSearchBar ? (
+        <SearchBar
+          onInputChange={(searchValue) => props.onSearchbarChange(searchValue)}
+        />
+      ) : null}
       <RightNavBarItems>
         {buttonsList.map((button) => {
           return (

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { CloseOutlined } from "@ant-design/icons";
 
 const StyledModal = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 3;
   background-color: #202020;
   width: auto;

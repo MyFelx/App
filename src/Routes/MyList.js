@@ -64,9 +64,9 @@ class MyList extends Component {
     return (
       <div style={{ height: "100%" }}>
         <NavBar
-          username={"Fady"}
+          username={"joo"}
           showMyListIcon={true}
-          showSearchbar={true}
+          showSearchBar={true}
           showLoginButton={false}
           showSignUpButton={false}
           showLogOutButton={true}
@@ -93,7 +93,7 @@ class MyList extends Component {
             }
             title="Spider-Man: Into the Spider-Verse"
             isInList={false}
-          />{" "}
+          />
           <MovieCard
             showModal={this.showModal}
             movieRating={8.4}

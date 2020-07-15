@@ -25,7 +25,7 @@ class Login extends React.Component {
         <NavBar
           username={null}
           showMyListIcon={false}
-          showSearchbar={false}
+          showSearchBar={false}
           showLoginButton={false}
           showSignUpButton={true}
           showLogOutButton={false}
