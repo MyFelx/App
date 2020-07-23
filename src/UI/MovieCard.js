@@ -9,6 +9,8 @@ import {
 import IMDbRating from "./IMDbRating";
 import { Typography, Popover } from "antd";
 import FadeIn from "react-fade-in";
+import noPoster from "../NoPoster.jpg";
+
 const { Text } = Typography;
 const MOVIE_STATE = {
   ADD: "add",
@@ -131,7 +133,10 @@ const MovieCard = (props) => {
   return (
     <MainContainer>
       <CardContainer onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
-        <PosterStyle draggable={false} src={props.posterSrc} />
+        <PosterStyle
+          draggable={false}
+          src={props.posterSrc ? props.posterSrc : noPoster}
+        />
         {hoverDiv}
         <IMDBContainer>
           <IMDbRating rating={props.movieRating} />

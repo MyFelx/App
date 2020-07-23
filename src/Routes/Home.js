@@ -1,32 +1,18 @@
 import React from "react";
-import ExpandingDivider from "../UI/ExpandingDivider";
-import BlurDiv from "../UI/BlurDiv";
-import NavBar from "../UI/NavBar";
-import MovieCard from "../UI/MovieCard";
 import styled from "styled-components";
-import MovieModal from "../UI/MovieModal";
-import API from "../API/API";
 import OnImagesLoaded from "react-on-images-loaded";
 import FadeIn from "react-fade-in";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import API from "../API/API";
+import Helper from "../Helper";
+import LoadingSpinner from "../UI/LoadingSpinner";
+import ExpandingDivider from "../UI/ExpandingDivider";
+import BlurDiv from "../UI/BlurDiv";
+import NavBar from "../UI/NavBar";
+import MovieCard from "../UI/MovieCard";
+import MovieModal from "../UI/MovieModal";
 
-const LoadingSpinner = styled(Spin)`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(calc(-50% - 0.5px), calc(-50%));
-`;
-const antIcon = (
-  <LoadingOutlined
-    style={{
-      zIndex: 5,
-      fontSize: 100,
-      color: "#c1c1c1",
-    }}
-    spin
-  />
-);
 class Home extends React.Component {
   state = {
     user: undefined,
@@ -41,37 +27,10 @@ class Home extends React.Component {
     this.setState({ showModal: false });
   };
 
-  getFirstFiveNames(obj) {
-    const castList = [];
-    for (let i = 0; i < 5; i++) {
-      castList.push(obj[i].name);
-    }
-    return castList.join(", ");
-  }
-
   showModal = async (movieId) => {
     const movieDetails = await API.movieDetails(movieId);
-    let movieData;
-    setTimeout(() => {
-      movieData = {
-        movieTitle: movieDetails.data.title,
-        poster:
-          "https://image.tmdb.org/t/p/original/" +
-          movieDetails.data.poster_path,
-        IMDb: movieDetails.data.vote_average,
-        runTime: movieDetails.data.runtime,
-        genres: movieDetails.data.genres
-          .map((each) => {
-            return each.name;
-          })
-          .join(", "),
-        releaseDate: movieDetails.data.release_date,
-        cast: this.getFirstFiveNames(movieDetails.data.credits.cast),
-        info: movieDetails.data.overview,
-        trailerID: movieDetails.data.videos.results[0].key,
-      };
-      this.setState({ showModal: true, modalData: movieData });
-    }, 1000);
+    const movieData = Helper.movieTransformer(movieDetails.data);
+    this.setState({ showModal: true, modalData: movieData });
   };
 
   async componentWillMount() {
@@ -103,7 +62,11 @@ class Home extends React.Component {
         <MovieCard
           showModal={() => this.showModal(movie.id)}
           movieRating={movie.vote_average}
-          posterSrc={"https://image.tmdb.org/t/p/original/" + movie.poster_path}
+          posterSrc={
+            movie.poster_path
+              ? "https://image.tmdb.org/t/p/original/" + movie.poster_path
+              : null
+          }
           title={movie.title}
           isInList={false}
         />
@@ -114,7 +77,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        {this.state.loading ? <LoadingSpinner indicator={antIcon} /> : null}
+        {this.state.loading ? <LoadingSpinner /> : null}
         <BlurDiv blurDegree={this.state.showModal ? 10 : 0}>
           <NavBar
             onSearchbarChange={(searchValue) => this.onSearch(searchValue)}
@@ -123,10 +86,7 @@ class Home extends React.Component {
             showMyListIcon={true}
             showSearchBar={true}
           ></NavBar>
-          <BlurDiv
-            style={{ height: "100%" }}
-            blurDegree={this.state.loading ? 3 : 0}
-          >
+          <BlurDiv blurDegree={this.state.loading ? 3 : 0}>
             <ExpandingDivider
               lineColor={"#606060"}
               titleColor={"#dbdbdb"}
@@ -138,12 +98,12 @@ class Home extends React.Component {
               onLoaded={() =>
                 this.setState({ showMoviePosters: true, loading: false })
               }
-              onTimeout={() =>
-                this.setState({ showMoviePosters: true, loading: false })
-              }
-              timeout={300}
+              // onTimeout={() =>
+              //   this.setState({ showMoviePosters: true, loading: false })
+              // }
+              // timeout={7000}
             >
-              <FadeIn key={this.state.index}>
+              <FadeIn>
                 <div
                   style={{
                     display: this.state.showMoviePosters ? "flex" : "none",
