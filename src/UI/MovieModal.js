@@ -43,7 +43,7 @@ const StaffInfoDiv = styled.div`
   flex-direction: column;
   align-items: center;
   color: #828282;
-  font-size: 16px;
+  font-size: 14px;
   margin: 10px;
 `;
 const VideoDiv = styled.div`
@@ -71,7 +71,7 @@ const MovieModal = (props) => {
   };
 
   return (
-    <Modal closable={true}>
+    <Modal closable={true} closeModal={props.closeModal}>
       <OuterDiv>
         <StyledPoster
           src={props.poster}
@@ -102,12 +102,10 @@ const MovieModal = (props) => {
             />
           </AddAndIMDbDiv>
           <IMDbInfoDiv>
-            <div>
-              {props.appropriateAudiance} | {props.runTime} | {props.genres} |{" "}
-              {props.releaseDate}
+            <div style={{ textAlign: "center" }}>
+              {props.runTime} minutes | {props.genres} | {props.releaseDate}
             </div>
             <StaffInfoDiv>
-              <div>Directors: {props.directors}</div>
               <div
                 style={{
                   marginLeft: "23px",

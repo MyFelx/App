@@ -25,19 +25,22 @@ const UserIconDiv = styled.div`
   border-radius: 50%;
   background-color: ${randomColor};
   text-align: center;
+  display: flex;
   line-height: 32px;
-  margin: 10px;
+  justify-content: center;
 `;
-const StyledLetter = styled.div`
-  font-size: 25px;
+const StyledLetter = styled.p`
+  font-size: 23px;
   font-weight: bold;
   color: #fff;
+  margin: 0;
+  margin-bottom: 25%;
 `;
 
 const UserIcon = (props) => {
   return (
     <UserIconDiv>
-      <StyledLetter>{props.username.charAt()}</StyledLetter>
+      <StyledLetter>{props.username.charAt().toUpperCase()}</StyledLetter>
     </UserIconDiv>
   );
 };
