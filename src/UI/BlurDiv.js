@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledBlurDiv = styled.div`
-  filter: blur(${(props) => props.blurDegree});
+  filter: blur(${(props) => props.blurDegree + "px"});
 `;
 
 const BlurDiv = (props) => {

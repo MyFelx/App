@@ -14,7 +14,7 @@ const StyledNavBar = styled.div`
   background-color: black;
   height: 50px;
   display: flex;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
@@ -95,7 +95,12 @@ const NavBar = (props) => {
         </Link>
         {myListIcon}
       </LeftNavBarItems>
-      {props.showSearchBar ? <SearchBar /> : null}
+      {/* <SearchBar /> */}
+      {props.showSearchBar ? (
+        <SearchBar
+          onInputChange={(searchValue) => props.onSearchbarChange(searchValue)}
+        />
+      ) : null}
       <RightNavBarItems>
         {buttonsList.map((button) => {
           return (

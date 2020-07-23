@@ -25,7 +25,7 @@ class SignUp extends React.Component {
         <NavBar
           username={null}
           showMyListIcon={false}
-          showSearchbar={false}
+          showSearchBar={false}
           showLoginButton={true}
           showSignUpButton={false}
           showLogOutButton={false}

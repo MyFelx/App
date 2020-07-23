@@ -34,14 +34,22 @@ const OuterDiv = styled.div`
 `;
 
 const SearchBar = (props) => {
+  let searchValue = "";
+  const setSearchValue = (event) => {
+    searchValue = event.target.value;
+  };
+
   return (
     <OuterDiv backgroundColor={props.backgroundColor}>
       <SearchOutlined style={searchIconStyling} />
+
       <StyledInput
         backgroundColor={props.backgroundColor}
         placeholder="Search"
         type="text"
-        onChange={props.onInputChange}
+        onChange={(event) => {
+          props.onInputChange(event.target.value);
+        }}
       />
     </OuterDiv>
   );
