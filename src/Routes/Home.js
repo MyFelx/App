@@ -60,6 +60,7 @@ class Home extends React.Component {
     this.state.movieList.forEach((movie) => {
       movies.push(
         <MovieCard
+          movieID={movie.id}
           showModal={() => this.showModal(movie.id)}
           movieRating={movie.vote_average}
           posterSrc={
@@ -68,7 +69,7 @@ class Home extends React.Component {
               : null
           }
           title={movie.title}
-          isInList={false}
+          isInList={movie.isAdded}
         />
       );
     });

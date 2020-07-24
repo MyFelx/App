@@ -34,9 +34,15 @@ class API {
 
   static logout() {
     return axios
-      .post("http://localhost:5000/logout", {
-        token: localStorage.getItem("token"),
-      })
+      .post(
+        "http://localhost:5000/logout",
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+        // {
+        //   token: localStorage.getItem("token"),
+        // }
+      )
       .finally(() => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
@@ -51,7 +57,6 @@ class API {
         password,
       })
       .then((res) => {
-        console.log(res);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         onSuccess(res);
@@ -65,7 +70,12 @@ class API {
     return (
       axios
         .get(
-          `http://localhost:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}`
+          `http://localhost:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
         )
         // .then((res) => console.log(res.data))
         .catch((e) => console.log(e))
@@ -80,6 +90,36 @@ class API {
         .catch((e) => console.log(e))
     );
   }
+
+  static addMovieToMyList(id) {
+    return axios
+      .patch("http://localhost:5000/myFlex/api/v1/user/list", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        return true;
+      })
+      .catch((e) => {
+        console.log(e);
+        return false;
+      });
+  }
+
+  // static removeMovieToMyList(movieID) {
+  //   return axios
+  //     .patch("http://localhost:5000/myFlex/api/v1/user/list", {
+  //       movieID,
+  //     })
+  //     .then((res) => {
+  //       return true;
+  //     })
+  //     .catch(() => {
+  //       return false;
+  //     });
+  // }
 }
 
 export default API;

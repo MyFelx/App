@@ -5,7 +5,8 @@ const ERRORS = require("../../../enums/Errors");
 const auth = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
-    // const token = req.body.token
+    console.log(token);
+    // const token = req.body.token;
     const decodedToken = jwt.verify(token, "myFlex");
     const user = await User.findOne({
       _id: decodedToken._id,

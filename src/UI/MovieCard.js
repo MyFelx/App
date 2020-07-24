@@ -6,16 +6,19 @@ import {
   MinusCircleFilled,
   InfoCircleFilled,
 } from "@ant-design/icons";
+import API from "../API/API";
 import IMDbRating from "./IMDbRating";
 import { Typography, Popover } from "antd";
 import FadeIn from "react-fade-in";
 import noPoster from "../NoPoster.jpg";
 
 const { Text } = Typography;
+
 const MOVIE_STATE = {
   ADD: "add",
   REMOVE: "remove",
 };
+
 const PosterStyle = styled.img`
   height: auto;
   box-shadow: 0 2px 5px #000;
@@ -24,6 +27,7 @@ const PosterStyle = styled.img`
   border-radius: 7px;
   object-fit: cover;
 `;
+
 const HoverDiv = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
@@ -33,11 +37,13 @@ const HoverDiv = styled.div`
   border-radius: 7px;
   box-shadow: 0 2px 5px #000;
 `;
+
 const TitleContainer = styled.div`
   margin-top: 10px;
   font-family: Roboto;
   width: 100%;
 `;
+
 const IMDBContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
@@ -47,6 +53,7 @@ const IMDBContainer = styled.div`
   bottom: 0%;
   width: 100%;
 `;
+
 const MainContainer = styled.div`
   position: relative;
   width: fit-content;
@@ -55,6 +62,7 @@ const MainContainer = styled.div`
   width: 200px;
   border-radius: 7px;
 `;
+
 const CardContainer = styled.div`
   width: 100%;
   border-radius: 7px;
@@ -62,6 +70,7 @@ const CardContainer = styled.div`
   box-shadow: 0 2px 5px #000;
   height: 95%;
 `;
+
 const ButtonsContainer = styled.div`
   width: 100%;
   height: 90%;
@@ -73,10 +82,12 @@ const ButtonsContainer = styled.div`
   padding: 30%;
   align-items: center;
 `;
+
 const IconStyling = {
   fontSize: "60px",
   color: "white",
 };
+
 const StyledInfoIcon = styled(InfoCircleFilled)`
   position: absolute;
   font-size: 30px;
@@ -108,6 +119,7 @@ const MovieCard = (props) => {
               onClick={() => {
                 setMovieState(MOVIE_STATE.ADD);
                 props.addToList && props.addToList(props.id);
+                API.addMovieToMyList(props.movieID);
               }}
             />
           </FadeIn>
