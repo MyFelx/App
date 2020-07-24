@@ -35,13 +35,10 @@ class API {
   static logout() {
     return axios
       .post(
-        "http://localhost:5000/logout",
+        "http://localhost:5000/myFlex/api/v1/logout",
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: localStorage.getItem("token") },
         }
-        // {
-        //   token: localStorage.getItem("token"),
-        // }
       )
       .finally(() => {
         localStorage.removeItem("token");
@@ -94,18 +91,13 @@ class API {
   static addMovieToMyList(id) {
     return axios
       .patch("http://localhost:5000/myFlex/api/v1/user/list", {
+        id
+      }, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: localStorage.getItem("token"),
         },
       })
-      .then((res) => {
-        console.log(res);
-        return true;
-      })
-      .catch((e) => {
-        console.log(e);
-        return false;
-      });
+
   }
 
   // static removeMovieToMyList(movieID) {
