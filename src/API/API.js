@@ -22,7 +22,7 @@ class API {
   static isLoggedIn() {
     return axios
       .get("http://localhost:5000/myFlex/api/v1/user", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: localStorage.getItem("token") },
       })
       .then((res) => {
         return true;
@@ -34,15 +34,9 @@ class API {
 
   static logout() {
     return axios
-      .post(
-        "http://localhost:5000/logout",
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-        // {
-        //   token: localStorage.getItem("token"),
-        // }
-      )
+      .post("http://localhost:5000/myFlex/api/v1/logout", {
+        headers: { Authorization: localStorage.getItem("token") },
+      })
       .finally(() => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
@@ -72,9 +66,7 @@ class API {
         .get(
           `http://localhost:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}`,
           {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+            headers: { Authorization: localStorage.getItem("token") },
           }
         )
         // .then((res) => console.log(res.data))
@@ -92,34 +84,35 @@ class API {
   }
 
   static addMovieToMyList(id) {
-    return axios
-      .patch("http://localhost:5000/myFlex/api/v1/user/list", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        return true;
-      })
-      .catch((e) => {
-        console.log(e);
-        return false;
-      });
+    return axios.patch(
+      "http://localhost:5000/myFlex/api/v1/user/list",
+      { id },
+      {
+        headers: { Authorization: localStorage.getItem("token") },
+      }
+    );
   }
 
-  // static removeMovieToMyList(movieID) {
-  //   return axios
-  //     .patch("http://localhost:5000/myFlex/api/v1/user/list", {
-  //       movieID,
-  //     })
-  //     .then((res) => {
-  //       return true;
-  //     })
-  //     .catch(() => {
-  //       return false;
-  //     });
-  // }
+  static removeMovieFromMyList(id) {
+    return axios.delete("http://localhost:5000/myFlex/api/v1/user/list", {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+      data: {
+        id,
+      },
+    });
+  }
+
+  static watched(id, watched) {
+    return axios.patch(
+      "http://localhost:5000/myFlex/api/v1/user/list",
+      { id, watched },
+      {
+        headers: { Authorization: localStorage.getItem("token") },
+      }
+    );
+  }
 }
 
 export default API;

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
-  PlusCircleFilled,
-  CheckCircleFilled,
-  MinusCircleFilled,
+  PlusOutlined,
+  CheckOutlined,
+  MinusOutlined,
   InfoCircleFilled,
+  EyeOutlined,
 } from "@ant-design/icons";
 import API from "../API/API";
 import IMDbRating from "./IMDbRating";
-import { Typography, Popover } from "antd";
+import { Typography, Popover, message } from "antd";
 import FadeIn from "react-fade-in";
 import noPoster from "../NoPoster.jpg";
 
@@ -104,6 +105,34 @@ const MovieCard = (props) => {
   const toggleHover = () => {
     setIsHovering(!isHovering);
   };
+
+  let [isWatched, ChangeIsWatched] = useState(props.isWatched);
+
+  const MovieWatched = isWatched ? (
+    <CheckOutlined
+      style={IconStyling}
+      onClick={() => {
+        API.watched(props.movieID, false)
+          .then((res) => {
+            ChangeIsWatched(false);
+            message.success("Not Watched");
+          })
+          .catch((e) => message.error("Failed To Make This Movie Not Watched"));
+      }}
+    />
+  ) : (
+    <EyeOutlined
+      style={IconStyling}
+      onClick={() => {
+        API.watched(props.movieID, true)
+          .then((res) => {
+            ChangeIsWatched(true);
+            message.success("Watched");
+          })
+          .catch((e) => message.error("Failed To Make This Movie Watched"));
+      }}
+    />
+  );
   const hoverDiv = isHovering && (
     <HoverDiv>
       <StyledInfoIcon
@@ -114,26 +143,37 @@ const MovieCard = (props) => {
       <ButtonsContainer>
         {movieState === MOVIE_STATE.REMOVE ? (
           <FadeIn>
-            <PlusCircleFilled
+            <PlusOutlined
               style={IconStyling}
               onClick={() => {
-                setMovieState(MOVIE_STATE.ADD);
-                props.addToList && props.addToList(props.id);
-                API.addMovieToMyList(props.movieID);
+                API.addMovieToMyList(props.movieID)
+                  .then((res) => {
+                    message.success("You Added This Movie To Your List");
+                    setMovieState(MOVIE_STATE.ADD);
+                  })
+                  .catch((e) => {
+                    message.error("Failed To Add This Movie To Your List");
+                  });
               }}
             />
           </FadeIn>
         ) : (
           [
+            <FadeIn>{MovieWatched}</FadeIn>,
             <FadeIn>
-              <CheckCircleFilled style={IconStyling} />
-            </FadeIn>,
-            <FadeIn>
-              <MinusCircleFilled
+              <MinusOutlined
                 style={IconStyling}
                 onClick={() => {
-                  setMovieState(MOVIE_STATE.REMOVE);
-                  props.removeFromList && props.removeFromList(props.id);
+                  // props.removeFromList && props.removeFromList(props.id);
+                  API.removeMovieFromMyList(props.movieID)
+                    .then((res) => {
+                      message.success("You Removed This Movie From Your List");
+                      ChangeIsWatched(false);
+                      setMovieState(MOVIE_STATE.REMOVE);
+                    })
+                    .catch((e) =>
+                      message.success("You Removed This Movie From Your List")
+                    );
                 }}
               />
             </FadeIn>,

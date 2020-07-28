@@ -70,6 +70,7 @@ class Home extends React.Component {
           }
           title={movie.title}
           isInList={movie.isAdded}
+          isWatched={movie.watched}
         />
       );
     });

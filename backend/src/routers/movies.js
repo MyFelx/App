@@ -23,6 +23,7 @@ router.get("/myFlex/api/v1/search/movie", auth, async (req, res) => {
         };
       } else {
         formatedResponse[i].isAdded = false;
+        formatedResponse[i].watched = false;
       }
     }
     res.send(formatedResponse);
