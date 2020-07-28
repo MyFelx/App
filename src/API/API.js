@@ -86,9 +86,13 @@ class API {
   static addMovieToMyList(id) {
     return axios.patch(
       "http://localhost:5000/myFlex/api/v1/user/list",
-      { id },
       {
-        headers: { Authorization: localStorage.getItem("token") },
+        id,
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
       }
     );
   }

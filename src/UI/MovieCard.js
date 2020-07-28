@@ -164,7 +164,6 @@ const MovieCard = (props) => {
               <MinusOutlined
                 style={IconStyling}
                 onClick={() => {
-                  // props.removeFromList && props.removeFromList(props.id);
                   API.removeMovieFromMyList(props.movieID)
                     .then((res) => {
                       message.success("You Removed This Movie From Your List");
