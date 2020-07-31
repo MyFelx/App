@@ -7,7 +7,7 @@ class Helper {
     for (let i = 0; i < castNumber; i++) {
       castList.push(obj[i].name);
     }
-    return castList.join(", ");
+    return castList.length > 0 ? castList.join(", ") : "N/A";
   }
 
   static movieTransformer(movieDetails) {
@@ -24,14 +24,9 @@ class Helper {
         })
         .join(", "),
       releaseDate: movieDetails.release_date,
-      cast:
-        movieDetails?.credits?.cast?.length > 0
-          ? this.getFirstNCast(movieDetails.credits.cast, 5)
-          : "N/A",
+      cast: this.getFirstNCast(movieDetails.credits.cast, 5),
       info: movieDetails.overview,
-      trailerID: movieDetails.videos.results[0]
-        ? movieDetails.videos.results[0].key
-        : "NA",
+      trailerID: movieDetails.videos.results[0]?.key || "NA",
     };
     return movieData;
   }
