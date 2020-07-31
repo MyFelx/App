@@ -1,9 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import OnImagesLoaded from "react-on-images-loaded";
 import FadeIn from "react-fade-in";
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
 import API from "../API/API";
 import Helper from "../Helper";
 import LoadingSpinner from "../UI/LoadingSpinner";
@@ -29,8 +26,8 @@ class Home extends React.Component {
 
   showModal = async (movieId) => {
     const movieDetails = await API.movieDetails(movieId);
-    const movieData = Helper.movieTransformer(movieDetails.data);
-    this.setState({ showModal: true, modalData: movieData });
+    const transformedMovie = Helper.movieTransformer(movieDetails.data);
+    this.setState({ showModal: true, modalData: transformedMovie });
   };
 
   async componentWillMount() {
@@ -63,11 +60,7 @@ class Home extends React.Component {
           movieID={movie.id}
           showModal={() => this.showModal(movie.id)}
           movieRating={movie.vote_average}
-          posterSrc={
-            movie.poster_path
-              ? "https://image.tmdb.org/t/p/original/" + movie.poster_path
-              : null
-          }
+          posterPath={movie.poster_path}
           title={movie.title}
           isInList={movie.isAdded}
           isWatched={movie.watched}
@@ -100,10 +93,10 @@ class Home extends React.Component {
               onLoaded={() =>
                 this.setState({ showMoviePosters: true, loading: false })
               }
-              // onTimeout={() =>
-              //   this.setState({ showMoviePosters: true, loading: false })
-              // }
-              // timeout={7000}
+              onTimeout={() =>
+                this.setState({ showMoviePosters: true, loading: false })
+              }
+              timeout={1000}
             >
               <FadeIn>
                 <div

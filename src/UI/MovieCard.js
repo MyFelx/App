@@ -186,7 +186,11 @@ const MovieCard = (props) => {
       <CardContainer onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
         <PosterStyle
           draggable={false}
-          src={props.posterSrc ? props.posterSrc : noPoster}
+          src={
+            props.posterPath
+              ? "https://image.tmdb.org/t/p/original/" + props.posterPath
+              : noPoster
+          }
         />
         {hoverDiv}
         <IMDBContainer>
