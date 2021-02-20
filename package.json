@@ -7,7 +7,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "antd": "^4.3.3",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bcrypt": "^3.0.4-napi",
     "cors": "^2.8.5",
     "express": "^4.17.1",
