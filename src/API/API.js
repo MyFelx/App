@@ -22,7 +22,7 @@ class API {
   static isLoggedIn() {
     return axios
       .get("http://localhost:5000/myFlex/api/v1/user", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: localStorage.getItem("token") },
       })
       .then((res) => {
         return true;
@@ -34,8 +34,8 @@ class API {
 
   static logout() {
     return axios
-      .post("http://localhost:5000/logout", {
-        token: localStorage.getItem("token"),
+      .post("http://localhost:5000/myFlex/api/v1/logout", {
+        headers: { Authorization: localStorage.getItem("token") },
       })
       .finally(() => {
         localStorage.removeItem("token");
@@ -51,7 +51,6 @@ class API {
         password,
       })
       .then((res) => {
-        console.log(res);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         onSuccess(res);
@@ -65,7 +64,10 @@ class API {
     return (
       axios
         .get(
-          `http://localhost:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}`
+          `http://localhost:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}`,
+          {
+            headers: { Authorization: localStorage.getItem("token") },
+          }
         )
         // .then((res) => console.log(res.data))
         .catch((e) => console.log(e))
@@ -78,6 +80,41 @@ class API {
         .get(`http://localhost:5000/myFlex/api/v1/movie?searchQuery=${movieID}`)
         // .then((res) => console.log(res.data))
         .catch((e) => console.log(e))
+    );
+  }
+
+  static addMovieToMyList(id) {
+    return axios.patch(
+      "http://localhost:5000/myFlex/api/v1/user/list",
+      {
+        id,
+      },
+      {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
+  }
+
+  static removeMovieFromMyList(id) {
+    return axios.delete("http://localhost:5000/myFlex/api/v1/user/list", {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+      data: {
+        id,
+      },
+    });
+  }
+
+  static watched(id, watched) {
+    return axios.patch(
+      "http://localhost:5000/myFlex/api/v1/user/list",
+      { id, watched },
+      {
+        headers: { Authorization: localStorage.getItem("token") },
+      }
     );
   }
 }

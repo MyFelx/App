@@ -57,11 +57,13 @@ class Home extends React.Component {
     this.state.movieList.forEach((movie) => {
       movies.push(
         <MovieCard
+          movieID={movie.id}
           showModal={() => this.showModal(movie.id)}
           movieRating={movie.vote_average}
           posterPath={movie.poster_path}
           title={movie.title}
-          isInList={false}
+          isInList={movie.isAdded}
+          isWatched={movie.watched}
         />
       );
     });
