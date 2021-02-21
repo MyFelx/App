@@ -34,6 +34,19 @@ class Helper {
     return moviesList;
   }
 
+  static formatMovieToSave(movie) {
+    const movieFilter = {
+      id: true,
+      title: true,
+      overview: true,
+      poster_path: true,
+      vote_average: true,
+      genres: [{ name: true }],
+    };
+
+    return this.filterObj(movie, movieFilter);
+  }
+
   static formatMovie(movie) {
     const movieExtraInfoFilter = {
       id: true,

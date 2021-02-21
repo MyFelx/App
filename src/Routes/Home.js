@@ -18,6 +18,7 @@ class Home extends React.Component {
     modalData: undefined,
     showMoviePosters: false,
     index: 0,
+    mylistCount: 0,
   };
 
   closeModal = () => {
@@ -26,15 +27,23 @@ class Home extends React.Component {
 
   showModal = async (movieId) => {
     const movieDetails = await API.movieDetails(movieId);
-    const transformedMovie = Helper.movieTransformer(movieDetails.data);
+    console.log(movieDetails);
+    const transformedMovie = Helper.movieTransformer(
+      movieDetails.data,
+      movieId
+    );
     this.setState({ showModal: true, modalData: transformedMovie });
   };
 
   async componentWillMount() {
+    const myList = await API.getMyList();
     const isLoggedIn = await API.isLoggedIn();
     if (isLoggedIn) {
       if (!this.state.user) {
-        this.setState({ user: JSON.parse(localStorage.getItem("user")) });
+        this.setState({
+          user: JSON.parse(localStorage.getItem("user")),
+          mylistCount: myList.data.length,
+        });
       }
     } else {
       this.props.history.push("/login");
@@ -80,6 +89,7 @@ class Home extends React.Component {
             username={this.state.user?.username}
             showMyListIcon={true}
             showSearchBar={true}
+            listCount={this.state.mylistCount}
           ></NavBar>
           <BlurDiv blurDegree={this.state.loading ? 3 : 0}>
             <ExpandingDivider

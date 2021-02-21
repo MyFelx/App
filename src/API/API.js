@@ -117,6 +117,19 @@ class API {
       }
     );
   }
+
+  static getMyList() {
+    return axios
+      .get("http://localhost:5000/myFlex/api/v1/user/list", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+        return res;
+      })
+      .catch((e) => {});
+  }
 }
 
 export default API;

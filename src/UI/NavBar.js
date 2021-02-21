@@ -53,7 +53,7 @@ const NavBar = (props) => {
   let myListIcon = props.showMyListIcon ? (
     <Link to="/my-list">
       <MyListIconDiv>
-        <MyListIcon myListNo={750} />
+        <MyListIcon myListNo={props.listCount} />
       </MyListIconDiv>
     </Link>
   ) : null;
@@ -104,7 +104,7 @@ const NavBar = (props) => {
       <RightNavBarItems>
         {buttonsList.map((button) => {
           return (
-            <Link to={button.linkTo}>
+            <Link to={button.linkTo} key={button.texti}>
               <AppButton
                 text={button.text}
                 icon={button.icon}

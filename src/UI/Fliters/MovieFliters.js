@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import FiltersGroup from "./FiltersGroup";
+import RadioFilters from "./RadioFilters";
 
 const FiltersDiv = styled.div`
   display: flex;
@@ -9,46 +10,32 @@ const FiltersDiv = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 28px;
+  font-size: 22px;
   color: #c1c1c1;
 `;
 
-class MovieFilter extends Component {
+const DividerLine = styled.hr`
+  height: 100%;
+  width: 2px;
+  margin: 5px;
+  color: ${(props) => props.color};
+`;
+
+class MovieFilters extends Component {
   state = {
-    allActiveFilters: {},
     activeGenreFilters: {},
     activeWatchedFilters: {},
   };
 
-  concatActiveFilters = () => {
-    this.setState(
-      {
-        allActiveFilters: {
-          ...this.state.activeGenreFilters,
-          ...this.state.activeWatchedFilters,
-        },
-      },
-      () => {
-        console.log(this.state.allActiveFilters);
-      }
-    );
-  };
-
   onUpdateGenreFilter = (newActiveFilters) => {
     this.setState({ activeGenreFilters: newActiveFilters }, () => {
-      this.props.onUpdateFilter({
-        ...this.state.activeGenreFilters,
-        ...this.state.activeWatchedFilters,
-      });
+      this.props.onUpdateGenreFilter(this.state.activeGenreFilters);
     });
   };
 
   onUpdateWatchedFilter = (newActiveFilters) => {
     this.setState({ activeWatchedFilters: newActiveFilters }, () => {
-      this.props.onUpdateFilter({
-        ...this.state.activeGenreFilters,
-        ...this.state.activeWatchedFilters,
-      });
+      this.props.onUpdateWatchedFilter(this.state.activeWatchedFilters);
     });
   };
 
@@ -75,22 +62,25 @@ class MovieFilter extends Component {
               "Music",
               "Mystery",
               "Romance",
-              "Sci-fi",
+              "Science Fiction",
               "Thriller",
               "War",
               "Western",
             ]}
           />
         </div>
+        <div style={{ height: "100px" }}>
+          <DividerLine color={"#505050"} />
+        </div>
 
-        <div>
+        <div style={{ float: "right" }}>
           <Title>Watched</Title>
 
-          <FiltersGroup
-            style={{ float: "right" }}
+          <RadioFilters
             activeFilters={this.state.activeWatchedFilters}
             onUpdateFilter={this.onUpdateWatchedFilter}
-            filters={["Watched", "Not Watched"]}
+            filters={["All", "Watched", "Not Watched"]}
+            defaultValue={"All"}
           />
         </div>
       </FiltersDiv>
@@ -98,4 +88,4 @@ class MovieFilter extends Component {
   }
 }
 
-export default MovieFilter;
+export default MovieFilters;

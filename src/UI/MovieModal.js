@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import YouTube from "react-youtube";
+import { message } from "antd";
 import Modal from "./Modal";
 import IMDbRating from "./IMDbRating";
 import AppButton from "./Button";
+import API from "../API/API";
 
 const OuterDiv = styled.div`
   display: flex;
@@ -57,7 +59,16 @@ const StyledPoster = styled.img`
   margin: 10px;
 `;
 
+const MOVIE_STATE = {
+  ADD: "add",
+  REMOVE: "remove",
+};
+
 const MovieModal = (props) => {
+  const [movieState, setMovieState] = useState(
+    props.isInList ? MOVIE_STATE.ADD : MOVIE_STATE.REMOVE
+  );
+
   const opts = {
     height: "230",
     width: "409",
@@ -91,15 +102,45 @@ const MovieModal = (props) => {
               iconHeight={"26px"}
               textHeight={"20px"}
             />
-            <AppButton
-              text={"Add to List"}
-              height={"40px"}
-              width={"130px"}
-              color={"#c1c1c1"}
-              fontSize={"20px"}
-              backgroundColor={"#303030"}
-              onClick={() => alert("Joined")}
-            />
+            {movieState === MOVIE_STATE.REMOVE ? (
+              <AppButton
+                text={"Add to List"}
+                height={"40px"}
+                width={"130px"}
+                color={"#c1c1c1"}
+                fontSize={"20px"}
+                backgroundColor={"#303030"}
+                onClick={() => {
+                  API.addMovieToMyList(props.movieID)
+                    .then((res) => {
+                      message.success("You Added This Movie To Your List");
+                      setMovieState(MOVIE_STATE.ADD);
+                    })
+                    .catch((e) => {
+                      message.error("Failed To Add This Movie To Your List");
+                    });
+                }}
+              />
+            ) : (
+              <AppButton
+                text={"In List"}
+                height={"40px"}
+                width={"130px"}
+                color={"#c1c1c1"}
+                fontSize={"20px"}
+                backgroundColor={"#303030"}
+                onClick={() => {
+                  API.removeMovieFromMyList(props.movieID)
+                    .then((res) => {
+                      message.success("You Removed This Movie From Your List");
+                      setMovieState(MOVIE_STATE.REMOVE);
+                    })
+                    .catch((e) =>
+                      message.success("You Removed This Movie From Your List")
+                    );
+                }}
+              />
+            )}
           </AddAndIMDbDiv>
           <IMDbInfoDiv>
             <div style={{ textAlign: "center" }}>

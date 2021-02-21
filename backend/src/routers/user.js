@@ -83,7 +83,7 @@ router.patch("/myFlex/api/v1/user/list", auth, async (req, res) => {
       const movieExists = await Movie.findOne({ id: req.body.id });
       if (movieExists === null) {
         const movie = await TMDBApi.movieDetails(req.body.id);
-        const formatedMovie = Helper.formatMovie(movie);
+        const formatedMovie = Helper.formatMovieToSave(movie);
         const movieID = new ObjectID();
         const mongoMovie = new Movie({ ...formatedMovie, _id: movieID });
         await mongoMovie.save();
@@ -118,7 +118,6 @@ router.get("/myFlex/api/v1/user/list", auth, async (req, res) => {
       moviesIDList.push(user.movies[i]._id.toString());
     }
     const movies = await Movie.find({ _id: { $in: moviesIDList } });
-
     const myMovies = [];
 
     movies.forEach((eachMovie) => {
