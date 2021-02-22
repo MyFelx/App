@@ -220,7 +220,8 @@ router.get("/myFlex/api/v1/user/recommendations", auth, async (req, res) => {
       }
       const movies = await TMDBApi.discoverForRecommendations(
         with_genres,
-        without_genres
+        without_genres,
+        req.query.page
       );
       const formatedResponse = Helper.formatMovies(movies);
       const injectedFormatedMoveies = Helper.injectWatchedToMovies(

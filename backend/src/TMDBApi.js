@@ -13,11 +13,12 @@ class TMDBApi {
   }
   static async discoverForRecommendations(
     with_genres = [],
-    without_genres = []
+    without_genres = [],
+    page = 0
   ) {
     const url = `${API_URL}discover/movie?api_key=${API_KEY}&without_genres=${without_genres.join(
       ","
-    )}&with_genres=${with_genres.join(",")}`;
+    )}&with_genres=${with_genres.join(",")}&page=${page}`;
     return await axios
       .get(url)
       .then((res) => {

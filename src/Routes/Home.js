@@ -10,6 +10,8 @@ import NavBar from "../UI/NavBar";
 import MovieCard from "../UI/MovieCard";
 import MovieModal from "../UI/MovieModal";
 import { message } from "antd";
+import InfiniteScroll from 'react-infinite-scroller';
+
 class Home extends React.Component {
   state = {
     user: undefined,
@@ -20,6 +22,7 @@ class Home extends React.Component {
     index: 0,
     searchValue: "",
     mylistCount: 0,
+    currentPage: 0,
   };
 
   closeModal = () => {
@@ -80,7 +83,7 @@ class Home extends React.Component {
     this.setState({
       loading: true,
     });
-    const popularMovies = await API.getRecommendations();
+    const popularMovies = await API.getRecommendations(this.state.currentPage);
     if (popularMovies?.data) {
       this.setState({
         movieList: popularMovies.data,
@@ -111,6 +114,13 @@ class Home extends React.Component {
       });
       return movies;
     }
+  }
+  loadNextPage() {
+    const newPage = this.state.currentPage + 1
+    this.setState({
+      currentPage: newPage
+    })
+    this.getRecommendations()
   }
   render() {
     return (
@@ -164,7 +174,14 @@ class Home extends React.Component {
                     justifyContent: "center",
                   }}
                 >
-                  {this.renderMovieCards()}
+                  <InfiniteScroll
+                    pageStart={0}
+                    loadMore={this.loadNextPage}
+                    hasMore={true || false}
+                    loader={<LoadingSpinner />}
+                  >
+                    {this.renderMovieCards()}
+                  </InfiniteScroll>
                 </div>
               </FadeIn>
             </OnImagesLoaded>
