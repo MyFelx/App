@@ -14,12 +14,12 @@ class API {
         onSuccess(res);
       })
       .catch((e) => {
-        console.log(e);
         onFail(e.response.data);
       });
   }
 
   static isLoggedIn() {
+    console.log(localStorage.getItem("token"));
     return axios
       .get("http://localhost:5000/myFlex/api/v1/user", {
         headers: { Authorization: localStorage.getItem("token") },
@@ -32,16 +32,19 @@ class API {
       });
   }
 
-  static logout() {
-    return axios
-      .post("http://localhost:5000/myFlex/api/v1/logout", {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .finally(() => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        console.log("LoggedOut");
-      });
+  static logout(onSuccess, onFail) {
+    localStorage.clear();
+    onSuccess();
+  }
+  static getRecommendations() {
+    return (
+      axios
+        .get(`http://localhost:5000/myFlex/api/v1/user/recommendations`, {
+          headers: { Authorization: localStorage.getItem("token") },
+        })
+        // .then((res) => console.log(res.data))
+        .catch((e) => console.log(e))
+    );
   }
 
   static login(loginValue, password, onSuccess, onFail) {
@@ -53,6 +56,20 @@ class API {
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
+        onSuccess(res);
+      })
+      .catch((e) => {
+        onFail(e.response.data);
+      });
+  }
+
+  static loginAsGuest(onSuccess, onFail) {
+    return axios
+      .post("http://localhost:5000/myFlex/api/v1/login/guest")
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        localStorage.setItem("guest", true);
         onSuccess(res);
       })
       .catch((e) => {
@@ -128,7 +145,9 @@ class API {
       .then((res) => {
         return res;
       })
-      .catch((e) => {});
+      .catch((e) => {
+        console.error(e);
+      });
   }
 }
 

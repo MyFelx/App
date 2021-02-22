@@ -22,16 +22,14 @@ class MyList extends Component {
   };
 
   async componentWillMount() {
-    const myList = await API.getMyList();
     const isLoggedIn = await API.isLoggedIn();
     if (isLoggedIn) {
       if (!this.state.user) {
         this.setState({
           user: JSON.parse(localStorage.getItem("user")),
-          movieList: myList.data,
-          mylistCount: myList.data.length,
         });
       }
+      this.updateList();
     } else {
       this.props.history.push("/login");
     }
@@ -54,7 +52,6 @@ class MyList extends Component {
   };
 
   showModal = async (movieId) => {
-    console.log("hi");
     const movieDetails = await API.movieDetails(movieId);
 
     const transformedMovie = Helper.movieTransformer(movieDetails.data);
@@ -76,6 +73,10 @@ class MyList extends Component {
       }
     });
     return filteredMovies;
+  };
+  updateList = async () => {
+    const myList = await API.getMyList();
+    this.setState({ mylistCount: myList.data.length, movieList: myList.data });
   };
 
   filterbyWatched = (movieList) => {
@@ -117,8 +118,10 @@ class MyList extends Component {
           movieRating={movie.vote_average}
           posterPath={movie.poster_path}
           title={movie.title}
+          updateOnChange={false}
           isInList={true}
           isWatched={movie.watched}
+          updateList={this.updateList}
         />
       );
     });
@@ -129,7 +132,10 @@ class MyList extends Component {
   render() {
     return (
       <div>
-        <BlurDiv blurDegree={this.state.showModal ? 10 : 0}>
+        <BlurDiv
+          blurDegree={this.state.showModal ? 10 : 0}
+          isBlur={this.state.showModal}
+        >
           <NavBar
             showLogOutButton={true}
             username={this.state.user?.username}
@@ -140,6 +146,7 @@ class MyList extends Component {
             <ExpandingDivider
               lineColor={"#606060"}
               titleColor={"#dbdbdb"}
+              openable={true}
               fontSize={21}
               title={"Filters"}
             >

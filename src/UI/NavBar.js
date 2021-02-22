@@ -58,12 +58,15 @@ const NavBar = (props) => {
     </Link>
   ) : null;
   const handleLogout = async () => {
-    await API.logout();
+    await API.logout(() => {});
   };
+  const userNameDisplay = localStorage.getItem("guest")
+    ? "Welcome Guest User"
+    : props.username;
   let usernameAndAvatar = props.username ? (
     <div style={{ display: "flex", minWidth: "fit-content" }}>
       <UserIcon username={props.username} />
-      <DisplayedUsername>{props.username}</DisplayedUsername>
+      <DisplayedUsername>{userNameDisplay}</DisplayedUsername>
     </div>
   ) : null;
   let buttonsList = [];

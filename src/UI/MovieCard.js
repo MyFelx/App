@@ -102,8 +102,8 @@ const MovieCard = (props) => {
     props.isInList ? MOVIE_STATE.ADD : MOVIE_STATE.REMOVE
   );
   let [isHovering, setIsHovering] = useState(false);
-  const toggleHover = () => {
-    setIsHovering(!isHovering);
+  const toggleHover = (value) => {
+    setIsHovering(value);
   };
 
   let [isWatched, ChangeIsWatched] = useState(props.isWatched);
@@ -116,8 +116,12 @@ const MovieCard = (props) => {
           .then((res) => {
             ChangeIsWatched(false);
             message.success("Not Watched");
+            props.updateList();
           })
-          .catch((e) => message.error("Failed To Make This Movie Not Watched"));
+          .catch((e) => {
+            console.error(e);
+            message.error("Failed To Make This Movie Not Watched");
+          });
       }}
     />
   ) : (
@@ -128,6 +132,7 @@ const MovieCard = (props) => {
           .then((res) => {
             ChangeIsWatched(true);
             message.success("Watched");
+            props.updateList();
           })
           .catch((e) => message.error("Failed To Make This Movie Watched"));
       }}
@@ -150,6 +155,7 @@ const MovieCard = (props) => {
                   .then((res) => {
                     message.success("You Added This Movie To Your List");
                     setMovieState(MOVIE_STATE.ADD);
+                    if (props.updateOnChange) props.updateList();
                   })
                   .catch((e) => {
                     message.error("Failed To Add This Movie To Your List");
@@ -169,6 +175,7 @@ const MovieCard = (props) => {
                       message.success("You Removed This Movie From Your List");
                       ChangeIsWatched(false);
                       setMovieState(MOVIE_STATE.REMOVE);
+                      if (props.updateOnChange) props.updateList();
                     })
                     .catch((e) =>
                       message.success("You Removed This Movie From Your List")
@@ -183,7 +190,10 @@ const MovieCard = (props) => {
   );
   return (
     <MainContainer>
-      <CardContainer onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
+      <CardContainer
+        onMouseEnter={() => toggleHover(true)}
+        onMouseLeave={() => toggleHover(false)}
+      >
         <PosterStyle
           draggable={false}
           src={

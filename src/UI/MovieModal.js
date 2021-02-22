@@ -102,7 +102,7 @@ const MovieModal = (props) => {
               iconHeight={"26px"}
               textHeight={"20px"}
             />
-            {movieState === MOVIE_STATE.REMOVE ? (
+            {/* {movieState === MOVIE_STATE.REMOVE ? (
               <AppButton
                 text={"Add to List"}
                 height={"40px"}
@@ -140,7 +140,7 @@ const MovieModal = (props) => {
                     );
                 }}
               />
-            )}
+            )} */}
           </AddAndIMDbDiv>
           <IMDbInfoDiv>
             <div style={{ textAlign: "center" }}>

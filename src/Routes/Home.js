@@ -9,7 +9,7 @@ import BlurDiv from "../UI/BlurDiv";
 import NavBar from "../UI/NavBar";
 import MovieCard from "../UI/MovieCard";
 import MovieModal from "../UI/MovieModal";
-
+import { message } from "antd";
 class Home extends React.Component {
   state = {
     user: undefined,
@@ -18,6 +18,7 @@ class Home extends React.Component {
     modalData: undefined,
     showMoviePosters: false,
     index: 0,
+    searchValue: "",
     mylistCount: 0,
   };
 
@@ -27,7 +28,6 @@ class Home extends React.Component {
 
   showModal = async (movieId) => {
     const movieDetails = await API.movieDetails(movieId);
-    console.log(movieDetails);
     const transformedMovie = Helper.movieTransformer(
       movieDetails.data,
       movieId
@@ -35,56 +35,102 @@ class Home extends React.Component {
     this.setState({ showModal: true, modalData: transformedMovie });
   };
 
-  async componentWillMount() {
+  updateList = async () => {
     const myList = await API.getMyList();
+    if (myList) {
+      this.setState({ mylistCount: myList.data.length });
+    }
+  };
+
+  async componentWillMount() {
+    message.config({
+      top: 60,
+      duration: 0.85,
+    });
     const isLoggedIn = await API.isLoggedIn();
     if (isLoggedIn) {
       if (!this.state.user) {
         this.setState({
           user: JSON.parse(localStorage.getItem("user")),
-          mylistCount: myList.data.length,
         });
       }
+      this.updateList();
+      this.getRecommendations();
     } else {
       this.props.history.push("/login");
     }
   }
 
   async onSearch(searchValue) {
-    const res = await API.search(searchValue);
-    if (res?.data)
+    if (this.state.searchValue === "") {
+      this.getRecommendations();
+    } else {
+      const res = await API.search(searchValue);
+      if (res?.data && this.state.searchValue !== "") {
+        this.setState({
+          movieList: res.data,
+          showMoviePosters: false,
+          index: this.state.index + 1,
+          loading: true,
+        });
+      }
+    }
+  }
+  async getRecommendations() {
+    this.setState({
+      loading: true,
+    });
+    const popularMovies = await API.getRecommendations();
+    if (popularMovies?.data) {
       this.setState({
-        movieList: res.data,
+        movieList: popularMovies.data,
         showMoviePosters: false,
         index: this.state.index + 1,
         loading: true,
       });
+    }
   }
+
   renderMovieCards() {
     const movies = [];
-
-    this.state.movieList.forEach((movie) => {
-      movies.push(
-        <MovieCard
-          movieID={movie.id}
-          showModal={() => this.showModal(movie.id)}
-          movieRating={movie.vote_average}
-          posterPath={movie.poster_path}
-          title={movie.title}
-          isInList={movie.isAdded}
-          isWatched={movie.watched}
-        />
-      );
-    });
-    return movies;
+    if (Array.isArray(this.state.movieList)) {
+      this.state.movieList.forEach((movie) => {
+        movies.push(
+          <MovieCard
+            movieID={movie.id}
+            showModal={() => this.showModal(movie.id)}
+            movieRating={movie.vote_average}
+            posterPath={movie.poster_path}
+            title={movie.title}
+            isInList={movie.isAdded}
+            isWatched={movie.watched}
+            updateOnChange={true}
+            updateList={this.updateList}
+          />
+        );
+      });
+      return movies;
+    }
   }
   render() {
     return (
       <div>
         {this.state.loading ? <LoadingSpinner /> : null}
-        <BlurDiv blurDegree={this.state.showModal ? 10 : 0}>
+        <BlurDiv
+          blurDegree={this.state.showModal ? 10 : 0}
+          isBlur={this.state.showModal}
+        >
           <NavBar
-            onSearchbarChange={(searchValue) => this.onSearch(searchValue)}
+            onSearchbarChange={(searchValue) => {
+              this.setState(
+                {
+                  searchValue: searchValue,
+                },
+                () => {
+                  this.onSearch(searchValue);
+                }
+              );
+            }}
             showLogOutButton={true}
             username={this.state.user?.username}
             showMyListIcon={true}
@@ -96,7 +142,9 @@ class Home extends React.Component {
               lineColor={"#606060"}
               titleColor={"#dbdbdb"}
               fontSize={21}
-              title={"Movies"}
+              title={
+                this.state.searchValue === "" ? "Recommendations" : "Resulsts"
+              }
             ></ExpandingDivider>
             <OnImagesLoaded
               key={this.state.index}

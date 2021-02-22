@@ -21,13 +21,9 @@ const movieSchema = new Schema({
     type: String,
     required: true,
   },
-  genres: [
-    {
-      name: {
-        type: String,
-      },
-    },
-  ],
+  genres: {
+    type: Object,
+  },
 });
 const Movie = mongoose.model("Movie", movieSchema);
 

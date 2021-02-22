@@ -11,22 +11,11 @@ router.get("/myFlex/api/v1/search/movie", auth, async (req, res) => {
     const user = req.user;
     const respone = await TMDBApi.searchMovies(req.query.searchQuery);
     const formatedResponse = Helper.formatMovies(respone);
-    for (let i = 0; i < formatedResponse.length; i++) {
-      const movieIndex = user.movies.findIndex(
-        (movie) => movie.TMDB_Id === formatedResponse[i].id
-      );
-      if (movieIndex !== -1) {
-        formatedResponse[i] = {
-          isAdded: true,
-          ...formatedResponse[i],
-          ...user.movies[movieIndex]._doc,
-        };
-      } else {
-        formatedResponse[i].isAdded = false;
-        formatedResponse[i].watched = false;
-      }
-    }
-    res.send(formatedResponse);
+    const injectedFormatedResponse = Helper.injectWatchedToMovies(
+      user.movies,
+      formatedResponse
+    );
+    res.send(injectedFormatedResponse);
   } catch (e) {
     res.status(400).send(e);
   }

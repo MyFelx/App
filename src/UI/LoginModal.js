@@ -5,6 +5,7 @@ import GenericInput from "../UI/Input";
 import Modal from "../UI/Modal";
 import ValidationNotice from "./ValidityNotice";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
+import { message } from "antd";
 import API from "../API/API";
 
 const iconStyling = {
@@ -39,7 +40,17 @@ class LoginModal extends Component {
       },
       (err) => {
         console.log(err);
+        this.setState({ incorrectLogin: true });
       }
+    );
+  };
+
+  loginAsGuest = () => {
+    API.loginAsGuest(
+      () => {
+        this.props.history.push("/");
+      },
+      () => message.error("Something Went Wrong :(")
     );
   };
 
@@ -65,9 +76,8 @@ class LoginModal extends Component {
           {this.state.incorrectLogin ? (
             <div>
               <ValidationNotice
-                isValid={this.state.confirmPasswordMatched}
-                ifValid={"Password Matches"}
-                ifInvalid={"Incorrect username or password"}
+                isValid={!this.state.incorrectLogin}
+                noticeMessage={"Incorrect username or password"}
               />
             </div>
           ) : null}
@@ -86,6 +96,8 @@ class LoginModal extends Component {
         <div>
           <span style={{ color: "#c1c1c1" }}>Don't have an acount?</span>
           <Link to={"/signup"}> Sign Up</Link>
+          <span style={{ color: "#c1c1c1" }}> or login as</span>
+          <Link onClick={this.loginAsGuest}> Guest</Link>
         </div>
       </Modal>
     );
