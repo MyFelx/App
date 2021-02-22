@@ -135,6 +135,7 @@ class Home extends React.Component {
             username={this.state.user?.username}
             showMyListIcon={true}
             showSearchBar={true}
+            listCount={this.state.mylistCount}
           ></NavBar>
           <BlurDiv blurDegree={this.state.loading ? 3 : 0}>
             <ExpandingDivider

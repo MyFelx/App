@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import YouTube from "react-youtube";
+import { message } from "antd";
 import Modal from "./Modal";
 import IMDbRating from "./IMDbRating";
 import AppButton from "./Button";
+import API from "../API/API";
 
 const OuterDiv = styled.div`
   display: flex;
@@ -57,7 +59,16 @@ const StyledPoster = styled.img`
   margin: 10px;
 `;
 
+const MOVIE_STATE = {
+  ADD: "add",
+  REMOVE: "remove",
+};
+
 const MovieModal = (props) => {
+  const [movieState, setMovieState] = useState(
+    props.isInList ? MOVIE_STATE.ADD : MOVIE_STATE.REMOVE
+  );
+
   const opts = {
     height: "230",
     width: "409",

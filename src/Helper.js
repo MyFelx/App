@@ -10,7 +10,7 @@ class Helper {
     return castList.length > 0 ? castList.join(", ") : "N/A";
   }
 
-  static movieTransformer(movieDetails) {
+  static movieTransformer(movieDetails, id) {
     const movieData = {
       movieTitle: movieDetails.title,
       poster: movieDetails.poster_path
@@ -27,6 +27,7 @@ class Helper {
       cast: this.getFirstNCast(movieDetails.credits.cast, 5),
       info: movieDetails.overview,
       trailerID: movieDetails.videos.results[0]?.key || "NA",
+      movieID: id,
     };
     return movieData;
   }

@@ -2,26 +2,29 @@ import React, { Component } from "react";
 import { Checkbox } from "antd";
 import styled from "styled-components";
 
-const FiltersDiv = styled.div`
-  display: flex;
-  height: 120px;
-`;
-
+const Group = Checkbox;
 const StyledCheckBox = styled(Checkbox)`
   color: white;
+  margin: 5px;
 `;
 
 const FlitersGroupDiv = styled.div`
   display: flex;
+  height: 120px;
+
   padding: 10px;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: flex-start;
 `;
+const StyledFilterGroup = styled(Group)`
+  display: flex;
+  height: 120px;
 
-const CheckboxDiv = styled.div`
-  margin: 5px;
-  width: 120px;
+  padding: 10px;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 `;
 
 class FiltersGroup extends Component {
@@ -41,21 +44,17 @@ class FiltersGroup extends Component {
 
   genreFilters = this.filters.map((element, i) => {
     return (
-      <CheckboxDiv key={i}>
-        <StyledCheckBox value={element}>{element}</StyledCheckBox>
-      </CheckboxDiv>
+      <StyledCheckBox key={i} value={element}>
+        {element}
+      </StyledCheckBox>
     );
   });
 
   render() {
     return (
-      <div>
-        <Checkbox.Group onChange={this.onChange}>
-          <FiltersDiv>
-            <FlitersGroupDiv>{this.genreFilters}</FlitersGroupDiv>
-          </FiltersDiv>
-        </Checkbox.Group>
-      </div>
+      <Checkbox.Group onChange={this.onChange}>
+        <FlitersGroupDiv>{this.genreFilters}</FlitersGroupDiv>
+      </Checkbox.Group>
     );
   }
 }

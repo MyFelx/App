@@ -1,32 +1,21 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import OnImagesLoaded from "react-on-images-loaded";
+import FadeIn from "react-fade-in";
+import Helper from "../Helper";
 import MovieCard from "../UI/MovieCard";
 import BlurDiv from "../UI/BlurDiv";
 import MovieModal from "../UI/MovieModal";
 import NavBar from "../UI/NavBar";
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-
-const LoadingSpinner = styled(Spin)`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(calc(-50% - 0.5px), calc(-50%));
-`;
-
-const antIcon = (
-  <LoadingOutlined
-    style={{
-      zIndex: 5,
-      fontSize: 100,
-      color: "#c1c1c1",
-    }}
-    spin
-  />
-);
+import ExpandingDivider from "../UI/ExpandingDivider";
+import LoadingSpinner from "../UI/LoadingSpinner";
+import MovieFilters from "../UI/Fliters/MovieFliters";
+import API from "../API/API";
 
 class MyList extends Component {
   state = {
+    activeGenreFilters: {},
+    activeWatchedFilter: "All",
+    movieList: [],
     showModal: false,
     modalData: undefined,
     mylistCount: 0,
@@ -206,5 +195,4 @@ class MyList extends Component {
     );
   }
 }
-
 export default MyList;

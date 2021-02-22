@@ -142,7 +142,7 @@ const MovieCard = (props) => {
     <HoverDiv>
       <StyledInfoIcon
         onClick={() => {
-          props.showModal(23313);
+          props.showModal(props.movieID);
         }}
       />
       <ButtonsContainer>

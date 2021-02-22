@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { HeartFilled } from "@ant-design/icons";
+import API from "../API/API";
 
 const heartIconStyling = {
   color: "#c1c1c1",
@@ -32,7 +33,7 @@ const MyListIcon = (props) => {
   return (
     <div onClick={props.onIconClick}>
       <HeartFilled style={heartIconStyling} />
-      <NumberDiv >
+      <NumberDiv>
         <StyledNumber>{myListNo}</StyledNumber>
       </NumberDiv>
     </div>

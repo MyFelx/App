@@ -12,6 +12,7 @@ const DividerDiv = styled.div`
 `;
 const TitleDiv = styled.div`
   color: ${(props) => props.color};
+  text-transform: uppercase;
 `;
 const DividerLine = styled.hr`
   width: -webkit-fill-available;
@@ -77,6 +78,10 @@ class ExpandingDivider extends Component {
           show={this.state.showContent}
         >
           {this.props.children}
+          <DividerLine
+            color={this.props.lineColor}
+            style={{ margin: "0px 15px" }}
+          />
         </ExpandingDiv>
       </div>
     );

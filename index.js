@@ -4,7 +4,6 @@ const userRouter = require("./backend/src/routers/user");
 const moviesRouter = require("./backend/src/routers/movies");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const seeder = require("./backend/src/seeder");
 app.use(cors());
 
 app.use(function (req, res, next) {
