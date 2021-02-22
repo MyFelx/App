@@ -8,6 +8,7 @@ const DividerDiv = styled.div`
   align-items: center;
   color: ${(props) => props.color};
   font-size: ${(props) => props.fontSize}px;
+  cursor: ${(props) => (props.openable ? "pointer" : "auto")};
 `;
 const TitleDiv = styled.div`
   color: ${(props) => props.color};
@@ -40,8 +41,10 @@ class ExpandingDivider extends Component {
 
   expandingDivRef = React.createRef();
 
-  toggleShowContent = () => {
-    this.setState({ showContent: !this.state.showContent });
+  toggleShowContent = (show) => {
+    this.setState({
+      showContent: show !== undefined ? show : !this.state.showContent,
+    });
   };
   getContentHeight() {
     return this.expandingDivRef.current?.scrollHeight;
@@ -52,14 +55,20 @@ class ExpandingDivider extends Component {
         <DividerDiv
           color={this.props.color}
           fontSize={this.props.fontSize}
-          onClick={this.toggleShowContent}
+          openable={this.props.openable}
+          onClick={() => {
+            if (this.props.openable) this.toggleShowContent();
+          }}
         >
           <TitleDiv color={this.props.titleColor}>{this.props.title}</TitleDiv>
-          <ArrowIcon
-            showing={this.state.showContent}
-            fontSize={this.props.fontSize}
-            color={this.props.titleColor}
-          />
+          {this.props.openable ? (
+            <ArrowIcon
+              showing={this.state.showContent}
+              fontSize={this.props.fontSize}
+              color={this.props.titleColor}
+            />
+          ) : null}
+
           <DividerLine color={this.props.lineColor} />
         </DividerDiv>
         <ExpandingDiv

@@ -5,7 +5,6 @@ import Login from "./Routes/Login";
 import Home from "./Routes/Home";
 import MyList from "./Routes/MyList";
 import SignUp from "./Routes/SignUp";
-
 const ContainerDiv = styled.div`
   position: fixed;
   width: 100%;

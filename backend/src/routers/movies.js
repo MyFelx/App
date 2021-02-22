@@ -8,7 +8,11 @@ router.get("/myFlex/api/v1/search/movie", async (req, res) => {
   try {
     const respone = await TMDBApi.searchMovies(req.query.searchQuery);
     const formatedResponse = Helper.formatMovies(respone);
-    res.send(formatedResponse);
+    const injectedFormatedResponse = Helper.injectWatchedToMovies(
+      user.movies,
+      formatedResponse
+    );
+    res.send(injectedFormatedResponse);
   } catch (e) {
     res.status(400).send(e);
   }

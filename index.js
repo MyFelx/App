@@ -4,7 +4,7 @@ const userRouter = require("./backend/src/routers/user");
 const moviesRouter = require("./backend/src/routers/movies");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
+const seeder = require("./backend/src/seeder");
 app.use(cors());
 
 app.use(function (req, res, next) {
@@ -16,8 +16,8 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
-mongoose.connect("mongodb://127.0.0.1:27017/MyFlex", {
+const mongodbLink = "mongodb://127.0.0.1:27017/MyFlex";
+mongoose.connect(mongodbLink, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false,

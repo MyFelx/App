@@ -91,15 +91,45 @@ const MovieModal = (props) => {
               iconHeight={"26px"}
               textHeight={"20px"}
             />
-            <AppButton
-              text={"Add to List"}
-              height={"40px"}
-              width={"130px"}
-              color={"#c1c1c1"}
-              fontSize={"20px"}
-              backgroundColor={"#303030"}
-              onClick={() => alert("Joined")}
-            />
+            {/* {movieState === MOVIE_STATE.REMOVE ? (
+              <AppButton
+                text={"Add to List"}
+                height={"40px"}
+                width={"130px"}
+                color={"#c1c1c1"}
+                fontSize={"20px"}
+                backgroundColor={"#303030"}
+                onClick={() => {
+                  API.addMovieToMyList(props.movieID)
+                    .then((res) => {
+                      message.success("You Added This Movie To Your List");
+                      setMovieState(MOVIE_STATE.ADD);
+                    })
+                    .catch((e) => {
+                      message.error("Failed To Add This Movie To Your List");
+                    });
+                }}
+              />
+            ) : (
+              <AppButton
+                text={"In List"}
+                height={"40px"}
+                width={"130px"}
+                color={"#c1c1c1"}
+                fontSize={"20px"}
+                backgroundColor={"#303030"}
+                onClick={() => {
+                  API.removeMovieFromMyList(props.movieID)
+                    .then((res) => {
+                      message.success("You Removed This Movie From Your List");
+                      setMovieState(MOVIE_STATE.REMOVE);
+                    })
+                    .catch((e) =>
+                      message.success("You Removed This Movie From Your List")
+                    );
+                }}
+              />
+            )} */}
           </AddAndIMDbDiv>
           <IMDbInfoDiv>
             <div style={{ textAlign: "center" }}>

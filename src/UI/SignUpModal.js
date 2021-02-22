@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { message } from "antd";
 import validator from "validator";
 import passwordValidator from "password-validator";
 import styled from "styled-components";
@@ -57,7 +58,6 @@ class SignUpModal extends Component {
         this.state.passwordLen &&
         this.state.passwordLetter &&
         this.state.passwordNumber &&
-        this.state.passwordSpecial &&
         this.state.confirmPasswordMatched,
     });
   };
@@ -115,7 +115,6 @@ class SignUpModal extends Component {
         passwordLen: passwordLength.validate(this.state.passwordInput),
         passwordLetter: passwordLetters.validate(this.state.passwordInput),
         passwordNumber: passwordNumbers.validate(this.state.passwordInput),
-        passwordSpecial: passwordSymbols.validate(this.state.passwordInput),
       },
       () => {
         this.checkSignupValidity();
@@ -127,7 +126,7 @@ class SignUpModal extends Component {
     const confirmPasswordMatched =
       this.state.confirmPasswordInput === this.state.passwordInput;
     let confirmPasswordValidityString;
-    if (confirmPasswordMatched) {
+    if (!confirmPasswordMatched) {
       confirmPasswordValidityString = "Password does not match!";
     } else {
       confirmPasswordValidityString = "Password Matches!";
@@ -159,6 +158,15 @@ class SignUpModal extends Component {
           });
         }
       }
+    );
+  };
+
+  loginAsGuest = () => {
+    API.loginAsGuest(
+      () => {
+        this.props.history.push("/");
+      },
+      () => message.error("Something Went Wrong :(")
     );
   };
 
@@ -236,10 +244,6 @@ class SignUpModal extends Component {
               "Atleast 1 number",
               this.state.passwordNumber
             )}
-            {this.createValidityNotice(
-              "Atleast 1 special character",
-              this.state.passwordSpecial
-            )}
           </div>
 
           <GenericInput
@@ -277,6 +281,13 @@ class SignUpModal extends Component {
               disabledColor={"#505050"}
               disabledBackgroundColor={"#262626"}
             />
+          </div>
+          <div>
+            <span style={{ color: "#c1c1c1" }}>
+              Try the application using our
+            </span>
+            <Link onClick={this.loginAsGuest}> Guest</Link>
+            <span style={{ color: "#c1c1c1" }}> account</span>
           </div>
           <div>
             <span style={{ color: "#c1c1c1" }}>Already have an acount?</span>

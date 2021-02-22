@@ -90,9 +90,42 @@ const MovieCard = (props) => {
     props.isInList ? MOVIE_STATE.ADD : MOVIE_STATE.REMOVE
   );
   let [isHovering, setIsHovering] = useState(false);
-  const toggleHover = () => {
-    setIsHovering(!isHovering);
+  const toggleHover = (value) => {
+    setIsHovering(value);
   };
+
+  let [isWatched, ChangeIsWatched] = useState(props.isWatched);
+
+  const MovieWatched = isWatched ? (
+    <CheckOutlined
+      style={IconStyling}
+      onClick={() => {
+        API.watched(props.movieID, false)
+          .then((res) => {
+            ChangeIsWatched(false);
+            message.success("Not Watched");
+            props.updateList();
+          })
+          .catch((e) => {
+            console.error(e);
+            message.error("Failed To Make This Movie Not Watched");
+          });
+      }}
+    />
+  ) : (
+    <EyeOutlined
+      style={IconStyling}
+      onClick={() => {
+        API.watched(props.movieID, true)
+          .then((res) => {
+            ChangeIsWatched(true);
+            message.success("Watched");
+            props.updateList();
+          })
+          .catch((e) => message.error("Failed To Make This Movie Watched"));
+      }}
+    />
+  );
   const hoverDiv = isHovering && (
     <HoverDiv>
       <StyledInfoIcon
@@ -106,8 +139,15 @@ const MovieCard = (props) => {
             <PlusCircleFilled
               style={IconStyling}
               onClick={() => {
-                setMovieState(MOVIE_STATE.ADD);
-                props.addToList && props.addToList(props.id);
+                API.addMovieToMyList(props.movieID)
+                  .then((res) => {
+                    message.success("You Added This Movie To Your List");
+                    setMovieState(MOVIE_STATE.ADD);
+                    if (props.updateOnChange) props.updateList();
+                  })
+                  .catch((e) => {
+                    message.error("Failed To Add This Movie To Your List");
+                  });
               }}
             />
           </FadeIn>
@@ -120,8 +160,16 @@ const MovieCard = (props) => {
               <MinusCircleFilled
                 style={IconStyling}
                 onClick={() => {
-                  setMovieState(MOVIE_STATE.REMOVE);
-                  props.removeFromList && props.removeFromList(props.id);
+                  API.removeMovieFromMyList(props.movieID)
+                    .then((res) => {
+                      message.success("You Removed This Movie From Your List");
+                      ChangeIsWatched(false);
+                      setMovieState(MOVIE_STATE.REMOVE);
+                      if (props.updateOnChange) props.updateList();
+                    })
+                    .catch((e) =>
+                      message.success("You Removed This Movie From Your List")
+                    );
                 }}
               />
             </FadeIn>,
@@ -132,7 +180,10 @@ const MovieCard = (props) => {
   );
   return (
     <MainContainer>
-      <CardContainer onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
+      <CardContainer
+        onMouseEnter={() => toggleHover(true)}
+        onMouseLeave={() => toggleHover(false)}
+      >
         <PosterStyle
           draggable={false}
           src={

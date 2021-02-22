@@ -29,80 +29,170 @@ class MyList extends Component {
   state = {
     showModal: false,
     modalData: undefined,
-    loading: false,
-    text: "Hi",
-    number: 0,
+    mylistCount: 0,
+  };
+
+  async componentWillMount() {
+    const isLoggedIn = await API.isLoggedIn();
+    if (isLoggedIn) {
+      if (!this.state.user) {
+        this.setState({
+          user: JSON.parse(localStorage.getItem("user")),
+        });
+      }
+      this.updateList();
+    } else {
+      this.props.history.push("/login");
+    }
+  }
+
+  updateGenreFilters = (newFilters) => {
+    this.setState({ activeGenreFilters: newFilters }, () => {
+      console.log(this.state.activeGenreFilters);
+    });
+  };
+
+  updateWatchedFilters = (newFilters) => {
+    this.setState({ activeWatchedFilter: newFilters }, () => {
+      console.log(this.state.activeWatchedFilter);
+    });
   };
 
   closeModal = () => {
     this.setState({ showModal: false });
   };
 
-  showModal = (movieId) => {
-    let movieData;
-    this.setState({ loading: true });
-    setTimeout(() => {
-      movieData = {
-        movieTitle: "Spider-Man: Into the Spider-Verse",
-        poster:
-          "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_SY1000_CR0,0,674,1000_AL_.jpg",
-        IMDb: 8.4,
-        appropriateAudiance: "PG",
-        runTime: "1h 57min",
-        genres: "Animation, Action, Adventure",
-        releaseDate: "14 December 2018 (USA)",
-        directors: "Peter Ramsey, Bob Persichetti, Rodney Rothman",
-        cast: "Shameik Moore, Jake Johnson, Hailee Steinfeld",
-        info:
-          "Miles Morales is a New York teen struggling with school, friends and, on top of that, being the new Spider-Man. When he comes across Peter Parker, the erstwhile saviour of New York, in the multiverse, Miles must train to become the new protector of his city.Miles Morales is a New York teen struggling with school, friends and, on top of that, being the new Spider-Man. When he comes across Peter Parker, the erstwhile saviour of New York, in the multiverse, Miles must train to become the new protector of his city.",
-        trailerID: "tg52up16eq0",
-      };
-      this.setState({ loading: false, showModal: true, modalData: movieData });
-    }, 1000);
+  showModal = async (movieId) => {
+    const movieDetails = await API.movieDetails(movieId);
+
+    const transformedMovie = Helper.movieTransformer(movieDetails.data);
+
+    this.setState({ showModal: true, modalData: transformedMovie });
   };
+
+  filterbyGenre = (movieList) => {
+    let filteredMovies = [];
+    movieList.forEach((movie) => {
+      let count = 0;
+      movie.genres.forEach((genre) => {
+        if (this.state.activeGenreFilters[genre.name]) {
+          count++;
+        }
+      });
+      if (count === Object.keys(this.state.activeGenreFilters).length) {
+        filteredMovies.push(movie);
+      }
+    });
+    return filteredMovies;
+  };
+  updateList = async () => {
+    const myList = await API.getMyList();
+    this.setState({ mylistCount: myList.data.length, movieList: myList.data });
+  };
+
+  filterbyWatched = (movieList) => {
+    let filteredMovies = [];
+
+    if (this.state.activeWatchedFilter === "All") {
+      filteredMovies = movieList;
+    } else {
+      if (this.state.activeWatchedFilter === "Watched") {
+        movieList.forEach((movie) => {
+          if (movie.watched) {
+            filteredMovies.push(movie);
+          }
+        });
+      } else {
+        if (this.state.activeWatchedFilter === "Not Watched") {
+          movieList.forEach((movie) => {
+            if (!movie.watched) {
+              filteredMovies.push(movie);
+            }
+          });
+        }
+      }
+    }
+    return filteredMovies;
+  };
+
+  renderMovieCards() {
+    let movies = [];
+    movies = this.filterbyGenre(this.state.movieList);
+    movies = this.filterbyWatched(movies);
+
+    const movieCards = movies.map((movie) => {
+      return (
+        <MovieCard
+          key={movie.id}
+          movieID={movie.id}
+          showModal={() => this.showModal(movie.id)}
+          movieRating={movie.vote_average}
+          posterPath={movie.poster_path}
+          title={movie.title}
+          updateOnChange={false}
+          isInList={true}
+          isWatched={movie.watched}
+          updateList={this.updateList}
+        />
+      );
+    });
+
+    return movieCards;
+  }
+
   render() {
     return (
-      <div style={{ height: "100%" }}>
-        <NavBar
-          username={"joo"}
-          showMyListIcon={true}
-          showSearchBar={true}
-          showLoginButton={false}
-          showSignUpButton={false}
-          showLogOutButton={true}
-        />
-        {this.state.loading ? <LoadingSpinner indicator={antIcon} /> : null}
+      <div>
         <BlurDiv
-          style={{ height: "100%" }}
-          blurDegree={this.state.loading || this.state.showModal ? 3 : 0}
+          blurDegree={this.state.showModal ? 10 : 0}
+          isBlur={this.state.showModal}
         >
-          <MovieCard
-            showModal={this.showModal}
-            movieRating={8.4}
-            posterSrc={
-              "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
-            }
-            title="Spider-Man: Into the Spider-Verse"
-            isInList={false}
+          <NavBar
+            showLogOutButton={true}
+            username={this.state.user?.username}
+            showMyListIcon={true}
+            listCount={this.state.mylistCount}
           />
-          <MovieCard
-            showModal={this.showModal}
-            movieRating={8.4}
-            posterSrc={
-              "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
-            }
-            title="Spider-Man: Into the Spider-Verse"
-            isInList={false}
-          />
-          <MovieCard
-            showModal={this.showModal}
-            movieRating={8.4}
-            posterSrc={
-              "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_SY1000_CR0,0,674,1000_AL_.jpg"
-            }
-            title="Spider-Man: Into the Spider-Verse"
-            isInList={false}
-          />
+          <BlurDiv blurDegree={this.state.loading ? 3 : 0}>
+            <ExpandingDivider
+              lineColor={"#606060"}
+              titleColor={"#dbdbdb"}
+              openable={true}
+              fontSize={21}
+              title={"Filters"}
+            >
+              <MovieFilters
+                onUpdateGenreFilter={(newFilters) =>
+                  this.updateGenreFilters(newFilters)
+                }
+                onUpdateWatchedFilter={(newFilters) =>
+                  this.updateWatchedFilters(newFilters)
+                }
+              />
+            </ExpandingDivider>
+            <OnImagesLoaded
+              key={this.state.index}
+              onLoaded={() =>
+                this.setState({ showMoviePosters: true, loading: false })
+              }
+              onTimeout={() =>
+                this.setState({ showMoviePosters: true, loading: false })
+              }
+              timeout={1000}
+            >
+              <FadeIn>
+                <div
+                  style={{
+                    display: this.state.showMoviePosters ? "flex" : "none",
+                    flexWrap: "wrap",
+                    justifyContent: "center",
+                  }}
+                >
+                  {this.renderMovieCards()}
+                </div>
+              </FadeIn>
+            </OnImagesLoaded>
+          </BlurDiv>
         </BlurDiv>
         {this.state.showModal ? (
           this.state.loading ? null : (

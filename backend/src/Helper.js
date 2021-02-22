@@ -34,6 +34,38 @@ class Helper {
     return moviesList;
   }
 
+  static formatMovieToSave(movie) {
+    const movieFilter = {
+      id: true,
+      title: true,
+      overview: true,
+      poster_path: true,
+      vote_average: true,
+      genres: true,
+    };
+
+    return this.filterObj(movie, movieFilter);
+  }
+  // Will check if the movie is in the list of user movies and add watched or added to the object.
+  static injectWatchedToMovies(userMovies, formatedMovies) {
+    for (let i = 0; i < formatedMovies.length; i++) {
+      const movieIndex = userMovies.findIndex(
+        (movie) => movie.TMDB_Id === formatedMovies[i].id
+      );
+      if (movieIndex !== -1) {
+        formatedMovies[i] = {
+          isAdded: true,
+          ...formatedMovies[i],
+          ...userMovies[movieIndex]._doc,
+        };
+      } else {
+        formatedMovies[i].isAdded = false;
+        formatedMovies[i].watched = false;
+      }
+    }
+    return formatedMovies;
+  }
+
   static formatMovie(movie) {
     const movieExtraInfoFilter = {
       id: true,
@@ -41,7 +73,7 @@ class Helper {
       overview: true,
       poster_path: true,
       release_date: true,
-      genres: [{ name: true }],
+      genres: true,
       runtime: true,
       vote_average: true,
       videos: { results: [{ key: true }] },
@@ -51,7 +83,7 @@ class Helper {
   }
 
   static filterWatchLaterMovie(movie) {
-    const watchLaterFilter = { watched: "true" };
+    const watchLaterFilter = { watched: "true", rating: "true" };
     return this.filterObj(movie, watchLaterFilter);
   }
 }
