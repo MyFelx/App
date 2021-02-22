@@ -6,6 +6,7 @@ const searchIconStyling = {
   color: "#c1c1c1",
   fontSize: "14px",
   marginRight: "8px",
+  marginLeft: "4px",
 };
 
 const StyledInput = styled.input`

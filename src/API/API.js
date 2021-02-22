@@ -22,7 +22,7 @@ class API {
     console.log(localStorage.getItem("token"));
     return axios
       .get("http://localhost:5000/myFlex/api/v1/user", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: localStorage.getItem("token") },
       })
       .then((res) => {
         return true;
@@ -54,7 +54,6 @@ class API {
         password,
       })
       .then((res) => {
-        console.log(res);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         onSuccess(res);
@@ -82,7 +81,10 @@ class API {
     return (
       axios
         .get(
-          `http://localhost:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}`
+          `http://localhost:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}`,
+          {
+            headers: { Authorization: localStorage.getItem("token") },
+          }
         )
         // .then((res) => console.log(res.data))
         .catch((e) => console.log(e))
