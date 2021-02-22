@@ -3,7 +3,7 @@ import axios from "axios";
 class API {
   static signUp(username, email, password, onSuccess, onFail) {
     return axios
-      .post("3.17.133.82:5000/myFlex/api/v1/signgup", {
+      .post("http://3.17.133.82:5000/myFlex/api/v1/signgup", {
         username: username,
         email,
         password,
@@ -21,7 +21,7 @@ class API {
   static isLoggedIn() {
     console.log(localStorage.getItem("token"));
     return axios
-      .get("3.17.133.82:5000/myFlex/api/v1/user", {
+      .get("http://3.17.133.82:5000/myFlex/api/v1/user", {
         headers: { Authorization: localStorage.getItem("token") },
       })
       .then((res) => {
@@ -39,7 +39,7 @@ class API {
   static getRecommendations() {
     return (
       axios
-        .get(`3.17.133.82:5000/myFlex/api/v1/user/recommendations`, {
+        .get(`http://3.17.133.82:5000/myFlex/api/v1/user/recommendations`, {
           headers: { Authorization: localStorage.getItem("token") },
         })
         // .then((res) => console.log(res.data))
@@ -49,7 +49,7 @@ class API {
 
   static login(loginValue, password, onSuccess, onFail) {
     return axios
-      .post("3.17.133.82:5000/myFlex/api/v1/login", {
+      .post("http://3.17.133.82:5000/myFlex/api/v1/login", {
         loginValue,
         password,
       })
@@ -65,7 +65,7 @@ class API {
 
   static loginAsGuest(onSuccess, onFail) {
     return axios
-      .post("3.17.133.82:5000/myFlex/api/v1/login/guest")
+      .post("http://3.17.133.82:5000/myFlex/api/v1/login/guest")
       .then((res) => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -81,7 +81,7 @@ class API {
     return (
       axios
         .get(
-          `3.17.133.82:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}`,
+          `http://3.17.133.82:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}`,
           {
             headers: { Authorization: localStorage.getItem("token") },
           }
@@ -94,7 +94,7 @@ class API {
   static movieDetails(movieID) {
     return (
       axios
-        .get(`3.17.133.82:5000/myFlex/api/v1/movie?searchQuery=${movieID}`)
+        .get(`http://3.17.133.82:5000/myFlex/api/v1/movie?searchQuery=${movieID}`)
         // .then((res) => console.log(res.data))
         .catch((e) => console.log(e))
     );
@@ -102,7 +102,7 @@ class API {
 
   static addMovieToMyList(id) {
     return axios.patch(
-      "3.17.133.82:5000/myFlex/api/v1/user/list",
+      "http://3.17.133.82:5000/myFlex/api/v1/user/list",
       {
         id,
       },
@@ -115,7 +115,7 @@ class API {
   }
 
   static removeMovieFromMyList(id) {
-    return axios.delete("3.17.133.82:5000/myFlex/api/v1/user/list", {
+    return axios.delete("http://3.17.133.82:5000/myFlex/api/v1/user/list", {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -127,7 +127,7 @@ class API {
 
   static watched(id, watched) {
     return axios.patch(
-      "3.17.133.82:5000/myFlex/api/v1/user/list",
+      "http://3.17.133.82:5000/myFlex/api/v1/user/list",
       { id, watched },
       {
         headers: { Authorization: localStorage.getItem("token") },
@@ -137,7 +137,7 @@ class API {
 
   static getMyList() {
     return axios
-      .get("3.17.133.82:5000/myFlex/api/v1/user/list", {
+      .get("http://3.17.133.82:5000/myFlex/api/v1/user/list", {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
