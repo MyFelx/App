@@ -37,6 +37,7 @@ class API {
     onSuccess();
   }
   static getRecommendations(page) {
+    console.log(page)
     return (
       axios
         .get(`http://localhost:5000/myFlex/api/v1/user/recommendations?page=${page}`, {

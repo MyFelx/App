@@ -218,6 +218,7 @@ router.get("/myFlex/api/v1/user/recommendations", auth, async (req, res) => {
           without_genres.push(rating);
         }
       }
+      console.log(req.query.page)
       const movies = await TMDBApi.discoverForRecommendations(
         with_genres,
         without_genres,
@@ -230,7 +231,7 @@ router.get("/myFlex/api/v1/user/recommendations", auth, async (req, res) => {
       );
       res.send(injectedFormatedMoveies);
     } else {
-      const popularMovies = await TMDBApi.getPopular();
+      const popularMovies = await TMDBApi.getPopular(req.query.page);
       const formatedMovies = Helper.formatMovies(popularMovies);
 
       res.send(formatedMovies);
