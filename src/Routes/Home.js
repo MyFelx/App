@@ -50,18 +50,13 @@ class Home extends React.Component {
   };
   componentDidMount() {
     document.getElementById('mainContainer').addEventListener('scroll', (e) => {
-      console.log(e)
-      console.log(e.target.scrollTop)
-      // console.log(this.state.movieList[this.state.movieList.length - 1])
-      var viewportOffset = this.lastMovie.current.getBoundingClientRect();
-      // these are relative to the viewport, i.e. the window
-      var top = viewportOffset.bottom;
-      console.log(top)
-      console.log(window.innerHeight)
-      if (Math.abs(top - window.innerHeight) < 50 && !this.state.loading) {
-        console.log('load')
-        this.loadNextPage()
+      if (this.lastMovie?.current) {
+        let boundingRect = this.lastMovie.current.getBoundingClientRect();
+        if (Math.abs(boundingRect.bottom - window.innerHeight) < 50 && !this.state.loading) {
+          this.loadNextPage()
+        }
       }
+
     })
   }
   async componentWillMount() {
@@ -85,30 +80,40 @@ class Home extends React.Component {
 
   async onSearch(searchValue) {
     if (this.state.searchValue === "") {
+      this.setState({
+        currentPage: 1,
+        movieList: []
+      })
       this.getRecommendations();
     } else {
-      const res = await API.search(searchValue);
+      const res = await API.search(searchValue, this.state.currentPage);
       if (res?.data && this.state.searchValue !== "") {
-        this.setState({
-          movieList: res.data,
-          showMoviePosters: false,
-          index: this.state.index + 1,
-          loading: true,
-        });
+        if (this.state.currentPage > 1) {
+          this.setState({
+            movieList: this.state.movieList.concat(res.data),
+            loading: false,
+          });
+        } else {
+          this.setState({
+            movieList: res.data,
+            showMoviePosters: false,
+            index: this.state.index + 1,
+            loading: true,
+          });
+        }
+
       }
     }
   }
-  async getRecommendations(page) {
+  async getRecommendations() {
     this.setState({
       loading: true,
     });
-    const popularMovies = await API.getRecommendations(page);
+    const popularMovies = await API.getRecommendations(this.state.currentPage);
     if (popularMovies?.data) {
       if (this.state.currentPage > 1) {
         this.setState({
           movieList: this.state.movieList.concat(popularMovies.data),
-          // showMoviePosters: false,
-          // index: this.state.index + 1,
           loading: false,
         });
       } else {
@@ -127,7 +132,11 @@ class Home extends React.Component {
       this.setState({
         currentPage: this.state.currentPage + 1
       }, () => {
-        this.getRecommendations(this.state.currentPage)
+        if (this.state.searchValue === "") {
+          this.getRecommendations(this.state.currentPage)
+        } else {
+          this.onSearch(this.state.searchValue)
+        }
       })
 
     }
@@ -169,10 +178,15 @@ class Home extends React.Component {
         >
           <NavBar
             onSearchbarChange={(searchValue) => {
+              const newState = {
+                searchValue: searchValue,
+              }
+              if (this.state.searchValue === "" && searchValue !== "") {
+                newState.currentPage = 1
+                newState.movieList = []
+              }
               this.setState(
-                {
-                  searchValue: searchValue,
-                },
+                newState,
                 () => {
                   this.onSearch(searchValue);
                 }
@@ -195,13 +209,18 @@ class Home extends React.Component {
             ></ExpandingDivider>
             <OnImagesLoaded
               key={this.state.index}
-              onLoaded={() =>
+              onLoaded={() => {
                 this.setState({ showMoviePosters: true, loading: false })
+
               }
-              onTimeout={() =>
+
+              }
+              onTimeout={() => {
                 this.setState({ showMoviePosters: true, loading: false })
+
               }
-              timeout={1000}
+              }
+              timeout={2}
             >
               <FadeIn>
                 <div
@@ -218,15 +237,17 @@ class Home extends React.Component {
           </BlurDiv>
         </BlurDiv>
 
-        {this.state.showModal ? (
-          this.state.loading ? null : (
-            <MovieModal
-              closeModal={this.closeModal}
-              {...this.state.modalData}
-            />
-          )
-        ) : null}
-      </div>
+        {
+          this.state.showModal ? (
+            this.state.loading ? null : (
+              <MovieModal
+                closeModal={this.closeModal}
+                {...this.state.modalData}
+              />
+            )
+          ) : null
+        }
+      </div >
     );
   }
 }

@@ -22,7 +22,7 @@ class TMDBApi {
     return await axios
       .get(url)
       .then((res) => {
-        return res.data.results;
+        return { movies: res.data.results, hasMore: res.data.page < page };
       })
       .catch((err) => {
         return undefined;

@@ -79,7 +79,7 @@ class API {
       });
   }
 
-  static search(searchValue, page = 0) {
+  static search(searchValue, page = 1) {
     return (
       axios
         .get(
