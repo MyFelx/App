@@ -10,7 +10,6 @@ import NavBar from "../UI/NavBar";
 import MovieCard from "../UI/MovieCard";
 import MovieModal from "../UI/MovieModal";
 import { message } from "antd";
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 class Home extends React.Component {
   constructor(props) {
