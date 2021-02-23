@@ -125,19 +125,19 @@ const MovieCard = (props) => {
       }}
     />
   ) : (
-    <EyeOutlined
-      style={IconStyling}
-      onClick={() => {
-        API.watched(props.movieID, true)
-          .then((res) => {
-            ChangeIsWatched(true);
-            message.success("Watched");
-            props.updateList();
-          })
-          .catch((e) => message.error("Failed To Make This Movie Watched"));
-      }}
-    />
-  );
+      <EyeOutlined
+        style={IconStyling}
+        onClick={() => {
+          API.watched(props.movieID, true)
+            .then((res) => {
+              ChangeIsWatched(true);
+              message.success("Watched");
+              props.updateList();
+            })
+            .catch((e) => message.error("Failed To Make This Movie Watched"));
+        }}
+      />
+    );
   const hoverDiv = isHovering && (
     <HoverDiv>
       <StyledInfoIcon
@@ -164,32 +164,32 @@ const MovieCard = (props) => {
             />
           </FadeIn>
         ) : (
-          [
-            <FadeIn>{MovieWatched}</FadeIn>,
-            <FadeIn>
-              <MinusOutlined
-                style={IconStyling}
-                onClick={() => {
-                  API.removeMovieFromMyList(props.movieID)
-                    .then((res) => {
-                      message.success("You Removed This Movie From Your List");
-                      ChangeIsWatched(false);
-                      setMovieState(MOVIE_STATE.REMOVE);
-                      if (props.updateOnChange) props.updateList();
-                    })
-                    .catch((e) =>
-                      message.success("You Removed This Movie From Your List")
-                    );
-                }}
-              />
-            </FadeIn>,
-          ]
-        )}
+            [
+              <FadeIn>{MovieWatched}</FadeIn>,
+              <FadeIn>
+                <MinusOutlined
+                  style={IconStyling}
+                  onClick={() => {
+                    API.removeMovieFromMyList(props.movieID)
+                      .then((res) => {
+                        message.success("You Removed This Movie From Your List");
+                        ChangeIsWatched(false);
+                        setMovieState(MOVIE_STATE.REMOVE);
+                        if (props.updateOnChange) props.updateList();
+                      })
+                      .catch((e) =>
+                        message.success("You Removed This Movie From Your List")
+                      );
+                  }}
+                />
+              </FadeIn>,
+            ]
+          )}
       </ButtonsContainer>
     </HoverDiv>
   );
   return (
-    <MainContainer>
+    <MainContainer ref={props.ref}>
       <CardContainer
         onMouseEnter={() => toggleHover(true)}
         onMouseLeave={() => toggleHover(false)}

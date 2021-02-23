@@ -9,7 +9,8 @@ const auth = require("../middleWare/auth");
 router.get("/myFlex/api/v1/search/movie", auth, async (req, res) => {
   try {
     const user = req.user;
-    const respone = await TMDBApi.searchMovies(req.query.searchQuery);
+    const page = req.query.page ? req.query.page : 1
+    const respone = await TMDBApi.searchMovies(req.query.searchQuery, { page });
     const formatedResponse = Helper.formatMovies(respone);
     const injectedFormatedResponse = Helper.injectWatchedToMovies(
       user.movies,

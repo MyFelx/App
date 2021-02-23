@@ -36,10 +36,11 @@ class API {
     localStorage.clear();
     onSuccess();
   }
-  static getRecommendations() {
+  static getRecommendations(page) {
+    console.log(page)
     return (
       axios
-        .get(`http://3.141.165.79:5000/myFlex/api/v1/user/recommendations`, {
+        .get(`http://3.141.165.79:5000/myFlex/api/v1/user/recommendations?page=${page}`, {
           headers: { Authorization: localStorage.getItem("token") },
         })
         // .then((res) => console.log(res.data))
@@ -73,15 +74,16 @@ class API {
         onSuccess(res);
       })
       .catch((e) => {
-        onFail(e.response.data);
+        console.error(e)
+        onFail(e);
       });
   }
 
-  static search(searchValue) {
+  static search(searchValue, page = 1) {
     return (
       axios
         .get(
-          `http://3.141.165.79:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}`,
+          `http://3.141.165.79:5000/myFlex/api/v1/search/movie?searchQuery=${searchValue}&page=${page}`,
           {
             headers: { Authorization: localStorage.getItem("token") },
           }

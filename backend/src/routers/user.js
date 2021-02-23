@@ -218,9 +218,10 @@ router.get("/myFlex/api/v1/user/recommendations", auth, async (req, res) => {
           without_genres.push(rating);
         }
       }
-      const movies = await TMDBApi.discoverForRecommendations(
-        with_genres,
-        without_genres
+      const { movies } = await TMDBApi.discoverForRecommendations(
+        [],
+        [],
+        req.query.page
       );
       const formatedResponse = Helper.formatMovies(movies);
       const injectedFormatedMoveies = Helper.injectWatchedToMovies(
@@ -229,9 +230,8 @@ router.get("/myFlex/api/v1/user/recommendations", auth, async (req, res) => {
       );
       res.send(injectedFormatedMoveies);
     } else {
-      const popularMovies = await TMDBApi.getPopular();
+      const popularMovies = await TMDBApi.getPopular(req.query.page);
       const formatedMovies = Helper.formatMovies(popularMovies);
-
       res.send(formatedMovies);
     }
   } catch (err) {

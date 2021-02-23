@@ -30,7 +30,7 @@ const ContainerDiv = styled.div`
 `;
 
 ReactDOM.render(
-  <ContainerDiv>
+  <ContainerDiv id="mainContainer">
     <Router>
       <Switch>
         <Route path="/" exact component={Home} />
