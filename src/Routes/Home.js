@@ -130,7 +130,8 @@ class Home extends React.Component {
   async loadNextPage(page) {
     if (!this.state.loading) {
       this.setState({
-        currentPage: this.state.currentPage + 1
+        currentPage: this.state.currentPage + 1,
+        loading: true
       }, () => {
         if (this.state.searchValue === "") {
           this.getRecommendations(this.state.currentPage)
