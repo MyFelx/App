@@ -17,7 +17,7 @@ const ContainerDiv = styled.div`
 class App extends React.Component {
   render() {
     return (
-      <ContainerDiv>
+      <ContainerDiv >
         <Router>
           <Switch>
             <Route path="/" exact component={Home} />

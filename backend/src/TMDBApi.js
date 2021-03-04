@@ -13,15 +13,16 @@ class TMDBApi {
   }
   static async discoverForRecommendations(
     with_genres = [],
-    without_genres = []
+    without_genres = [],
+    page = 1
   ) {
     const url = `${API_URL}discover/movie?api_key=${API_KEY}&without_genres=${without_genres.join(
       ","
-    )}&with_genres=${with_genres.join(",")}`;
+    )}&with_genres=${with_genres.join(",")}&page=${page}`;
     return await axios
       .get(url)
       .then((res) => {
-        return res.data.results;
+        return { movies: res.data.results, hasMore: res.data.page < page };
       })
       .catch((err) => {
         return undefined;
@@ -41,8 +42,8 @@ class TMDBApi {
       });
   }
 
-  static async getPopular() {
-    const url = `${API_URL}movie/popular?api_key=${API_KEY}`;
+  static async getPopular(page = 1) {
+    const url = `${API_URL}movie/popular?api_key=${API_KEY}&page=${page}`;
     return await axios
       .get(url)
       .then((res) => {

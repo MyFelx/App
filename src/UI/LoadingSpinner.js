@@ -4,9 +4,10 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 const StyledSpinner = styled(Spin)`
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
+  z-index: 100;
   transform: translate(calc(-50% - 0.5px), calc(-50%));
 `;
 
@@ -24,7 +25,7 @@ const antIcon = (
 const LoadingSpinner = (props) => {
   return (
     <div>
-      <StyledSpinner indicator={antIcon} />
+      <StyledSpinner id="spinner" indicator={antIcon} />
     </div>
   );
 };
